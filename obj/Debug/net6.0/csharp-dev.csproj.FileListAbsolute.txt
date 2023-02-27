@@ -1,0 +1,15 @@
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/bin/Debug/net6.0/csharp-dev
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/bin/Debug/net6.0/csharp-dev.deps.json
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/bin/Debug/net6.0/csharp-dev.runtimeconfig.json
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/bin/Debug/net6.0/csharp-dev.dll
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/bin/Debug/net6.0/csharp-dev.pdb
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/obj/Debug/net6.0/csharp-dev.csproj.AssemblyReference.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/obj/Debug/net6.0/csharp-dev.GeneratedMSBuildEditorConfig.editorconfig
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/obj/Debug/net6.0/csharp-dev.AssemblyInfoInputs.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/obj/Debug/net6.0/csharp-dev.AssemblyInfo.cs
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/obj/Debug/net6.0/csharp-dev.csproj.CoreCompileInputs.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/obj/Debug/net6.0/csharp-dev.dll
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/obj/Debug/net6.0/refint/csharp-dev.dll
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/obj/Debug/net6.0/csharp-dev.pdb
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/obj/Debug/net6.0/csharp-dev.genruntimeconfig.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/obj/Debug/net6.0/ref/csharp-dev.dll
