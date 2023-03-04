@@ -16,15 +16,17 @@ This two methods take int? as parameters.
         // Main function to sort the args
         static void Main(string[] args)
         {
+            /*
             foreach (var arg in args)
             {
                 Console.WriteLine(arg + " Type: " + arg.GetType());
             }
+            */
             // Shield: if args.Lenght != 2 || args0 != Bubble && args0 != Merge -> Format hint
             // if args[0] == "-Bubble" ... (check args[1] datatype?) then => Bubble(args[1])
             //  else if args[0] == "-Merge" ... (check args[1] datatype?) then => Merge(args[1])
             if (args.Length != 2 || args[0] != "-Bubble" && args[0] != "-Merge") {
-                Console.WriteLine("Please format your request like this: \nI [-Bubble or -Merge] [1,2,3,4]");
+                Console.WriteLine("Please format your request like this:\n[-Bubble or -Merge] [1,2,3,4]");
                 return;
             }
 
