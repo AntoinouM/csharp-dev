@@ -31,6 +31,11 @@ This two methods take int? as parameters.
             }
 
             int[] numbers = args[1].Split(',').Select(int.Parse).ToArray<int>();
+            /*
+            foreach (int number in numbers) {
+                Console.WriteLine(number);
+            }
+            */
             if (args[0] == "-Bubble") {
                 Bubble(numbers);
             }
@@ -43,13 +48,13 @@ This two methods take int? as parameters.
         // Bubble takes int and sort the array with the Bubble method
         static void Bubble(int[] numbers)
         {
-
+            Console.WriteLine("Bubble");
         }
 
         // Merge takes int and sort the array with the Merge method
         static void Merge(int[] numbers)
         {
-            
+            Console.WriteLine("Merge");
         }
     }
 }
