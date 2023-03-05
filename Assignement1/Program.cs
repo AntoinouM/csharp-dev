@@ -71,22 +71,18 @@ This two methods take int? as parameters.
             Merge(left); //iterate for left subarray
             Merge(right);
             int leftIndex = 0, rightIndex = 0, numbersIndex = 0;
-            int firstloop = 0, secondloop = 0, thirdloop = 0;
             while(leftIndex < left.Length && rightIndex < right.Length) {
                 if (left[leftIndex] < right[rightIndex]) {
                     numbers[numbersIndex++] = left[leftIndex++];
                 } else {
                     numbers[numbersIndex++] = right[rightIndex++];
                 }
-                firstloop++;
             }
             while(leftIndex < left.Length) {
                 numbers[numbersIndex++] = left[leftIndex++];
-                secondloop++;
             }
             while(rightIndex < right.Length) {
             numbers[numbersIndex++] = right[rightIndex++];
-            thirdloop++;
             }
 
             static int MiddlePoint(int lenght) {
