@@ -13,7 +13,6 @@ This two methods take int? as parameters.
 
     internal class Program
     {
-        static System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
         // Main function to sort the args
         static void Main(string[] args)
         {
@@ -43,15 +42,13 @@ This two methods take int? as parameters.
             else {
                 Merge(numbers);
             }
-
+            
+            WriteArrayIntoTerminal(numbers, true);
         }
 
         // Bubble takes int and sort the array with the Bubble method
         static void Bubble(int[] numbers)
         {       
-            watch.Start();
-            
-            // code to execute
             // compare each vallue to the direct neigbhor. Repeat until each value in order.
             // create a boolean that change when no swap needed == sorting finished
             bool hasChanged = true;
@@ -67,22 +64,58 @@ This two methods take int? as parameters.
                     } 
                 }
             } while (hasChanged == true); 
-            Console.WriteLine("After sort: " + "[{0}]", string.Join(", ", numbers));
-
-            watch.Stop();
-            Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
         }
 
         // Merge takes int and sort the array with the Merge method
         static void Merge(int[] numbers)
-        {      
-            watch.Start();
-            
-            // code to execute
-            Console.WriteLine("Merge");
+        {                  
+            if (numbers.Length <= 1) {
+                return;
+            }           
+            // divide the array until undivisable. need left index, right index, middle index. 
+            int middle = MiddlePoint(numbers.Length);
+            int[] left = new int[middle]; // create a new array with [middle.ceiled - left] entries (all = 0)
+            int[] right = new int[(numbers.Length + 1) - (middle + 1)];
+            Array.Copy(numbers, left, left.Length); // initiate the value of left array with origin array
+            Array.Copy(numbers, middle, right, 0, right.Length);
+            Merge(left); //iterate for left subarray
+            Merge(right);
+            int leftIndex = 0, rightIndex = 0, numbersIndex = 0;
+            int firstloop = 0, secondloop = 0, thirdloop = 0;
+            while(leftIndex < left.Length && rightIndex < right.Length) {
+                if (left[leftIndex] < right[rightIndex]) {
+                    numbers[numbersIndex++] = left[leftIndex++];
+                } else {
+                    numbers[numbersIndex++] = right[rightIndex++];
+                }
+                firstloop++;
+            }
+            while(leftIndex < left.Length) {
+                numbers[numbersIndex++] = left[leftIndex++];
+                secondloop++;
+            }
+            while(rightIndex < right.Length) {
+            numbers[numbersIndex++] = right[rightIndex++];
+            thirdloop++;
+            }
 
-            watch.Stop();
-            Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
+            static int MiddlePoint(int lenght) {
+                int result = 0;
+                if (lenght % 2 == 0) {
+                    result = lenght / 2;
+                } else {
+                    result = (lenght + 1) / 2;
+                }
+                return result;
+            }
+        }
+
+        static void WriteArrayIntoTerminal(int[] array, bool sort) {
+            if (sort == true) {
+                Console.WriteLine("After sort: " + "{0}", string.Join(" ", array));
+            } else {
+                Console.WriteLine("{0}", string.Join(" ", array));
+            }
         }
     }
 }
