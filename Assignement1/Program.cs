@@ -16,12 +16,6 @@ This two methods take int? as parameters.
         // Main function to sort the args
         static void Main(string[] args)
         {
-            /*
-            foreach (var arg in args)
-            {
-                Console.WriteLine(arg + " Type: " + arg.GetType());
-            }
-            */
             // Shield: if args.Lenght != 2 || args0 != Bubble && args0 != Merge -> Format hint
             // if args[0] == "-Bubble" ... (check args[1] datatype?) then => Bubble(args[1])
             //  else if args[0] == "-Merge" ... (check args[1] datatype?) then => Merge(args[1])
@@ -31,11 +25,7 @@ This two methods take int? as parameters.
             }
 
             int[] numbers = args[1].Split(',').Select(int.Parse).ToArray<int>();
-            /*
-            foreach (int number in numbers) {
-                Console.WriteLine(number);
-            }
-            */
+
             if (args[0] == "-Bubble") {
                 Bubble(numbers);
             }

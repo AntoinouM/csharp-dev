@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/csharp-dev.csproj",
-      "projectName": "csharp-dev",
-      "projectPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/csharp-dev.csproj",
+      "projectUniqueName": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Lesson/Lesson.csproj",
+      "projectName": "Lesson",
+      "projectPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Lesson/Lesson.csproj",
       "packagesPath": "/Users/antoinemuneret/.nuget/packages/",
-      "outputPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/obj/",
+      "outputPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Lesson/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/antoinemuneret/.nuget/NuGet/NuGet.Config"
