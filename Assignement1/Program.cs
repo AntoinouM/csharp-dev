@@ -54,23 +54,20 @@ This two methods take int? as parameters.
             // code to execute
             // compare each vallue to the direct neigbhor. Repeat until each value in order.
             // create a boolean that change when no swap needed == sorting finished
-            Console.WriteLine("Bubble");
             bool hasChanged = true;
             int temp = 0;
             do {
                 hasChanged = false;
                 for (int i = 1; i < numbers.Length; i++) {
-                    if (numbers[i] > numbers[i-1]) {
+                    if (numbers[i-1] > numbers[i]) {
                         temp = numbers[i];
                         numbers[i] = numbers [i-1];
                         numbers[i-1] = temp;
                         hasChanged = true;
-                    } else {
-                        hasChanged = false;
-                    }
+                    } 
                 }
             } while (hasChanged == true); 
-
+            Console.WriteLine("After sort: " + "[{0}]", string.Join(", ", numbers));
 
             watch.Stop();
             Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
