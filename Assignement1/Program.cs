@@ -13,6 +13,7 @@ This two methods take int? as parameters.
 
     internal class Program
     {
+        static System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
         // Main function to sort the args
         static void Main(string[] args)
         {
@@ -47,14 +48,44 @@ This two methods take int? as parameters.
 
         // Bubble takes int and sort the array with the Bubble method
         static void Bubble(int[] numbers)
-        {
+        {       
+            watch.Start();
+            
+            // code to execute
+            // compare each vallue to the direct neigbhor. Repeat until each value in order.
+            // create a boolean that change when no swap needed == sorting finished
             Console.WriteLine("Bubble");
+            bool hasChanged = true;
+            int temp = 0;
+            do {
+                hasChanged = false;
+                for (int i = 1; i < numbers.Length; i++) {
+                    if (numbers[i] > numbers[i-1]) {
+                        temp = numbers[i];
+                        numbers[i] = numbers [i-1];
+                        numbers[i-1] = temp;
+                        hasChanged = true;
+                    } else {
+                        hasChanged = false;
+                    }
+                }
+            } while (hasChanged == true); 
+
+
+            watch.Stop();
+            Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
         }
 
         // Merge takes int and sort the array with the Merge method
         static void Merge(int[] numbers)
-        {
+        {      
+            watch.Start();
+            
+            // code to execute
             Console.WriteLine("Merge");
+
+            watch.Stop();
+            Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
         }
     }
 }
