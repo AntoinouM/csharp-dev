@@ -13,7 +13,6 @@ This two methods take int? as parameters.
 
     internal class Program
     {
-        static int stepCount = 0;
         // Main function to sort the args
         static void Main(string[] args)
         {
@@ -60,7 +59,6 @@ This two methods take int? as parameters.
         // Merge takes int and sort the array with the Merge method
         static void Merge(int[] numbers)
         {                  
-            stepCount++;
             if (numbers.Length <= 1) { // break the Merge method when array <= 1
                 return;
             }
