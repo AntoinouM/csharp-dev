@@ -13,6 +13,7 @@ This two methods take int? as parameters.
 
     internal class Program
     {
+        static int stepCount = 0;
         // Main function to sort the args
         static void Main(string[] args)
         {
@@ -59,18 +60,22 @@ This two methods take int? as parameters.
         // Merge takes int and sort the array with the Merge method
         static void Merge(int[] numbers)
         {                  
-            if (numbers.Length <= 1) {
+            stepCount++;
+            if (numbers.Length <= 1) { // break the Merge method when array <= 1
                 return;
-            }           
+            }
+            
             // divide the array until undivisable. need left index, right index, middle index. 
             int middle = MiddlePoint(numbers.Length);
             int[] left = new int[middle]; // create a new array with [middle.ceiled - left] entries (all = 0)
             int[] right = new int[(numbers.Length + 1) - (middle + 1)];
             Array.Copy(numbers, left, left.Length); // initiate the value of left array with origin array
             Array.Copy(numbers, middle, right, 0, right.Length);
-            Merge(left); //iterate for left subarray
+            
+            Merge(left); //iterate for left subarray until left array is one
             Merge(right);
-            int leftIndex = 0, rightIndex = 0, numbersIndex = 0;
+
+            int leftIndex = 0, rightIndex = 0, numbersIndex = 0; // initiating the index each iteration
             while(leftIndex < left.Length && rightIndex < right.Length) {
                 if (left[leftIndex] < right[rightIndex]) {
                     numbers[numbersIndex++] = left[leftIndex++];
@@ -78,6 +83,8 @@ This two methods take int? as parameters.
                     numbers[numbersIndex++] = right[rightIndex++];
                 }
             }
+
+            //adding leftover
             while(leftIndex < left.Length) {
                 numbers[numbersIndex++] = left[leftIndex++];
             }
