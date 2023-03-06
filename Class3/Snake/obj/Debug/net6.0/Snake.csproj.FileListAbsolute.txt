@@ -1,0 +1,15 @@
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/bin/Debug/net6.0/Snake
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/bin/Debug/net6.0/Snake.deps.json
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/bin/Debug/net6.0/Snake.runtimeconfig.json
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/bin/Debug/net6.0/Snake.dll
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/bin/Debug/net6.0/Snake.pdb
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/obj/Debug/net6.0/Snake.csproj.AssemblyReference.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/obj/Debug/net6.0/Snake.GeneratedMSBuildEditorConfig.editorconfig
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/obj/Debug/net6.0/Snake.AssemblyInfoInputs.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/obj/Debug/net6.0/Snake.AssemblyInfo.cs
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/obj/Debug/net6.0/Snake.csproj.CoreCompileInputs.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/obj/Debug/net6.0/Snake.dll
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/obj/Debug/net6.0/refint/Snake.dll
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/obj/Debug/net6.0/Snake.pdb
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/obj/Debug/net6.0/Snake.genruntimeconfig.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class3/Snake/obj/Debug/net6.0/ref/Snake.dll
