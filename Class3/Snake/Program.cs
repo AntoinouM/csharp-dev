@@ -115,6 +115,5 @@ namespace Snake // Note: actual namespace depends on the project name.
 
             // methods
 
-
          }
     }
