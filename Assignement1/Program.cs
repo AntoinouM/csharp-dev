@@ -20,14 +20,14 @@ This two methods take int? as parameters.
             // Shield: if args.Lenght != 2 || args0 != Bubble && args0 != Merge -> Format hint
             // if args[0] == "-Bubble" ... (check args[1] datatype?) then => Bubble(args[1])
             //  else if args[0] == "-Merge" ... (check args[1] datatype?) then => Merge(args[1])
-            if (args.Length != 2 || args[0] != "-Bubble" && args[0] != "-Merge") {
-                Console.WriteLine("Please format your request like this:\n[-Bubble or -Merge] [1,2,3,4]");
+            if (args.Length != 3 || args[0] != "sort" || args[1] != "-Bubble" && args[1] != "-Merge") {
+                Console.WriteLine("Please format your request like this:\n sort [-Bubble or -Merge] [1,2,3,4]");
                 return;
             }
 
-            int[] numbers = args[1].Split(',').Select(int.Parse).ToArray<int>();
+            int[] numbers = args[2].Split(',').Select(int.Parse).ToArray<int>();
 
-            if (args[0] == "-Bubble") {
+            if (args[1] == "-Bubble") {
                 Bubble(numbers);
             }
             else {
@@ -71,7 +71,7 @@ This two methods take int? as parameters.
             int[] right = new int[(numbers.Length + 1) - (middle + 1)];
             Array.Copy(numbers, left, left.Length); // initiate the value of left array with origin array
             Array.Copy(numbers, middle, right, 0, right.Length);
-            
+
             Merge(left); //iterate for left subarray until left array is one
             Merge(right);
 
