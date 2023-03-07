@@ -53,7 +53,7 @@ This two methods take int? as parameters.
                         hasChanged = true;
                     } 
                 }
-            } while (hasChanged == true); 
+            } while (hasChanged); 
         }
 
         // Merge takes int and sort the array with the Merge method
