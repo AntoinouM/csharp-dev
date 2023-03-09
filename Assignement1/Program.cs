@@ -41,7 +41,7 @@ This two methods take int? as parameters.
         {       
             // compare each vallue to the direct neigbhor. Repeat until each value in order.
             // create a boolean that change when no swap needed == sorting finished
-            bool hasChanged = true;
+            bool hasChanged;
             int temp = 0;
             do {
                 hasChanged = false;
