@@ -149,12 +149,12 @@ namespace Class5;
         // PrintList
         public void PrintList() {
             Node? temp = _head;
-            System.Console.WriteLine("The singleLinkedList: ");
+            Console.WriteLine("The singleLinkedList: ");
             while(temp != null) {
-                System.Console.WriteLine(temp.Data + " ");
+                Console.Write(temp.Data + " ");
                 temp = temp.Next;
             }
-            System.Console.WriteLine(" ");
+            Console.WriteLine(" ");
         }
 
         // Finaliser
