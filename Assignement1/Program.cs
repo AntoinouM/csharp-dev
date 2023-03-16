@@ -11,6 +11,7 @@ static void Bubble method is called regarding args[0] || static void Merge is ca
 This two methods take int? as parameters.
  */
 
+
     internal class Program
     {
         // Main function to sort the args

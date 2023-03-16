@@ -6,7 +6,19 @@ namespace Class5;
     {
         static void Main(string[] args)
         {
-        
+            SingleLinkedList singleList = new SingleLinkedList();
+            singleList.InsertLast(4);
+            singleList.InsertLast(3);
+            singleList.InsertLast(6);
+            singleList.InsertLast(12);
+            singleList.InsertLast(2);
+            singleList.PrintList();
+
+            singleList.deleteNodebyKey(12);
+            singleList.PrintList();
+
+            singleList.InsertAfter(singleList.FindbyKey(6), 12);
+            singleList.PrintList();
         }
     }
 
@@ -126,9 +138,24 @@ namespace Class5;
                 prev = temp;
                 temp = temp.Next;
             }
+
+            // case if you don't find key in the list
+            if (temp == null) return;
+
+            if (prev != null) {
+                prev.Next = temp.Next;
+            }
         }
         // PrintList
-
+        public void PrintList() {
+            Node? temp = _head;
+            System.Console.WriteLine("The singleLinkedList: ");
+            while(temp != null) {
+                System.Console.WriteLine(temp.Data + " ");
+                temp = temp.Next;
+            }
+            System.Console.WriteLine(" ");
+        }
 
         // Finaliser
         ~SingleLinkedList() 
