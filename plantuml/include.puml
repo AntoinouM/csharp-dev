@@ -1,0 +1,35 @@
+@startuml
+!include ./Assignement1/Program.puml
+!include ./Lesson/Program.puml
+!include ./Class3/Class-Exercice/Program.puml
+!include ./Class3/Fibo/Program.puml
+!include ./Class3/Snake/Program.puml
+!include ./Class4/class-implementation/Program.puml
+!include ./Class5/Exercice/Program.puml
+!include ./Class5/class-implementation/Program.puml
+!include ./Class5/File_Management/My_Business/Program.puml
+!include ./Class5/File_Management/PetLibrary/Cat.puml
+!include ./Class5/File_Management/PetLibrary/OwnPets.puml
+!include ./Class5/File_Management/PetLibrary/Dog.puml
+!include ./Assignement1/obj/Debug/net6.0/Assignement1.AssemblyInfo.puml
+!include ./Assignement1/obj/Debug/net6.0/Assignement1.GlobalUsings.g.puml
+!include ./Assignement1/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.puml
+!include ./Class3/Fibo/obj/Debug/net6.0/Class3.GlobalUsings.g.puml
+!include ./Class3/Fibo/obj/Debug/net6.0/Class3.AssemblyInfo.puml
+!include ./Class3/Fibo/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.puml
+!include ./Class3/Snake/obj/Debug/net6.0/Snake.AssemblyInfo.puml
+!include ./Class3/Snake/obj/Debug/net6.0/Snake.GlobalUsings.g.puml
+!include ./Class3/Snake/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.puml
+!include ./Class5/Exercice/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.puml
+!include ./Class5/Exercice/obj/Debug/net6.0/Exercice.AssemblyInfo.puml
+!include ./Class5/Exercice/obj/Debug/net6.0/Exercice.GlobalUsings.g.puml
+!include ./Class5/class-implementation/obj/Debug/net6.0/Class5.GlobalUsings.g.puml
+!include ./Class5/class-implementation/obj/Debug/net6.0/Class5.AssemblyInfo.puml
+!include ./Class5/class-implementation/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.puml
+!include ./Class5/File_Management/My_Business/obj/Debug/net6.0/My_Business.AssemblyInfo.puml
+!include ./Class5/File_Management/My_Business/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.puml
+!include ./Class5/File_Management/My_Business/obj/Debug/net6.0/My_Business.GlobalUsings.g.puml
+!include ./Class5/File_Management/PetLibrary/obj/Debug/net6.0/PetLibrary.AssemblyInfo.puml
+!include ./Class5/File_Management/PetLibrary/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.puml
+!include ./Class5/File_Management/PetLibrary/obj/Debug/net6.0/PetLibrary.GlobalUsings.g.puml
+@enduml

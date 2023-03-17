@@ -1,0 +1,6 @@
+@startuml
+class OwnPets {
+    + OwnPets()
+    + WriteToconsole() : void
+}
+@enduml
