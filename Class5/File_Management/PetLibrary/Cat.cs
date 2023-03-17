@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace PetLibrary;
-public class Cat : IRun 
+public class Cat : IComparable<Cat>
 {
     // Fields
     public string Name;
@@ -55,6 +55,15 @@ public class Cat : IRun
     public Cat ProduceKitty(Cat partner) // can be called by a Cat instance.
     {
         return Cat.ProduceKitty(this, partner);
+    }
+
+    // Implementation of interface IComparable
+    public int CompareTo (Cat? anotherCat)
+    {
+        if (anotherCat != null) {
+            return Name.CompareTo(anotherCat.Name);
+        } 
+        else return 0;
     }
 
     // Implementation of interface IRun
