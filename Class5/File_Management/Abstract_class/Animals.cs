@@ -25,10 +25,30 @@ namespace Animals
             System.Console.WriteLine("Meow!");
         }
 
-        public void WriteToConsole()
+        public sealed override void Move()
+        {
+            System.Console.WriteLine("Move like a Cat.");
+        }
+
+        public virtual void WriteToConsole()
         {
             System.Console.WriteLine($"{Name} was born on a {DateOfBirth:dddd}");
         }
 
     }
+
+    public class WildCat : Cat 
+  {
+        public WildCat(string name, DateTime dateOfBirth) : base (name, dateOfBirth)
+        {
+            // Name = name;
+            // DateOfBirth = dateOfBirth;
+        }
+
+        public override void WriteToConsole() // can't do this because method is in parent Class. T override, make it virtual in parent class
+        {
+            System.Console.WriteLine($"{Name} was born on a {DateOfBirth:dddd}");
+        }
+  }  
+
 }
