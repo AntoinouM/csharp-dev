@@ -12,3 +12,9 @@
 ## Interface
 
 - Definition: An interface defines a contract. Any class or struct that implements that contract must provide an implementation of the members defined in the interface.
+
+## Inheritance
+
+To inherit from a super class we use the semicolon operator:
+> public class WildCats : Cat
+
