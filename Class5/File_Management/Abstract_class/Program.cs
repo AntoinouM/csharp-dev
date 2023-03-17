@@ -11,10 +11,13 @@ class Program
         System.Console.WriteLine($"{r} has been doubled to {newR}");
 
         float f = 2.5F;
-        int newF = DoubleMyRessource(f);
+        float newF = DoubleMyRessource(f);
         System.Console.WriteLine($"{f} has been doubled to {newF}");
 
         // generic function
+        int gr = 2;
+        int newGr = DoubleMyRessource<int>(gr);
+        System.Console.WriteLine($"{gr} has been doubled to {newGr}");
 
     }
 
