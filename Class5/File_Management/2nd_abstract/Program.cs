@@ -11,6 +11,17 @@ class Program
         cat2.food = "fish";
         System.Console.WriteLine($"Cat food with an integer {cat2.checkedFood("fish")}");
 
-        
+        // generics
+        GenericCat<int> gCat = new GenericCat<int>();
+        gCat.food = 5;
+        System.Console.WriteLine($"Cat food with an integer {gCat.checkFood(5)}");
+
+        // generic method
+        string food1 = "4";
+        System.Console.WriteLine("Double cat food",
+            arg0: food1,
+            arg1: GenericMethodCat.DoubleMyFood<string>(food1)
+        );
+
     }
 }

@@ -37,4 +37,12 @@ namespace _2nd_abstract
             }
         }
     }
+
+    public class GenericMethodCat {
+        public static double DoubleMyFood<T>(T input) where T : IConvertible {
+            double d = input.ToDouble(Thread.CurrentThread.CurrentCulture);
+
+            return 2.0 * d;
+        }
+    }
 }
