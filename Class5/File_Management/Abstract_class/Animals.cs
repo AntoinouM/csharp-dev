@@ -20,5 +20,15 @@ namespace Animals
             DateOfBirth = dateOfBirth;
         }
 
+        public override void Speak() // use override keyword to nitify that you override the method from abstraxt class
+        {
+            System.Console.WriteLine("Meow!");
+        }
+
+        public void WriteToConsole()
+        {
+            System.Console.WriteLine($"{Name} was born on a {DateOfBirth:dddd}");
+        }
+
     }
 }
