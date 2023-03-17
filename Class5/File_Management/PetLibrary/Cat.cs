@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace PetLibrary;
-public class Cat
+public class Cat : IRun 
 {
     // Fields
     public string Name;
@@ -55,5 +55,27 @@ public class Cat
     public Cat ProduceKitty(Cat partner) // can be called by a Cat instance.
     {
         return Cat.ProduceKitty(this, partner);
-     }
+    }
+
+    // Implementation of interface IRun
+    public double Speed {get; set;}
+    public int Distance {get;}
+    public double SpeedUp(double velocity) 
+    {
+        Speed += velocity;
+        return Speed;
+    }
+
  }
+
+/* Intefrace */
+
+interface IRun // naming convention
+{
+    // Property
+    double Speed {get; set;}
+    int Distance {get;} // read only so no setter
+
+    // Method
+    double SpeedUp(double velocity);
+}
