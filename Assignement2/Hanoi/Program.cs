@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Hanoi;
 
@@ -11,6 +12,7 @@ class Program
 {
 
     static System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+
     // entry point to sort inputs and direct to proper algorithm
     static void Main(string[] args)
     {
@@ -95,27 +97,35 @@ class Program
         int i;
         int totalMoves = (int) (Math.Pow(2, nDisks) - 1); // calculate total number of moves and convert to int
 
+        string animState = "start";
+
         // Put all disks from larger to smaller on first rod
         for (i = nDisks; i >= 1; i--) {
             startStack.PushDisk(i);
         }       
 
+        AnimateConsole(animState);
+
         for (i = 1; i <= totalMoves; i++)
         {
+            animState = "ongoing";
+            if (i == totalMoves) {
+                animState = "end";
+            }
             if (i % 3 == 1) { // move 1 - 4 - 7 - ....
-                MoveDiskBetweenRod(startStack, endStack, startRod, endRod, animate, nDisks);
+                MoveDiskBetweenRod(startStack, endStack, startRod, endRod, animate, nDisks, animState);
             }
             else if (i % 3 == 2) { //2 move 2 - 5 - 8 ...
-                MoveDiskBetweenRod(startStack, tempStack, startRod, tempRod, animate, nDisks);
+                MoveDiskBetweenRod(startStack, tempStack, startRod, tempRod, animate, nDisks, animState);
             }
             else if (i % 3 == 0) { // move 3 - 6 - 9 - ...
-                MoveDiskBetweenRod(tempStack, endStack, tempRod, endRod, animate, nDisks);
+                MoveDiskBetweenRod(tempStack, endStack, tempRod, endRod, animate, nDisks, animState);
             }
         }
     }
 
     // function to move disk between two pegs
-    static void MoveDiskBetweenRod(Stack src, Stack dest, char srcRod, char destRod, bool animate, int nDisks) {
+    static void MoveDiskBetweenRod(Stack src, Stack dest, char srcRod, char destRod, bool animate, int nDisks, string animState) {
 
         int rod1TopDisk = src.pop(); // return top disk of rod 1 or int.MinValue if rod empty
         int rod2TopDisk = dest.pop();
@@ -127,14 +137,14 @@ class Program
         if (rod1TopDisk == int.MinValue)
         {
             src.PushDisk(rod2TopDisk);
-            ConsoleMove(destRod, srcRod, rod2TopDisk, animation);
+            ConsoleMove(destRod, srcRod, rod2TopDisk, animation, animState);
         }
          
         // When rod 2 pole is empty
         else if (rod2TopDisk == int.MinValue)
         {
             dest.PushDisk(rod1TopDisk);
-            ConsoleMove(destRod, srcRod, rod1TopDisk, animation);
+            ConsoleMove(destRod, srcRod, rod1TopDisk, animation, animState);
         }
          
         // When top disk of rod 1 is larger than top disk of rod 2
@@ -142,7 +152,7 @@ class Program
         {
             src.PushDisk(rod1TopDisk);
             src.PushDisk(rod2TopDisk);
-            ConsoleMove(destRod, srcRod, rod2TopDisk, animation);
+            ConsoleMove(destRod, srcRod, rod2TopDisk, animation, animState);
         }
          
         // When top disk of rod 1 is smaller top disk of rod 2
@@ -150,19 +160,27 @@ class Program
         {
             dest.PushDisk(rod2TopDisk);
             dest.PushDisk(rod1TopDisk);
-            ConsoleMove(destRod, srcRod, rod1TopDisk, animation);
+            ConsoleMove(destRod, srcRod, rod1TopDisk, animation, animState);
         }
 
     }
 
     // function to write in console the move
-    static void ConsoleMove(char fromPeg, char toPeg, int disk, bool animation)
+    static void ConsoleMove(char fromPeg, char toPeg, int disk, bool animation, string animState)
     {
         if (animation == false) {
             Console.WriteLine("Move the disk " + disk + " from " + fromPeg + " to " + toPeg);
         } else {
-            System.Console.WriteLine("animation");
+            AnimateConsole(animState);
         }
+    }
+
+    static void AnimateConsole(string animState) {
+        Thread.Sleep(500);
+        //Console.Clear();
+
+        System.Console.WriteLine(animState);
+
     }
 
     // function to create a stack of given capacity.
