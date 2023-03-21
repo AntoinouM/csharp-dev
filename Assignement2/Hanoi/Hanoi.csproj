@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+    <!-- set environment variables -->
+  <ItemGroup>
+    <ProjectReference Include="./Classes/Classes.csproj"/>
+  </ItemGroup>
+
 </Project>

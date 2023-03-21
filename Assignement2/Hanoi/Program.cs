@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Classes;
 
 namespace Hanoi;
 
@@ -87,32 +88,14 @@ class Program
     //iterative method
     static void IterativeHanoi(int nDisks, bool animate) {
         System.Console.WriteLine("Iterative" + "; " + nDisks + "; " + animate);
+       
+       
 
     }
 
-    public class HanoiParam 
-    {
-        // Fields
-        private char[] _pegs = {'A', 'B', 'C'};
+// Class stack
+// Class HanoiParam
 
-        // Getters and Setters
-        public char[] Pegs 
-        {
-            get { return _pegs;} // shortend of having a Getage() function with a return
-            set { _pegs = value;}
-        }
-
-        // Methods
-
-        // Finalisers
-        ~HanoiParam() {}
-    }
-
-    public class Stack {
-        private int _capacity;
-        private int _top;
-        private int[] _disks;
-    }
     public static bool StringIsInt(string stringToTest) {
         return int.TryParse(stringToTest, out int value);
     }
@@ -122,3 +105,4 @@ class Program
         System.Console.WriteLine("Runtime: " + elapsedTime + " ms");
     }
 }
+
