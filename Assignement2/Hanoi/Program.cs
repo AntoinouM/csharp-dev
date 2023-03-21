@@ -60,7 +60,10 @@ class Program
             ShowElapsedTime(watch);
         }
         else {
+            watch.Start();
             IterativeHanoi(nDisks, animate);
+            watch.Stop();
+            ShowElapsedTime(watch);
         }
 
     }
@@ -105,6 +108,11 @@ class Program
         ~HanoiParam() {}
     }
 
+    public class Stack {
+        private int _capacity;
+        private int _top;
+        private int[] _disks;
+    }
     public static bool StringIsInt(string stringToTest) {
         return int.TryParse(stringToTest, out int value);
     }
