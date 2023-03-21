@@ -61,7 +61,8 @@ class Program
         }
         else {
             watch.Start();
-            IterativeHanoi(nDisks, animate);
+            IterativeHanoi(nDisks, startRod, tempRod, endRod, animate);
+            if (nDisks >= 6) {System.Console.WriteLine("To many disks to animate. Try with 6 disks or less.");}
             watch.Stop();
             ShowElapsedTime(watch);
         }
@@ -85,15 +86,87 @@ class Program
     }
 
     //iterative method
-    static void IterativeHanoi(int nDisks, bool animate) {
-    
-       
-       
+    static void IterativeHanoi(int nDisks, char startRod, char tempRod, char endRod, bool animate) {
+
+        Stack startStack = createStack(nDisks);
+        Stack tempStack = createStack(nDisks);
+        Stack endStack = createStack(nDisks);
+
+        int i;
+        int totalMoves = (int) (Math.Pow(2, nDisks) - 1); // calculate total number of moves and convert to int
+
+        // Put all disks from larger to smaller on first rod
+        for (i = nDisks; i >= 1; i--) {
+            startStack.PushDisk(i);
+        }       
+
+        for (i = 1; i <= totalMoves; i++)
+        {
+            if (i % 3 == 1) { // move 1 - 4 - 7 - ....
+                MoveDiskBetweenRod(startStack, endStack, startRod, endRod, animate, nDisks);
+            }
+            else if (i % 3 == 2) { //2 move 2 - 5 - 8 ...
+                MoveDiskBetweenRod(startStack, tempStack, startRod, tempRod, animate, nDisks);
+            }
+            else if (i % 3 == 0) { // move 3 - 6 - 9 - ...
+                MoveDiskBetweenRod(tempStack, endStack, tempRod, endRod, animate, nDisks);
+            }
+        }
+    }
+
+    // function to move disk between two pegs
+    static void MoveDiskBetweenRod(Stack src, Stack dest, char srcRod, char destRod, bool animate, int nDisks) {
+
+        int rod1TopDisk = src.pop(); // return top disk of rod 1 or int.MinValue if rod empty
+        int rod2TopDisk = dest.pop();
+        bool animation = animate;
+
+        if (nDisks >= 6) { animation = false;}
+
+        // When rod 1 is empty
+        if (rod1TopDisk == int.MinValue)
+        {
+            src.PushDisk(rod2TopDisk);
+            ConsoleMove(destRod, srcRod, rod2TopDisk, animation);
+        }
+         
+        // When rod 2 pole is empty
+        else if (rod2TopDisk == int.MinValue)
+        {
+            dest.PushDisk(rod1TopDisk);
+            ConsoleMove(destRod, srcRod, rod1TopDisk, animation);
+        }
+         
+        // When top disk of rod 1 is larger than top disk of rod 2
+        else if (rod1TopDisk > rod2TopDisk)
+        {
+            src.PushDisk(rod1TopDisk);
+            src.PushDisk(rod2TopDisk);
+            ConsoleMove(destRod, srcRod, rod2TopDisk, animation);
+        }
+         
+        // When top disk of rod 1 is smaller top disk of rod 2
+        else
+        {
+            dest.PushDisk(rod2TopDisk);
+            dest.PushDisk(rod1TopDisk);
+            ConsoleMove(destRod, srcRod, rod1TopDisk, animation);
+        }
 
     }
 
+    // function to write in console the move
+    static void ConsoleMove(char fromPeg, char toPeg, int disk, bool animation)
+    {
+        if (animation == false) {
+            Console.WriteLine("Move the disk " + disk + " from " + fromPeg + " to " + toPeg);
+        } else {
+            System.Console.WriteLine("animation");
+        }
+    }
+
     // function to create a stack of given capacity.
-    Stack createStack(int capacity)
+    static Stack createStack(int capacity)
     {
         Stack stack = new Stack(capacity, -1, new int[capacity]);
         return stack;
