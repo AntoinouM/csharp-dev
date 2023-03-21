@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Hanoi;
 
@@ -8,6 +9,8 @@ namespace Hanoi;
 // As all method will use the same Puzzle framework, privateclass to use pegs name...?
 class Program
 {
+
+    static System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
     // entry point to sort inputs and direct to proper algorithm
     static void Main(string[] args)
     {
@@ -37,6 +40,12 @@ class Program
 
         // if input correct then do
         int nDisks = int.Parse(args[2]);
+
+        HanoiParam board = new HanoiParam();
+        char startRod = board.Pegs[0];
+        char tempRod = board.Pegs[1];
+        char endRod = board.Pegs[2];
+
         bool animate = false;
         if ( (args[3] != null) && (args[3] == "-animation") ) {
             animate = true;
@@ -45,7 +54,10 @@ class Program
 
 
         if (args[1] == "-Recursive") {
-            RecursiveHanoi(nDisks, animate);
+            watch.Start();
+            RecursiveHanoi(nDisks, startRod, endRod, tempRod, animate);
+            watch.Stop();
+            ShowElapsedTime(watch);
         }
         else {
             IterativeHanoi(nDisks, animate);
@@ -54,13 +66,24 @@ class Program
     }
 
     // recursive method
-    static void RecursiveHanoi(int nDisks, bool animate) {
-        System.Console.WriteLine("Recursive" + " ;" + nDisks + " ;" + animate);
+    static void RecursiveHanoi(int nDisks, char startRod, char endRod, char tempRod, bool animate) {
+        // exit if no more disk to move
+         if (nDisks == 0) {
+            return;
+        }
+
+        // call again -- move all disks to tempRod but the base
+        RecursiveHanoi(nDisks - 1, startRod, tempRod, endRod, animate);
+        
+        Console.WriteLine("Move disk " + nDisks + " from rod " + startRod + " to rod " + endRod);
+
+        // call again -- move all from tempRod to endRod
+        RecursiveHanoi(nDisks - 1, tempRod, endRod, startRod, animate);
     }
 
     //iterative method
     static void IterativeHanoi(int nDisks, bool animate) {
-        System.Console.WriteLine("Iterative" + " ;" + nDisks + " ;" + animate);
+        System.Console.WriteLine("Iterative" + "; " + nDisks + "; " + animate);
 
     }
 
@@ -86,4 +109,8 @@ class Program
         return int.TryParse(stringToTest, out int value);
     }
 
+    static void ShowElapsedTime(System.Diagnostics.Stopwatch watch) {
+        double elapsedTime = watch.ElapsedMilliseconds;
+        System.Console.WriteLine("Runtime: " + elapsedTime + " ms");
+    }
 }
