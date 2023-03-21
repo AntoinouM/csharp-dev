@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using Classes;
 
 namespace Hanoi;
 
@@ -87,14 +86,86 @@ class Program
 
     //iterative method
     static void IterativeHanoi(int nDisks, bool animate) {
-        System.Console.WriteLine("Iterative" + "; " + nDisks + "; " + animate);
+    
        
        
 
     }
 
-// Class stack
-// Class HanoiParam
+    // function to create a stack of given capacity.
+    Stack createStack(int capacity)
+    {
+        Stack stack = new Stack(capacity, -1, new int[capacity]);
+        return stack;
+    }
+
+    public class Stack {
+        //Fields
+        private int _capacity;
+        private int _top;
+        private int[] _disks;
+
+        //Constructor
+        public Stack(int cap, int top, int[] disks)
+            {
+                _capacity = cap;
+                _top = top;
+                _disks = disks;
+            }
+
+        // Getters and setters
+        public int Capacity{
+            get{return _capacity;}
+            set{_capacity = value;}
+        }
+        public int Top{
+            get{return _top;}
+            set{_top = value;}
+        }
+        public int[] Disks{
+            get{return _disks;}
+            set{_disks = value;}
+        }
+
+        //Methods
+        public bool isFull() {
+            return (_top == _capacity -1);
+        }
+
+        public bool isEmpty() {
+            return (_top == -1);
+        }
+
+        public void PushDisk(int disk) {
+            if (isFull()) {return;} // check is peg is full
+            _disks[++_top] = disk; // increment top and add disk to stack
+        }
+
+        public int pop() { // remove a disk from stack
+            if (isEmpty()) {return int.MinValue;}
+            return _disks[_top--];
+        }
+
+        //Finaliser
+        ~Stack() {}   
+    }
+
+    public class HanoiParam 
+    {
+        // Fields
+        private char[] _pegs = {'A', 'B', 'C'};
+
+        // Getters
+        public char[] Pegs 
+        {
+            get { return _pegs;} // shortend of having a Getage() function with a return
+        }
+
+        // Methods
+
+        // Finalisers
+        ~HanoiParam() {}
+    }
 
     public static bool StringIsInt(string stringToTest) {
         return int.TryParse(stringToTest, out int value);
