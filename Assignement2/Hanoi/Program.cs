@@ -12,8 +12,13 @@ class Program
 {
 
     static System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+
+    //**********************   ASCII   ***********************//
     static int consoleBtmOffset = 3;
-    static List<string> diskChara = new List<string>();
+    static int firstLimit = Console.WindowWidth / 3;
+    static int secLimit = ((Console.WindowWidth / 3) * 2);
+    static List<string> diskChara = new List<string>();  
+    //********************************************************//
 
     // entry point to sort inputs and direct to proper algorithm
     static void Main(string[] args)
@@ -44,9 +49,12 @@ class Program
 
         // if input correct then do
         int nDisks = int.Parse(args[2]);
+
         diskChara.Add("");
+        string tempStringDisk;
         for (int i = 1; i <= nDisks; i++) {
-            diskChara.Add($"{i}");
+            tempStringDisk = new String('#', i * 2);
+            diskChara.Add($"<{tempStringDisk}>");
         }
         
 
@@ -97,9 +105,9 @@ class Program
     //iterative method
     static void IterativeHanoi(int nDisks, char startRod, char tempRod, char endRod, bool animate) {
 
-        Stack startStack = createStack(nDisks, startRod);
-        Stack tempStack = createStack(nDisks, tempRod);
-        Stack endStack = createStack(nDisks, endRod);
+        Stack startStack = createStack(nDisks, startRod, (0 + ((Console.WindowWidth / 3) / 2)));
+        Stack tempStack = createStack(nDisks, tempRod, (firstLimit + ((Console.WindowWidth / 3) / 2)));
+        Stack endStack = createStack(nDisks, endRod, (secLimit + ((Console.WindowWidth / 3) / 2)));
         Stack[] stacks = { startStack, tempStack, endStack};
 
         int i;
@@ -182,25 +190,41 @@ class Program
     }
 
     static void AnimateConsole(string animState, int nDisks, int disk, Stack[] stacks) {
-        Thread.Sleep(500);
-        //Console.Clear();
-        //DrawPegs(nDisks);
-        System.Console.WriteLine("step: ");
+
+        // wait a bit
+        Thread.Sleep(700);
+
+        //Clear console
+        Console.Clear();
+
+        DrawPegs(nDisks);
+        
+        // for each peg, draw all disks starting from bottom
+        // for each peg
+            // for each disks in pegs
+                    // reinitiate level -------------------------------variable level
+                    //cursor posX peg - string.Length / 2
+                    //cursor posY c.wH - consoleBtmOffset - level
+                        // draw disk
+                        // level ++ -----------------------------------variable level
+                        // draw peg limit
         for (int i = 0; i < stacks.Length; i++) {
+            int level = 0;
             for (int j = 0; j < stacks[i].Disks.Length; j++) {
-                if (stacks[i].Disks[j] != 0) {
-                    System.Console.WriteLine($"Peg: {stacks[i].Name} has disk {stacks[i].Disks[j]}");
-                    System.Console.WriteLine(diskChara[stacks[i].Disks[j]]);
-                }
+                string tempDisk = diskChara[stacks[i].Disks[j]];
+                Stack peg = stacks[i];
+                    Console.SetCursorPosition(peg.xPos - (tempDisk.Length / 2), Console.WindowHeight - level - consoleBtmOffset);
+                    Console.Write(tempDisk);
+                    level++;
             }
         }
         
-
+        // wait a bit
+        Thread.Sleep(300);
 
     }
 
     static void DrawPegs(int nDisks) {
-        Console.Clear();
         for (int i = 0; i <= nDisks + 1; i++) {
             Console.SetCursorPosition((Console.WindowWidth / 3), Console.WindowHeight - i - consoleBtmOffset);
             Console.Write('|');
@@ -211,9 +235,9 @@ class Program
     }
 
     // function to create a stack of given capacity.
-    static Stack createStack(int capacity, char name)
+    static Stack createStack(int capacity, char name, int xPos)
     {
-        Stack stack = new Stack(capacity, -1, new int[capacity], name);
+        Stack stack = new Stack(capacity, -1, new int[capacity], name, xPos);
         return stack;
     }
 
@@ -223,14 +247,16 @@ class Program
         private int _top;
         private int[] _disks;
         private char _name;
+        private int _xPos;
 
         //Constructor
-        public Stack(int cap, int top, int[] disks, char name)
+        public Stack(int cap, int top, int[] disks, char name, int xPos)
             {
                 _capacity = cap;
                 _top = top;
                 _disks = disks;
                 _name = name;
+                _xPos = xPos;
             }
 
         // Getters and setters
@@ -249,6 +275,11 @@ class Program
         public char Name{
             get{return _name;}
             set{_name = value;}
+        }
+
+        public int xPos{
+        get{return _xPos;}
+        set{_xPos = value;}
         }
 
         //Methods
