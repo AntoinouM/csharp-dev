@@ -12,6 +12,8 @@ class Program
 {
 
     static System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+    static int consoleBtmOffset = 3;
+    static List<string> diskChara = new List<string>();
 
     // entry point to sort inputs and direct to proper algorithm
     static void Main(string[] args)
@@ -42,6 +44,11 @@ class Program
 
         // if input correct then do
         int nDisks = int.Parse(args[2]);
+        diskChara.Add("");
+        for (int i = 1; i <= nDisks; i++) {
+            diskChara.Add($"{i}");
+        }
+        
 
         HanoiParam board = new HanoiParam();
         char startRod = board.Pegs[0];
@@ -49,7 +56,7 @@ class Program
         char endRod = board.Pegs[2];
 
         bool animate = false;
-        if ( (args[3] != null) && (args[3] == "-animation") ) {
+        if ( (args.Length > 3) && (args[3] != null) && (args[3] == "-animation") ) {
             animate = true;
         }
 
@@ -90,9 +97,10 @@ class Program
     //iterative method
     static void IterativeHanoi(int nDisks, char startRod, char tempRod, char endRod, bool animate) {
 
-        Stack startStack = createStack(nDisks);
-        Stack tempStack = createStack(nDisks);
-        Stack endStack = createStack(nDisks);
+        Stack startStack = createStack(nDisks, startRod);
+        Stack tempStack = createStack(nDisks, tempRod);
+        Stack endStack = createStack(nDisks, endRod);
+        Stack[] stacks = { startStack, tempStack, endStack};
 
         int i;
         int totalMoves = (int) (Math.Pow(2, nDisks) - 1); // calculate total number of moves and convert to int
@@ -104,8 +112,6 @@ class Program
             startStack.PushDisk(i);
         }       
 
-        AnimateConsole(animState);
-
         for (i = 1; i <= totalMoves; i++)
         {
             animState = "ongoing";
@@ -113,19 +119,19 @@ class Program
                 animState = "end";
             }
             if (i % 3 == 1) { // move 1 - 4 - 7 - ....
-                MoveDiskBetweenRod(startStack, endStack, startRod, endRod, animate, nDisks, animState);
+                MoveDiskBetweenRod(startStack, endStack, animate, nDisks, animState, stacks);
             }
             else if (i % 3 == 2) { //2 move 2 - 5 - 8 ...
-                MoveDiskBetweenRod(startStack, tempStack, startRod, tempRod, animate, nDisks, animState);
+                MoveDiskBetweenRod(startStack, tempStack, animate, nDisks, animState, stacks);
             }
             else if (i % 3 == 0) { // move 3 - 6 - 9 - ...
-                MoveDiskBetweenRod(tempStack, endStack, tempRod, endRod, animate, nDisks, animState);
+                MoveDiskBetweenRod(tempStack, endStack, animate, nDisks, animState, stacks);
             }
         }
     }
 
     // function to move disk between two pegs
-    static void MoveDiskBetweenRod(Stack src, Stack dest, char srcRod, char destRod, bool animate, int nDisks, string animState) {
+    static void MoveDiskBetweenRod(Stack src, Stack dest, bool animate, int nDisks, string animState, Stack[] stacks) {
 
         int rod1TopDisk = src.pop(); // return top disk of rod 1 or int.MinValue if rod empty
         int rod2TopDisk = dest.pop();
@@ -135,16 +141,16 @@ class Program
 
         // When rod 1 is empty
         if (rod1TopDisk == int.MinValue)
-        {
+        {   
             src.PushDisk(rod2TopDisk);
-            ConsoleMove(destRod, srcRod, rod2TopDisk, animation, animState);
+            ConsoleMove(dest.Name, src.Name, rod2TopDisk, animation, animState, nDisks, stacks);
         }
          
-        // When rod 2 pole is empty
+        // When rod 2  is empty
         else if (rod2TopDisk == int.MinValue)
         {
             dest.PushDisk(rod1TopDisk);
-            ConsoleMove(destRod, srcRod, rod1TopDisk, animation, animState);
+            ConsoleMove(dest.Name, src.Name, rod1TopDisk, animation, animState, nDisks, stacks);
         }
          
         // When top disk of rod 1 is larger than top disk of rod 2
@@ -152,7 +158,7 @@ class Program
         {
             src.PushDisk(rod1TopDisk);
             src.PushDisk(rod2TopDisk);
-            ConsoleMove(destRod, srcRod, rod2TopDisk, animation, animState);
+            ConsoleMove(dest.Name, src.Name, rod2TopDisk, animation, animState, nDisks, stacks);
         }
          
         // When top disk of rod 1 is smaller top disk of rod 2
@@ -160,33 +166,54 @@ class Program
         {
             dest.PushDisk(rod2TopDisk);
             dest.PushDisk(rod1TopDisk);
-            ConsoleMove(destRod, srcRod, rod1TopDisk, animation, animState);
+            ConsoleMove(dest.Name, src.Name, rod1TopDisk, animation, animState, nDisks, stacks);
         }
 
     }
 
     // function to write in console the move
-    static void ConsoleMove(char fromPeg, char toPeg, int disk, bool animation, string animState)
+    static void ConsoleMove(char fromPeg, char toPeg, int disk, bool animation, string animState, int nDisks, Stack[] stacks)
     {
         if (animation == false) {
             Console.WriteLine("Move the disk " + disk + " from " + fromPeg + " to " + toPeg);
         } else {
-            AnimateConsole(animState);
+            AnimateConsole(animState, nDisks, disk, stacks);
         }
     }
 
-    static void AnimateConsole(string animState) {
+    static void AnimateConsole(string animState, int nDisks, int disk, Stack[] stacks) {
         Thread.Sleep(500);
         //Console.Clear();
+        //DrawPegs(nDisks);
+        System.Console.WriteLine("step: ");
+        for (int i = 0; i < stacks.Length; i++) {
+            for (int j = 0; j < stacks[i].Disks.Length; j++) {
+                if (stacks[i].Disks[j] != 0) {
+                    System.Console.WriteLine($"Peg: {stacks[i].Name} has disk {stacks[i].Disks[j]}");
+                    System.Console.WriteLine(diskChara[stacks[i].Disks[j]]);
+                }
+            }
+        }
+        
 
-        System.Console.WriteLine(animState);
 
     }
 
+    static void DrawPegs(int nDisks) {
+        Console.Clear();
+        for (int i = 0; i <= nDisks + 1; i++) {
+            Console.SetCursorPosition((Console.WindowWidth / 3), Console.WindowHeight - i - consoleBtmOffset);
+            Console.Write('|');
+            Console.SetCursorPosition((Console.WindowWidth / 3) * 2, Console.WindowHeight - i - consoleBtmOffset);
+            Console.Write('|');
+        }
+        System.Console.WriteLine("");
+    }
+
     // function to create a stack of given capacity.
-    static Stack createStack(int capacity)
+    static Stack createStack(int capacity, char name)
     {
-        Stack stack = new Stack(capacity, -1, new int[capacity]);
+        Stack stack = new Stack(capacity, -1, new int[capacity], name);
         return stack;
     }
 
@@ -195,13 +222,15 @@ class Program
         private int _capacity;
         private int _top;
         private int[] _disks;
+        private char _name;
 
         //Constructor
-        public Stack(int cap, int top, int[] disks)
+        public Stack(int cap, int top, int[] disks, char name)
             {
                 _capacity = cap;
                 _top = top;
                 _disks = disks;
+                _name = name;
             }
 
         // Getters and setters
@@ -216,6 +245,10 @@ class Program
         public int[] Disks{
             get{return _disks;}
             set{_disks = value;}
+        }
+        public char Name{
+            get{return _name;}
+            set{_name = value;}
         }
 
         //Methods
@@ -234,7 +267,9 @@ class Program
 
         public int pop() { // remove a disk from stack
             if (isEmpty()) {return int.MinValue;}
-            return _disks[_top--];
+            int temp = _disks[_top];
+            _disks[_top--] = 0;
+            return temp;
         }
 
         //Finaliser
@@ -257,7 +292,6 @@ class Program
         // Finalisers
         ~HanoiParam() {}
     }
-
     public static bool StringIsInt(string stringToTest) {
         return int.TryParse(stringToTest, out int value);
     }
