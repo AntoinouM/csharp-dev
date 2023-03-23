@@ -83,6 +83,7 @@ class Program
         if (args[1] == "-Recursive") {
             watch.Start();
             RecursiveHanoi(nDisks, startRod, endRod, tempRod, animate, startStack, endStack, tempStack, maxDisk, stacks);
+            Console.SetCursorPosition(0, Console.WindowHeight);
             watch.Stop();
             ShowElapsedTime(watch);
         }
@@ -90,6 +91,7 @@ class Program
             watch.Start();
             IterativeHanoi(nDisks, startRod, tempRod, endRod, animate);
             if (nDisks >= 6) {System.Console.WriteLine("To many disks to animate. Try with 6 disks or less.");}
+            Console.SetCursorPosition(0, Console.WindowHeight);
             watch.Stop();
             ShowElapsedTime(watch);
         }
