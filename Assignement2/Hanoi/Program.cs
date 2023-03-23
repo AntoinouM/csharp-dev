@@ -63,6 +63,18 @@ class Program
         char tempRod = board.Pegs[1];
         char endRod = board.Pegs[2];
 
+        Stack startStack = createStack(nDisks, startRod, (0 + ((Console.WindowWidth / 3) / 2)));
+        Stack tempStack = createStack(nDisks, tempRod, (firstLimit + ((Console.WindowWidth / 3) / 2)));
+        Stack endStack = createStack(nDisks, endRod, (secLimit + ((Console.WindowWidth / 3) / 2)));
+        Stack[] stacks = { startStack, tempStack, endStack};
+
+        // Put all disks from larger to smaller on first rod
+        for (int i = nDisks; i >= 1; i--) {
+            startStack.PushDisk(i);
+        }      
+
+        int maxDisk = nDisks;
+
         bool animate = false;
         if ( (args.Length > 3) && (args[3] != null) && (args[3] == "-animation") ) {
             animate = true;
@@ -70,7 +82,7 @@ class Program
 
         if (args[1] == "-Recursive") {
             watch.Start();
-            RecursiveHanoi(nDisks, startRod, endRod, tempRod, animate);
+            RecursiveHanoi(nDisks, startRod, endRod, tempRod, animate, startStack, tempStack, endStack, maxDisk, stacks);
             watch.Stop();
             ShowElapsedTime(watch);
         }
@@ -85,17 +97,21 @@ class Program
     }
 
     // recursive method
-    static void RecursiveHanoi(int nDisks, char startRod, char endRod, char tempRod, bool animate) {
+    static void RecursiveHanoi(int nDisks, char startRod, char endRod, char tempRod, bool animate, Stack startStack, Stack tempStack, Stack endStack, int maxDisk, Stack[] stacks) {
         // exit if no more disk to move
          if (nDisks == 0) {
             return;
         }
+
+
         // call again -- move all disks to tempRod but the base
-        RecursiveHanoi(nDisks - 1, startRod, tempRod, endRod, animate);
+        RecursiveHanoi(nDisks - 1, startRod, tempRod, endRod, animate, startStack, tempStack, endStack, maxDisk, stacks);
         
-        Console.WriteLine("Move disk " + diskChara[nDisks] + " from rod " + startRod + " to rod " + endRod);
+        endStack.PushDisk(startStack.pop());
+
+        Console.WriteLine("Move disk " + nDisks + " from rod " + startRod + " to rod " + endRod);
         // call again -- move all from tempRod to endRod
-        RecursiveHanoi(nDisks - 1, tempRod, endRod, startRod, animate);
+        RecursiveHanoi(nDisks - 1, tempRod, endRod, startRod, animate, tempStack, endStack, startStack, maxDisk, stacks);
     }
 
     //iterative method
