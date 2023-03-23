@@ -77,7 +77,9 @@ class Program
 
         bool animate = false;
         if ( (args.Length > 3) && (args[3] != null) && (args[3] == "-animation") ) {
-            animate = true;
+            if (nDisks <= 6) {
+                animate = true;
+            }
         }
 
         if (args[1] == "-Recursive") {
@@ -110,8 +112,8 @@ class Program
         RecursiveHanoi(nDisks - 1, startRod, tempRod, endRod, animate, startStack, tempStack, endStack, maxDisk, stacks);
         
         endStack.PushDisk(startStack.pop());
-        AnimateConsole("blabla", maxDisk, stacks);
         //Console.WriteLine("Move disk " + nDisks + " from rod " + startRod + " to rod " + endRod);
+        ConsoleMove(startRod, endRod, nDisks, animate, "ongoing", maxDisk, stacks);
         // call again -- move all from tempRod to endRod
         RecursiveHanoi(nDisks - 1, tempRod, endRod, startRod, animate, tempStack, endStack, startStack, maxDisk, stacks);
     }
