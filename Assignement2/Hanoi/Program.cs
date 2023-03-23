@@ -72,7 +72,7 @@ class Program
 
         if (args[1] == "-Recursive") {
             watch.Start();
-            RecursiveHanoi(nDisks, startRod, endRod, tempRod, animate);
+            RecursiveHanoi(nDisks, startRod, endRod, tempRod, animate, nDisks);
             watch.Stop();
             ShowElapsedTime(watch);
         }
@@ -87,19 +87,55 @@ class Program
     }
 
     // recursive method
-    static void RecursiveHanoi(int nDisks, char startRod, char endRod, char tempRod, bool animate) {
+    static void RecursiveHanoi(int nDisks, char startRod, char endRod, char tempRod, bool animate, int maxDisks) {
+
+        Stack startStack = createStack(nDisks, startRod, (0 + ((Console.WindowWidth / 3) / 2)));
+        Stack tempStack = createStack(nDisks, tempRod, (firstLimit + ((Console.WindowWidth / 3) / 2)));
+        Stack endStack = createStack(nDisks, endRod, (secLimit + ((Console.WindowWidth / 3) / 2)));
+        Stack[] stacks = { startStack, tempStack, endStack};
+
         // exit if no more disk to move
          if (nDisks == 0) {
             return;
         }
 
         // call again -- move all disks to tempRod but the base
-        RecursiveHanoi(nDisks - 1, startRod, tempRod, endRod, animate);
+        RecursiveHanoi(nDisks - 1, startStack.Name, tempStack.Name, endStack.Name, animate, maxDisks);
+
         
-        Console.WriteLine("Move disk " + nDisks + " from rod " + startRod + " to rod " + endRod);
+        //Console.WriteLine("Move disk " + nDisks + " from rod " + startRod + " to rod " + endRod);
+        AnimateRecursive(nDisks, maxDisks, stacks, startRod, endRod);
 
         // call again -- move all from tempRod to endRod
-        RecursiveHanoi(nDisks - 1, tempRod, endRod, startRod, animate);
+        RecursiveHanoi(nDisks - 1, tempStack.Name, endStack.Name, startStack.Name, animate, maxDisks);
+    }
+
+    static void AnimateRecursive(int nDisks, int maxDisks, Stack[] stacks, char startRod, char endRod) {
+
+        Thread.Sleep(400);
+        //Console.Clear();
+        //DrawPegs(maxDisks);
+        // ndisks, startRod, endRod
+        Stack currentStartPeg = correspondingPeg(startRod)!;
+        Stack currentEndPeg = correspondingPeg(endRod)!;
+        Console.WriteLine("Move disk " + diskChara[nDisks] + " from rod " + currentStartPeg.Name + " to rod " + currentEndPeg.Name);
+
+
+        // Draw initial state
+
+         //var index = Array.FindIndex(stacks, stacks.Name => stacks.Name.Contains("Author='xyz'"));
+
+         Stack? correspondingPeg(char peg) {
+
+            for (int i = 0; i < 3; i++)  {
+                if (stacks[i].Name == peg) {
+                    Stack stackTarget = stacks[i];
+                    return stackTarget;
+                    }
+            }
+            return null;
+         }
+
     }
 
     //iterative method
@@ -112,6 +148,12 @@ class Program
 
         int i;
         int totalMoves = (int) (Math.Pow(2, nDisks) - 1); // calculate total number of moves and convert to int
+
+        if (nDisks % 2 == 0) {
+            Stack temp = tempStack;
+            tempStack = endStack;
+            endStack = temp;
+        }
 
         string animState = "start";
 
@@ -192,7 +234,7 @@ class Program
     static void AnimateConsole(string animState, int nDisks, int disk, Stack[] stacks) {
 
         // wait a bit
-        Thread.Sleep(700);
+        Thread.Sleep(400);
 
         //Clear console
         Console.Clear();
