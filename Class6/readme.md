@@ -13,3 +13,8 @@ the most used algorithms usually in a program.
   - space complexity: ammount of memory algorithm requires to execute and get result
   - time complexity: amount of time needed to execute and get result
 
+## Tree
+
+### What is a tree
+
+A graph without cycle

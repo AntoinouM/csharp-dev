@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/lesson.csproj": {}
+    "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/SocialNet/SocialNet.csproj": {}
   },
   "projects": {
-    "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/lesson.csproj": {
+    "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/SocialNet/SocialNet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/lesson.csproj",
-        "projectName": "lesson",
-        "projectPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/lesson.csproj",
+        "projectUniqueName": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/SocialNet/SocialNet.csproj",
+        "projectName": "SocialNet",
+        "projectPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/SocialNet/SocialNet.csproj",
         "packagesPath": "/Users/antoinemuneret/.nuget/packages/",
-        "outputPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/obj/",
+        "outputPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/SocialNet/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/antoinemuneret/.nuget/NuGet/NuGet.Config"
