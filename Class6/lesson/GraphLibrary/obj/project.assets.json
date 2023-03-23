@@ -1,30 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {
-      "GraphLibrary/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/GraphLibrary.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/GraphLibrary.dll": {}
-        }
-      }
-    }
+    "net6.0": {}
   },
-  "libraries": {
-    "GraphLibrary/1.0.0": {
-      "type": "project",
-      "path": "../GraphLibrary/GraphLibrary.csproj",
-      "msbuildProject": "../GraphLibrary/GraphLibrary.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net6.0": [
-      "GraphLibrary >= 1.0.0"
-    ]
+    "net6.0": []
   },
   "packageFolders": {
     "/Users/antoinemuneret/.nuget/packages/": {}
@@ -32,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/SocialNet/SocialNet.csproj",
-      "projectName": "SocialNet",
-      "projectPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/SocialNet/SocialNet.csproj",
+      "projectUniqueName": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/GraphLibrary/GraphLibrary.csproj",
+      "projectName": "GraphLibrary",
+      "projectPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/GraphLibrary/GraphLibrary.csproj",
       "packagesPath": "/Users/antoinemuneret/.nuget/packages/",
-      "outputPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/SocialNet/obj/",
+      "outputPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/GraphLibrary/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/antoinemuneret/.nuget/NuGet/NuGet.Config"
@@ -50,11 +31,7 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/GraphLibrary/GraphLibrary.csproj": {
-              "projectPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Class6/lesson/GraphLibrary/GraphLibrary.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
