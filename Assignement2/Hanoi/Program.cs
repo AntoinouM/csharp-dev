@@ -110,13 +110,13 @@ class Program
 
         
         //Console.WriteLine("Move disk " + nDisks + " from rod " + startRod + " to rod " + endRod);
-        AnimateRecursive(nDisks, maxDisks, stacks, startRod, endRod);
+        AnimateRecursive(nDisks, maxDisks, stacks, startRod, endRod, stacks);
 
         // call again -- move all from tempRod to endRod
         RecursiveHanoi(nDisks - 1, stacks[1].Name, stacks[2].Name, stacks[0].Name, animate, maxDisks, stacks);
     }
 
-    static void AnimateRecursive(int nDisks, int maxDisks, Stack[] stacks, char startRod, char endRod) {
+    static void AnimateRecursive(int nDisks, int maxDisks, Stack[] stacks, char startRod, char endRod, Stack[] stacks) {
 
         Thread.Sleep(400);
         //Console.Clear();
