@@ -19,7 +19,7 @@ namespace Sort
             List<string> listToSort = new List<string>();
 
             foreach(string element in args[args.Length - 1].Split(",")) {
-                listToSort.Add(element);
+                listToSort.Add(element.Trim());
             }
 
             ConvertAndRedirect(args[1], listToSort, args[2]);
@@ -63,7 +63,7 @@ namespace Sort
 
                     break;
                 default: //string
-                    List<string> listToSortString = passedList.ConvertAll<string>(x => x.ToString(Thread.CurrentThread.CurrentCulture).Trim());
+                    List<string> listToSortString = passedList.ConvertAll<string>(x => x.ToString(Thread.CurrentThread.CurrentCulture));
 
                     if(sortingMethod == "-Bubble") {
                         BubbleSort<string>.StartSort(listToSortString);
