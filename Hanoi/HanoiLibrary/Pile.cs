@@ -1,6 +1,6 @@
 namespace HanoiLibrary
 {
-    public class Stacks
+    public class Pile
     {
             //Fields
         private int _capacity;
@@ -10,7 +10,7 @@ namespace HanoiLibrary
         private int _xPos;
 
         //Constructor
-        public Stacks(int cap, int top, int[] disks, char name, int xPos)
+        public Pile(int cap, int top, int[] disks, char name, int xPos)
             {
                 _capacity = cap;
                 _top = top;
@@ -64,7 +64,7 @@ namespace HanoiLibrary
         }
 
         //Finaliser
-        ~Stacks() {}   
+        ~Pile() {}   
     }
 
 }

@@ -14,8 +14,8 @@ class Program
         HanoiBoardParam board = new HanoiBoardParam();
         board.InitiateBoard(5);
 
-        for (int i = 0; i < board.Stacks.Length; i++) {
-            System.Console.WriteLine(board.Stacks[i].Name);
+        for (int i = 0; i < board.Piles.Length; i++) {
+            System.Console.WriteLine(board.Piles[i].Name);
         }
         
     }

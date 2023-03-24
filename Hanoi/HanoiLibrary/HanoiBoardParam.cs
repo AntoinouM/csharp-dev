@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 namespace HanoiLibrary;
+
  class HanoiBoardParam
 {
     // Fields
@@ -11,7 +12,7 @@ namespace HanoiLibrary;
     private int _maxDisks;
     private int _firstLimit = Console.WindowWidth / 3;
     private int _secLimit = ((Console.WindowWidth / 3) * 2);
-    private Stacks[] _stacksArr = new Stacks[3];
+    private Pile[] _pilesArr = new Pile[3];
     private List<string> _diskChara = new List<string>();  
 
     // Constructor
@@ -22,7 +23,7 @@ namespace HanoiLibrary;
     public char EndRod {get{return _endRod;}}
     public int FirstLimit {get{return _firstLimit;}}
     public int SecLimit {get{return _secLimit;}}
-    public Stacks[] Stacks {get{return _stacksArr;}}
+    public Pile[] Piles {get{return _pilesArr;}}
     public List<string> DiskChara {get{return _diskChara;}}
     public int MaxDisks {
         get{return _maxDisks;}
@@ -34,10 +35,10 @@ namespace HanoiLibrary;
     // Methods
     // Initiate (put all disks on first stack)
     // Create stack
-    public Stacks createStack(int capacity, char name, int xPos)
+    public Pile createStack(int capacity, char name, int xPos)
     {
 
-        Stacks stack = new Stacks(capacity, -1, new int[capacity], name, xPos);
+        Pile stack = new Pile(capacity, -1, new int[capacity], name, xPos);
         return stack;
     }
 
@@ -52,9 +53,9 @@ namespace HanoiLibrary;
 
     public void InitiateBoard(int nDisks) {
         _maxDisks = nDisks;
-        Stacks startStack = createStack(nDisks, _startRod, (0 + ((Console.WindowWidth / 3) / 2)));
-        Stacks tempStack = createStack(nDisks, _tempRod, (_firstLimit + ((Console.WindowWidth / 3) / 2)));
-        Stacks endStack = createStack(nDisks, _endRod, (_secLimit + ((Console.WindowWidth / 3) / 2)));
+        Pile startStack = createStack(nDisks, _startRod, (0 + ((Console.WindowWidth / 3) / 2)));
+        Pile tempStack = createStack(nDisks, _tempRod, (_firstLimit + ((Console.WindowWidth / 3) / 2)));
+        Pile endStack = createStack(nDisks, _endRod, (_secLimit + ((Console.WindowWidth / 3) / 2)));
 
         CreateDisksStringRepresentations(nDisks);
 
@@ -64,8 +65,8 @@ namespace HanoiLibrary;
     }
 
     // Add in stacks array
-    public void AddtoStacksArray(int index, Stacks stack) {
-        _stacksArr[index] = stack;
+    public void AddtoStacksArray(int index, Pile stack) {
+        _pilesArr[index] = stack;
     }
 
     // Finaliser
