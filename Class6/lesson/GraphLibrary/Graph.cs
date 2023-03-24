@@ -12,6 +12,8 @@ where TEdges: BasicEdgeProperty, new()
     private LinkedList<Vertex<TVertex>> _vertices;
     private LinkedList<Edge<TEdges>> _edges;
 
+    //private Dictionary<int, Vertex<T1>> _vertices; // better access methods, just bind an ID to a vertex! better?
+
     // The number of vertices and edges
     private uint _nVertices;
     private uint _nEdges;
