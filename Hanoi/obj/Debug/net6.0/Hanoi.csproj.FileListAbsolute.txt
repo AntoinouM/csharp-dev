@@ -1,0 +1,15 @@
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/obj/Debug/net6.0/Hanoi.csproj.AssemblyReference.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/obj/Debug/net6.0/Hanoi.GeneratedMSBuildEditorConfig.editorconfig
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/obj/Debug/net6.0/Hanoi.AssemblyInfoInputs.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/obj/Debug/net6.0/Hanoi.AssemblyInfo.cs
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/obj/Debug/net6.0/Hanoi.csproj.CoreCompileInputs.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/bin/Debug/net6.0/Hanoi
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/bin/Debug/net6.0/Hanoi.deps.json
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/bin/Debug/net6.0/Hanoi.runtimeconfig.json
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/bin/Debug/net6.0/Hanoi.dll
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/bin/Debug/net6.0/Hanoi.pdb
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/obj/Debug/net6.0/Hanoi.dll
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/obj/Debug/net6.0/refint/Hanoi.dll
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/obj/Debug/net6.0/Hanoi.pdb
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/obj/Debug/net6.0/Hanoi.genruntimeconfig.cache
+/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Hanoi/obj/Debug/net6.0/ref/Hanoi.dll

@@ -1,4 +1,7 @@
-﻿namespace HanoiLibrary;
+﻿using System;
+using System.Collections.Generic;
+
+namespace HanoiLibrary;
  class HanoiBoardParam
 {
     // Fields
@@ -8,7 +11,8 @@
     private int _maxDisks;
     private int _firstLimit = Console.WindowWidth / 3;
     private int _secLimit = ((Console.WindowWidth / 3) * 2);
-    private Stacks[] _stacks = new Stacks[3];
+    private Stacks[] _stacksArr = new Stacks[3];
+    private List<string> _diskChara = new List<string>();  
 
     // Constructor
 
@@ -18,7 +22,8 @@
     public char EndRod {get{return _endRod;}}
     public int FirstLimit {get{return _firstLimit;}}
     public int SecLimit {get{return _secLimit;}}
-    public Stacks[] Stacks {get{return _stacks;}}
+    public Stacks[] Stacks {get{return _stacksArr;}}
+    public List<string> DiskChara {get{return _diskChara;}}
     public int MaxDisks {
         get{return _maxDisks;}
         set{_maxDisks = value;}
@@ -36,9 +41,31 @@
         return stack;
     }
 
+    public void CreateDisksStringRepresentations(int nDisks) {
+        _diskChara.Add("");
+        string tempStringDisk;
+        for (int i = 1; i <= nDisks; i++) {
+            tempStringDisk = new String('#', i * 2);
+            _diskChara.Add($"<{tempStringDisk}>");
+        }
+    }
+
+    public void InitiateBoard(int nDisks) {
+        _maxDisks = nDisks;
+        Stacks startStack = createStack(nDisks, _startRod, (0 + ((Console.WindowWidth / 3) / 2)));
+        Stacks tempStack = createStack(nDisks, _tempRod, (_firstLimit + ((Console.WindowWidth / 3) / 2)));
+        Stacks endStack = createStack(nDisks, _endRod, (_secLimit + ((Console.WindowWidth / 3) / 2)));
+
+        CreateDisksStringRepresentations(nDisks);
+
+        AddtoStacksArray(0, startStack);
+        AddtoStacksArray(1, tempStack);
+        AddtoStacksArray(2, endStack);
+    }
+
     // Add in stacks array
-    public void AddtoArray(int index, Stacks stack) {
-        _stacks[index] = stack;
+    public void AddtoStacksArray(int index, Stacks stack) {
+        _stacksArr[index] = stack;
     }
 
     // Finaliser
