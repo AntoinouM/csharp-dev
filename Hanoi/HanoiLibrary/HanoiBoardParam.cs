@@ -57,6 +57,11 @@ namespace HanoiLibrary;
         Pile tempStack = createStack(nDisks, _tempRod, (_firstLimit + ((Console.WindowWidth / 3) / 2)));
         Pile endStack = createStack(nDisks, _endRod, (_secLimit + ((Console.WindowWidth / 3) / 2)));
 
+        // Put all disks from larger to smaller on first rod
+        for (int i = nDisks; i >= 1; i--) {
+            startStack.PushDisk(i);
+        }   
+
         CreateDisksStringRepresentations(nDisks);
 
         AddtoStacksArray(0, startStack);
