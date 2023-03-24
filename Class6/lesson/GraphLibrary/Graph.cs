@@ -77,6 +77,35 @@ public class Graph
         }
 
         // Edge
+        public void AddEdge(uint sourceId, uint targetId) {
+            Edge? e = HasEdge(sourceId, targetId);
+
+            if (e == null) {
+                Vertex? sourceV = HasVertex(sourceId);
+                Vertex? targetV = HasVertex(targetId);
+
+                if (sourceV == null || targetV == null) {
+                    Console.WriteLine("Source or target vertex could not be found.");
+                    return;
+                }
+                else {
+                    Edge newE = new Edge(_nEdges, sourceId, targetId);
+                    _edges.AddLast(newE);
+                    _nEdges++;
+                }
+            }
+        }
+
+        public Edge? HasEdge(uint sourceId, uint targetId) {
+
+            for (int i = 0; i < _edges.Count; i++) {
+                if ( (_edges.ElementAt(i).Property.SourceId == sourceId) && (_edges.ElementAt(i).Property.TargetId == targetId)) {
+                    return _edges.ElementAt(i);
+                }
+            }
+            return null;
+        }
+
         // Graph
     public void PrintGraph()
     {
