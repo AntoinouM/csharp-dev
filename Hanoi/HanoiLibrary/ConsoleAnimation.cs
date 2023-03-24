@@ -63,7 +63,7 @@ public class ConsoleAnimation
     }
 
     public void TextDisplay(int disk, char fromRod, char endRod) {
-        Thread.Sleep(_delay);
+        Thread.Sleep(_delay / 10);
         System.Console.WriteLine($"Disk {disk} from {fromRod} to {endRod}");
     }
     public void DrawPegs(int maxDisks, Pile[] piles) {

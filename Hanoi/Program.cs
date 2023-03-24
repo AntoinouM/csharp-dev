@@ -58,12 +58,7 @@ class Program
             board.Piles[1] = board.Piles[2];
             board.Piles[2] = temp;
         }
-
-        // Put all disks from larger to smaller on first rod
-        for (i = nDisks; i >= 1; i--) {
-            board.Piles[0].PushDisk(i);
-        }       
-
+    
         for (i = 1; i <= totalMoves; i++)
         {
 
