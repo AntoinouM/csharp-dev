@@ -1,27 +1,27 @@
 ﻿namespace GraphLibrary;
 
-public struct VertexProperty
+public abstract class BasicVertexProperty
 {
     // Fields
     public uint Id;
-    public string Name;
+    public string Name = "Unknown Name";
 }
 
-public class Vertex 
+public class Vertex<T> where T: BasicVertexProperty, new() // this is a constraint because we want to initiate a new instance later
 {
     // Fields
-    private VertexProperty _property;
+    private T _property;
 
     // Constructor
     public Vertex( uint id, string name)
     {
-        _property = new VertexProperty();
+        _property = new T();
         _property.Id = id;
         _property.Name = name;
     }
 
     // Getters and Setters
-    public VertexProperty Property {
+    public T Property {
         get {return _property;}
         set {_property = value;}
     }

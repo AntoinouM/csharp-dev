@@ -3,12 +3,14 @@ using System.Collections.Generic;
 namespace GraphLibrary;
 
 
-public class Graph 
+public class Graph <TVertex, TEdges> 
+where TVertex: BasicVertexProperty, new()
+where TEdges: BasicEdgeProperty, new()
 {
     // Fields
     // The vertex/edge lists in the graph
-    private LinkedList<Vertex> _vertices;
-    private LinkedList<Edge> _edges;
+    private LinkedList<Vertex<TVertex>> _vertices;
+    private LinkedList<Edge<TEdges>> _edges;
 
     // The number of vertices and edges
     private uint _nVertices;
@@ -17,8 +19,8 @@ public class Graph
     // Constructors
     public Graph() 
     {
-        _vertices = new LinkedList<Vertex>();
-        _edges = new LinkedList<Edge>();
+        _vertices = new LinkedList<Vertex<TVertex>>();
+        _edges = new LinkedList<Edge<TEdges>>();
         _nVertices = 0;
         _nEdges = 0;
 
@@ -27,13 +29,13 @@ public class Graph
     // Methods
         // Vertex
         public uint AddVertex(string name) {
-            Vertex v = new Vertex(_nVertices, name);
+            Vertex<TVertex> v = new Vertex<TVertex>(_nVertices, name);
             _vertices.AddLast(v);
             _nVertices++;
             return _nVertices-1;
         }
 
-        public Vertex? HasVertex(string name) {
+        public Vertex<TVertex>? HasVertex(string name) {
             for (int i = 0; i < _vertices.Count; i++) {
                 if (_vertices.ElementAt(i).Property.Name == name) {
                     return _vertices.ElementAt(i);
@@ -43,7 +45,7 @@ public class Graph
         }
 
         // Function overload same one with different parameter
-        public Vertex? HasVertex(uint id) {
+        public Vertex<TVertex>? HasVertex(uint id) {
             for (int i = 0; i < _vertices.Count; i++) {
                 if (_vertices.ElementAt(i).Property.Id == id) {
                     return _vertices.ElementAt(i);
@@ -53,7 +55,7 @@ public class Graph
         }
 
         public void RemoverVertex(string name) {
-            Vertex? v = HasVertex(name);
+            Vertex<TVertex>? v = HasVertex(name);
 
             if (v == null) {return;}
 
@@ -78,24 +80,24 @@ public class Graph
 
         // Edge
         public void AddEdge(uint sourceId, uint targetId) {
-            Edge? e = HasEdge(sourceId, targetId);
+            Edge<TEdges>? e = HasEdge(sourceId, targetId);
 
             if (e == null) {
-                Vertex? sourceV = HasVertex(sourceId);
-                Vertex? targetV = HasVertex(targetId);
+                Vertex<TVertex>? sourceV = HasVertex(sourceId);
+                Vertex<TVertex>? targetV = HasVertex(targetId);
 
                 if (sourceV == null || targetV == null) {
                     Console.WriteLine("Source or target vertex could not be found.");
                     return;
                 }
 
-                Edge newE = new Edge(_nEdges, sourceId, targetId);
+                Edge<TEdges> newE = new Edge<TEdges>(_nEdges, sourceId, targetId);
                 _edges.AddLast(newE);
                 _nEdges++;
             }
         }
 
-        public Edge? HasEdge(uint sourceId, uint targetId) {
+        public Edge<TEdges>? HasEdge(uint sourceId, uint targetId) {
 
             for (int i = 0; i < _edges.Count; i++) {
                 if ( (_edges.ElementAt(i).Property.SourceId == sourceId) && (_edges.ElementAt(i).Property.TargetId == targetId)) {
@@ -106,7 +108,7 @@ public class Graph
         }
 
         public void RemoveEdge(uint sourceId, uint targetId) {
-            Edge? e = HasEdge(sourceId, targetId);
+            Edge<TEdges>? e = HasEdge(sourceId, targetId);
 
             if (e != null) {
                 _edges.Remove(e);
