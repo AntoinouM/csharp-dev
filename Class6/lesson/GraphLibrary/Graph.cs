@@ -88,11 +88,10 @@ public class Graph
                     Console.WriteLine("Source or target vertex could not be found.");
                     return;
                 }
-                else {
-                    Edge newE = new Edge(_nEdges, sourceId, targetId);
-                    _edges.AddLast(newE);
-                    _nEdges++;
-                }
+
+                Edge newE = new Edge(_nEdges, sourceId, targetId);
+                _edges.AddLast(newE);
+                _nEdges++;
             }
         }
 
@@ -104,6 +103,15 @@ public class Graph
                 }
             }
             return null;
+        }
+
+        public void RemoveEdge(uint sourceId, uint targetId) {
+            Edge? e = HasEdge(sourceId, targetId);
+
+            if (e != null) {
+                _edges.Remove(e);
+                _nEdges--;
+            }
         }
 
         // Graph
