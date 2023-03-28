@@ -32,8 +32,13 @@ class Program
         Predicate<string> ChecikIfApple = new Predicate<string>(IsApple);
         bool result = ChecikIfApple("IphoneX");
         if (result) {
-            
+            Console.WriteLine("It is an Iphone");
         }
+    }
+
+    private static bool IsApple(string blabla) {
+        if(blabla == "IPhoneX") return true;
+        else return false;
     }
 
     private static void PrintAddNumbers(int num1, int num2) {
