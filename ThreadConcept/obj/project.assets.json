@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Thread/Thread.csproj",
+      "projectUniqueName": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/ThreadConcept/Thread.csproj",
       "projectName": "Thread",
-      "projectPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Thread/Thread.csproj",
+      "projectPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/ThreadConcept/Thread.csproj",
       "packagesPath": "/Users/antoinemuneret/.nuget/packages/",
-      "outputPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/Thread/obj/",
+      "outputPath": "/Users/antoinemuneret/Documents/Cours/Semester4/csharp-dev/ThreadConcept/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/antoinemuneret/.nuget/NuGet/NuGet.Config"
