@@ -3,7 +3,7 @@ using System;
 namespace GeometryLibrary
 {
 
-    abstract class BasicGeometry {
+    abstract class SShape {
         
     }
 
