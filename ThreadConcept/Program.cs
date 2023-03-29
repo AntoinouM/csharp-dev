@@ -4,12 +4,37 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 
 namespace ThreadConsept;
+
+public class Cat
+{
+    public string Name = "ACat";
+    public virtual void Speak() {
+        Console.WriteLine("Meow!");
+    }
+}
+
+public class WildCat: Cat 
+{
+    public override void Speak()
+    {
+        Console.WriteLine("WildMeow!");
+    }
+}
 class Program
 {
     static string _message = ""; // a shared resource
     private static object conch = new object();
     static void Main(string[] args)
     {
+        Cat nana = new Cat();
+        WildCat leopard = new WildCat();
+
+        Cat petCat = leopard;
+        //WildCat wildo = petCat; // can'T convert in that direction because WildCat inherit from Cat --->
+        WildCat wildo = (WildCat) petCat;
+
+        petCat.Speak();
+
         Stopwatch timer = Stopwatch.StartNew();
         // System.Console.WriteLine("Running method synchornously on one thread.");
         // MethodA();
