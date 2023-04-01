@@ -1,34 +1,31 @@
 ﻿namespace GeometryLibrary;
 
-public struct Position {
-        public float x;
-        public float y;
-        public float z;
-}
-
 public abstract class BasicVertexProperty
 {    
-    public Position position;
+    public float x;
+    public float y;
+    public float z;
+    
 }
 
 public class Vertex<T> where T: BasicVertexProperty, new() // this is a constraint because we want to initiate a new instance later
 {
     // Fields
-    private T _property;
+    private T _position;
 
     // Constructor
     public Vertex(float xPos, float yPos, float zPos)
     {
-        _property = new T();
-        _property.position.x = xPos;
-        _property.position.y = yPos;
-        _property.position.z = zPos;
+        _position = new T();
+        _position.x = xPos;
+        _position.y = yPos;
+        _position.z = zPos;
     }
 
     // Getters and Setters
-    public T Property {
-        get {return _property;}
-        set {_property = value;}
+    public T Position {
+        get {return _position;}
+        set {_position = value;}
     }
 
     // Methods
