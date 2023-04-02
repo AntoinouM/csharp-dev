@@ -2,21 +2,39 @@ using System;
 
 namespace GeometryLibrary
 {
+    public struct Position {
+        private float _x;
+        private float _y;
+        private float _z;
 
-    public abstract class SShape<TVertex> where TVertex : BasicVertexProperty, new() {
+        public float x {
+            get {return _x;}
+            set {_x = value;}
+        }
+        public float y {
+            get {return _y;}
+            set {_y = value;}
+        }
+        public float z {
+            get {return _z;}
+            set {_z = value;}
+        }
+    }
+
+    public abstract class SShape {
         
         // Field
-        private LinkedList<Vertex<TVertex>>? _vertices;
+        private LinkedList<Position> _vertices;
         private uint _nVertices;
 
         // Constructor
         public SShape() {
-            _vertices = new LinkedList<Vertex<TVertex>>();
+            _vertices = new LinkedList<Position>();
             _nVertices = 0;
         }
 
-        public LinkedList<Vertex<TVertex>> Vertices {
-            get {return _vertices!;}
+        public LinkedList<Position> Vertices {
+            get {return _vertices;}
         }
 
         public uint NumberOfVertices {
@@ -25,8 +43,8 @@ namespace GeometryLibrary
         }
 
         // methods
-        public virtual void AddVertices(Vertex<TVertex> vertex) {
-            _vertices!.AddLast(vertex);
+        public virtual void AddVertices(Position vertex) {
+            _vertices.AddLast(vertex);
             _nVertices++;
         }
         //GetCentroid

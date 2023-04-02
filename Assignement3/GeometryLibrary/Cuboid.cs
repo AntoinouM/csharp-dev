@@ -6,9 +6,7 @@ namespace GeometryLibrary
 
     }
 
-    public class Cuboid<TVertex, TCuboid> : SShape<TVertex> 
-    where TVertex : BasicVertexProperty, new() 
-    where TCuboid : BasicCuboidProperty, new() 
+    public class Cuboid<TCuboid> : SShape where TCuboid : BasicCuboidProperty, new() 
     {
         private TCuboid _property = new TCuboid();
 

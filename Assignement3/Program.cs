@@ -6,9 +6,6 @@ using GeometryLibrary;
 namespace Assignement3;
 class Program
 {
-    public class VertexPorperty : BasicVertexProperty {
-
-    }
     public class CylinderProperty : BasicCylinderProperties {
                
     }
@@ -20,17 +17,18 @@ class Program
     }
     static void Main(string[] args)
     {
-        Tetrahedon<VertexPorperty, TetrahedonProperty> tetrahedon = new Tetrahedon<VertexPorperty, TetrahedonProperty>();
-        Vertex<VertexPorperty> newPoint = new Vertex<VertexPorperty>(1, 2, 1);
+        Tetrahedon<TetrahedonProperty> tetrahedon = new Tetrahedon<TetrahedonProperty>();
+        Position newPoint = new Position();
+        newPoint.x = 5f;
 
-        Cylinder<VertexPorperty, CylinderProperty> cylo = new Cylinder<VertexPorperty, CylinderProperty>();
+        Cylinder<CylinderProperty> cylo = new Cylinder<CylinderProperty>();
         cylo.Property.Height = 2f;
         
         tetrahedon.AddVertices(newPoint);
         System.Console.WriteLine(cylo.Property.Radius);
         
         for (int i = 0; i < tetrahedon.Vertices.Count; i++) {
-            System.Console.WriteLine(tetrahedon.Vertices.ElementAt(i).Position.x);
+            System.Console.WriteLine(tetrahedon.Vertices.ElementAt(i).x);
         }
         
         

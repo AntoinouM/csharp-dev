@@ -4,8 +4,7 @@ public abstract class BasicVertexProperty
 {    
     public float x;
     public float y;
-    public float z;
-    
+    public float z;  
 }
 
 public class Vertex<T> where T: BasicVertexProperty, new() // this is a constraint because we want to initiate a new instance later

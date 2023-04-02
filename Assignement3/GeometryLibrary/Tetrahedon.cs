@@ -6,9 +6,7 @@ namespace GeometryLibrary
 
     }
 
-    public class Tetrahedon<TVertex, TTetrahedon> : SShape<TVertex> 
-    where TVertex : BasicVertexProperty, new() 
-    where TTetrahedon : BasicTetrahedonProperty, new ()
+    public class Tetrahedon<TTetrahedon> : SShape where TTetrahedon : BasicTetrahedonProperty, new ()
     {
         private TTetrahedon _property = new TTetrahedon();
 

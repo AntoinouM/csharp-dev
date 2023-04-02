@@ -7,9 +7,7 @@ namespace GeometryLibrary
         public float Radius = 1f;
     }
 
-    public class Cylinder<TVertex, TCylinder> : SShape<TVertex>
-     where TVertex : BasicVertexProperty, new()
-     where TCylinder : BasicCylinderProperties, new() 
+    public class Cylinder<TCylinder> : SShape where TCylinder : BasicCylinderProperties, new() 
      {
 
         private TCylinder _property = new TCylinder();
