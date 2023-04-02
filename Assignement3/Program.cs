@@ -28,7 +28,7 @@ class Program
         System.Console.WriteLine(cylo.Property.Radius);
         
         for (int i = 0; i < tetrahedon.Vertices.Count; i++) {
-            System.Console.WriteLine(tetrahedon.Vertices.ElementAt(i).x);
+            System.Console.WriteLine(tetrahedon.Vertices.ElementAt(i).y);
         }
         
         

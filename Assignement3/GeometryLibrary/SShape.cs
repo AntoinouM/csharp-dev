@@ -7,6 +7,12 @@ namespace GeometryLibrary
         private float _y;
         private float _z;
 
+        public Position(float xPos, float yPos, float zPos) {
+            this._x = xPos;
+            this._y = yPos;
+            this._z = zPos;
+        }
+
         public float x {
             get {return _x;}
             set {_x = value;}
@@ -48,9 +54,15 @@ namespace GeometryLibrary
             _nVertices++;
         }
         //GetCentroid
-        public abstract void GetCentroid();
+        public virtual Position Centroid() {
+            return new Position();
+        }
         //SurfaceArea
+        public abstract void SurfaceArea();
         //Volume
+        public virtual float Volume() {
+            return 0;
+        }
 
         // Finaliser
         ~SShape() {}

@@ -17,7 +17,7 @@ namespace GeometryLibrary
             set {_property = value;}
        }
 
-        public override void GetCentroid() {
+        public override void SurfaceArea() {
 
         }
     }
