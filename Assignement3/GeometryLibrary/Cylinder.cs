@@ -16,9 +16,22 @@ namespace GeometryLibrary
             get {return _property;}
             set {_property = value;}
        }
-
+        // Methods
+            // Surface area
         public override void SurfaceArea() {
-
+            Thread.Sleep(1000); //mandatory sleeping time requirement
+        }
+            // Volume
+        public override float Volume() {
+            return base.Volume();
+        }
+            // Height
+        public float Height() {
+            return 0;
+        }
+            // BottomArea
+        public float BottomArea() {
+            return 0;
         }
     }
 

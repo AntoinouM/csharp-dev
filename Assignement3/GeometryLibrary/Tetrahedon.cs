@@ -16,7 +16,7 @@ namespace GeometryLibrary
        }
         
         public override void SurfaceArea() {
-
+            Thread.Sleep(1000); //mandatory sleeping time requirement
         }
 
         public override Position Centroid()
