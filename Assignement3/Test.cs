@@ -8,9 +8,9 @@ namespace Assignement3;
  public class Test {
     public Tetrahedon<Assignement3.Program.TetrahedonProperty> AddTetrahedon(float offset) {
         Position point1 = new Position(0f + offset, 0f + offset, 0f + offset);
-        Position point2 = new Position(1f + offset, 0f + offset, 1f + offset);
-        Position point3 = new Position(0f + offset, 0f + offset, 1f + offset);
-        Position point4 = new Position(1f + offset, 1f + offset, 0f + offset);
+        Position point2 = new Position(4f + offset, 0f + offset, 0f + offset);
+        Position point3 = new Position(2f + offset, 3f + offset, 2f + offset);
+        Position point4 = new Position(2f + offset, 0f + offset, 4f + offset);
 
         Tetrahedon<Assignement3.Program.TetrahedonProperty> tetra = new Tetrahedon<Assignement3.Program.TetrahedonProperty>();
         tetra.AddVertex(point1);
