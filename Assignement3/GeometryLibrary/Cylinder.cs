@@ -3,8 +3,7 @@ using System;
 namespace GeometryLibrary
 {
     public abstract class BasicCylinderProperties {
-        public float Height = 1f;
-        public float Radius = 1f;
+        public float Radius {get; set;}
     }
 
     public class Cylinder<TCylinder> : SShape where TCylinder : BasicCylinderProperties, new() 
@@ -12,17 +11,19 @@ namespace GeometryLibrary
 
         private TCylinder _property = new TCylinder();
 
+        public Cylinder() : base(2) {}
+
        public TCylinder Property {
             get {return _property;}
             set {_property = value;}
        }
         // Methods
             // Surface area
-        public override void SurfaceArea() {
+        sealed public override void SurfaceArea() {
             Thread.Sleep(1000); //mandatory sleeping time requirement
         }
             // Volume
-        public override float Volume() {
+        sealed public override float Volume() {
             return base.Volume();
         }
             // Height

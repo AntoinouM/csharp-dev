@@ -4,7 +4,7 @@ using GeometryLibrary;
 
 
 namespace Assignement3;
-class Program
+public class Program
 {
     public class CylinderProperty : BasicCylinderProperties {
                
@@ -13,25 +13,25 @@ class Program
                
     }
     public class TetrahedonProperty : BasicTetrahedonProperty {
-               
+
     }
     static void Main(string[] args)
     {
-        Tetrahedon<TetrahedonProperty> tetrahedon = new Tetrahedon<TetrahedonProperty>();
-        Position newPoint = new Position();
-        newPoint.x = 5f;
+        Test test = new Test();
+        Cylinder<CylinderProperty> cylo = test.AddCylinder(0f);
+        Cuboid<CuboidProperty> cubo = test.AddCuboid(0f);
 
-        Cylinder<CylinderProperty> cylo = new Cylinder<CylinderProperty>();
-        cylo.Property.Height = 2f;
-        
-        tetrahedon.AddVertices(newPoint);
-        System.Console.WriteLine(cylo.Property.Radius);
-        
-        for (int i = 0; i < tetrahedon.Vertices.Count; i++) {
-            System.Console.WriteLine(tetrahedon.Vertices.ElementAt(i).y);
+        // for (int i = 0; i < cubo.Vertices.Length; i++) {
+        //     System.Console.WriteLine($"Point {i}:   x: {cubo.Vertices[i].x}, y: {cubo.Vertices[i].y}, z: {cubo.Vertices[i].z}");
+        // }
+
+        Position[] btmFace = cubo.returnBtmFace(cubo.Vertices);
+        Position[] topFace = cubo.returnTopFace(cubo.Vertices);
+        cubo.Vertices = cubo.OrganisePoints(cubo.Vertices);
+        for (int i = 0; i < cubo.Vertices.Length; i++) {
+            System.Console.WriteLine($"Point {i}:   x: {cubo.Vertices[i].x}, y: {cubo.Vertices[i].y}, z: {cubo.Vertices[i].z}");
         }
-        
-        
-        
+  
     }
+
 }

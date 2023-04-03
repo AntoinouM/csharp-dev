@@ -7,11 +7,13 @@ namespace GeometryLibrary
         private float _x;
         private float _y;
         private float _z;
+        private bool _declared = false;
 
         public Position(float xPos, float yPos, float zPos) {
             this._x = xPos;
             this._y = yPos;
             this._z = zPos;
+            this._declared = true;
         }
 
         public float x {
@@ -26,33 +28,90 @@ namespace GeometryLibrary
             get {return _z;}
             set {_z = value;}
         }
+        public bool Declared {
+            get {return _declared;}
+            set {_declared = value;}
+        }
+        public static bool operator ==(Position a, Position b)
+        {
+            return a.x == b.x && a.y == b.y && a.z == b.z;
+        }
+
+        public static bool operator !=(Position a, Position b)
+        {
+            return !(a == b);
+        }
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is Position))
+            {
+                return false;
+            }
+            Position other = (Position)obj;
+            return x == other.x && y == other.y && z == other.z;
+        }
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = _x.GetHashCode();
+                hashCode = (hashCode * 397) ^ _y.GetHashCode();
+                hashCode = (hashCode * 397) ^ _z.GetHashCode();
+                return hashCode;
+            }
+        }
+
     }
 
     public abstract class SShape {
         
         // Field
-        private LinkedList<Position> _vertices;
-        private uint _nVertices;
+        protected Position[] _vertices;
+
 
         // Constructor
-        public SShape() {
-            _vertices = new LinkedList<Position>();
-            _nVertices = 0;
+        protected SShape(uint nVertices) {
+            _vertices = new Position[nVertices];
         }
 
-        public LinkedList<Position> Vertices {
+        public Position[] Vertices {
             get {return _vertices;}
-        }
-
-        public uint NumberOfVertices {
-            get {return _nVertices;}
-            set {_nVertices = value;}
+            set {_vertices = value;}
         }
 
         // methods
-        public virtual void AddVertices(Position vertex) {
-            _vertices.AddLast(vertex);
-            _nVertices++;
+        public void AddVertex(Position vertex) {
+            for (int i = 0; i < _vertices.Length; i++) {
+                if (!_vertices[i].Declared) {
+                    _vertices[i] = vertex;
+                    return;
+                }
+            }
+        }
+        public void RemoveVertex(Position vertex) {
+            Position temp = new Position(0f, 0f, 0f);
+            temp.Declared = false;
+            for (int i = 0; i < _vertices.Length; i++) {
+                if ( (_vertices[i].x == vertex.x) &&
+                     (_vertices[i].y == vertex.y) &&
+                     (_vertices[i].z == vertex.z) ) {
+                        _vertices[i] = temp;
+                        break;
+                } else {
+                    Console.WriteLine($"The vertex (x: {vertex.x}, y: {vertex.y}, z: {vertex.z}) was not found in the shape.");
+                }
+            }
+        }
+
+        public bool HasVertex(Position vertex) {
+            for (int i = 0; i < _vertices.Length; i++) {
+                if ( (_vertices[i].x == vertex.x) &&
+                     (_vertices[i].y == vertex.y) &&
+                     (_vertices[i].z == vertex.z) ) {
+                        return true;
+                    } 
+            }
+            return false;
         }
         //GetCentroid
         public virtual Position Centroid() {

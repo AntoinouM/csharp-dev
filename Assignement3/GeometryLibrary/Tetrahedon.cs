@@ -3,7 +3,7 @@ using System;
 namespace GeometryLibrary
 {
     public abstract class BasicTetrahedonProperty {
-
+        
     }
 
     public class Tetrahedon<TTetrahedon> : SShape where TTetrahedon : BasicTetrahedonProperty, new ()
@@ -14,12 +14,16 @@ namespace GeometryLibrary
             get {return _property;}
             set {_property = value;}
        }
+
+       public Tetrahedon() : base(4) {
+            
+       }
         
-        public override void SurfaceArea() {
+        sealed public override void SurfaceArea() {
             Thread.Sleep(1000); //mandatory sleeping time requirement
         }
 
-        public override Position Centroid()
+        sealed public override Position Centroid()
         {
             return base.Centroid();
         }
