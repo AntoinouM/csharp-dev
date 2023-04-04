@@ -22,15 +22,30 @@ public class Program
         Cuboid<CuboidProperty> cubo = test.AddCuboid(0f);
         Tetrahedon<TetrahedonProperty> tetra = test.AddTetrahedon(0f);
 
-        // for (int i = 0; i < cubo.Vertices.Length; i++) {
-        //     System.Console.WriteLine($"Point {i}:   x: {cubo.Vertices[i].x}, y: {cubo.Vertices[i].y}, z: {cubo.Vertices[i].z}");
-        // }
+        QuadriFace face = new QuadriFace();
+        Position[] faceVertices = new Position[] {
+            face.p1, face.p2, face.p3, face.p4
+        };
+        SShape.WritePositionToConsole(faceVertices);
 
-        Position[] btmFace = tetra.returnBtmFace(tetra.Vertices);
-        tetra.Vertices = tetra.OrganisePoints(tetra.Vertices);
-        Position tetraCentroid = tetra.Centroid();
-        float tetraSurface = tetra.SurfaceArea();
-        System.Console.WriteLine(tetraSurface);
+
+        // for (int i = 0; i < tetra.Vertices.Length; i++) {
+        //     System.Console.WriteLine($"Point {i}:       x: {tetra.Vertices[i].x}, y: {tetra.Vertices[i].y}, z: {tetra.Vertices[i].z}");
+        // }
+        // Position tetraCentroid1 = tetra.Centroid();
+        // float tetraSurface1 = tetra.SurfaceArea();
+        // System.Console.WriteLine(tetraSurface1);
+        // System.Console.WriteLine($"{tetraCentroid1.x}, {tetraCentroid1.y}, {tetraCentroid1.z}");
+  
+        // System.Console.WriteLine();
+        // tetra.Vertices = tetra.OrganisePoints(tetra.Vertices);
+        // for (int i = 0; i < tetra.Vertices.Length; i++) {
+        //     System.Console.WriteLine($"Point {i}:       x: {tetra.Vertices[i].x}, y: {tetra.Vertices[i].y}, z: {tetra.Vertices[i].z}");
+        // }
+        // Position tetraCentroid = tetra.Centroid();
+        // float tetraSurface = tetra.SurfaceArea();
+        // System.Console.WriteLine(tetraSurface);
+        // System.Console.WriteLine($"{tetraCentroid.x}, {tetraCentroid.y}, {tetraCentroid.z}");
   
     }
 

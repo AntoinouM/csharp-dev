@@ -3,12 +3,12 @@ using System.Collections;
 
 namespace GeometryLibrary
 {
-    public struct Face {
+    public struct TriFace {
         private Position[] _vertices;
         private Edge[] _edges;
         private float _semiPerim;
         private float _surface;
-        public Face(Position vertex1, Position vertex2, Position vertex3) {
+        public TriFace(Position vertex1, Position vertex2, Position vertex3) {
 
             this._vertices = new Position[] {
                 vertex1,
@@ -151,12 +151,10 @@ namespace GeometryLibrary
             }
         }
         public void RemoveVertex(Position vertex) {
-            Position temp = new Position(0f, 0f, 0f);
+            Position temp = new Position(float.MinValue, float.MinValue, float.MinValue);
             temp.Declared = false;
             for (int i = 0; i < _vertices.Length; i++) {
-                if ( (_vertices[i].x == vertex.x) &&
-                     (_vertices[i].y == vertex.y) &&
-                     (_vertices[i].z == vertex.z) ) {
+                if (_vertices[i] == vertex) {
                         _vertices[i] = temp;
                         break;
                 } else {
@@ -182,8 +180,23 @@ namespace GeometryLibrary
         //SurfaceArea
         public abstract float SurfaceArea();
         //Volume
+        public virtual float VolumeTetrahedron(Position v1, Position v2, Position v3, Position v4) {
+            float volume = (v4.x - v1.x) * ((v2.y - v1.y) * (v3.z - v1.z) - (v2.z - v1.z) * (v3.y - v1.y)) +
+                    (v4.y - v1.y) * ((v2.z - v1.z) * (v3.x - v1.x) - (v2.x - v1.x) * (v3.z - v1.z)) +
+                    (v4.z - v1.z) * ((v2.x - v1.x) * (v3.y - v1.y) - (v2.y - v1.y) * (v3.x - v1.x));
+
+            return Math.Abs((1.0f / 6.0f) * volume);
+        }
         public virtual float Volume() {
             return 0;
+        }
+        public static void WritePositionToConsole(Position[] arr) {
+            for (int i = 0; i < arr.Length; i++) {
+                System.Console.WriteLine($"Point {i}:    x: {arr[i].x}, y: {arr[i].y}, z: {arr[i].z}");
+            }                       
+        }
+        public static void WritePositionToConsole(Position pos) {
+            System.Console.WriteLine($"x: {pos.x}, y: {pos.y}, z: {pos.z}");                     
         }
 
         // Finaliser

@@ -24,9 +24,9 @@ namespace GeometryLibrary
             return 0;
         }
             // Volume
-        sealed public override float Volume() {
-            return base.Volume();
-        }
+        // sealed public override float Volume() {
+        //     return base.Volume();
+        // }
             // Height
         public float Height() {
             return 0;

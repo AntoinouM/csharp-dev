@@ -32,9 +32,10 @@ namespace GeometryLibrary
             return base.Centroid();
         }
             // Volume
-        sealed public override float Volume() {
-            return base.Volume();
-        }
+        // sealed public override float Volume() {
+        //     base.Volume();
+        //     return base.Volume();
+        // }
 
         // Methods non-inheritated
         public Position[] OrganisePoints(Position[] arrayToOrganize) {
@@ -100,12 +101,12 @@ namespace GeometryLibrary
             switch (coord) {
                 case 'y':
                     for (int i = 0; i < arr.Length; i++) {
-                        coordArray[i] = arr[i].x;
+                        coordArray[i] = arr[i].y;
                     }
                         break;
                 case 'z':
                     for (int i = 0; i < arr.Length; i++) {
-                        coordArray[i] = arr[i].x;
+                        coordArray[i] = arr[i].z;
                     }
                     break;
                 default:
@@ -161,11 +162,12 @@ namespace GeometryLibrary
         public void IterativeIncrementation(Position[] destArr, Position[] srcArr, uint index) {
             if (index == destArr.Length) {return;}
             // look for the minimun
-            float minY = minMaxCoord(srcArr, 'y')[0];
+            float minY = MathF.Abs(minMaxCoord(srcArr, 'y')[0]);
+
             // find the first point with minY and add it to destArr
-            Position chosenPoint = new Position(float.MinValue, float.MinValue, float.MinValue);
+            Position chosenPoint = new Position(float.MaxValue, float.MaxValue, float.MaxValue);
             for (int i = 0; i < srcArr.Length; i++) {
-                if (srcArr[i].y <= minY && (chosenPoint == new Position(float.MinValue, float.MinValue, float.MinValue) || srcArr[i].y < chosenPoint.y)) {
+                if (srcArr[i].y <= minY && (chosenPoint == new Position(float.MaxValue, float.MaxValue, float.MaxValue) || srcArr[i].y < chosenPoint.y)) {
                     chosenPoint = srcArr[i];
                 }
             }

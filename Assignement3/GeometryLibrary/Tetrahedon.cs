@@ -22,14 +22,14 @@ namespace GeometryLibrary
         sealed public override float SurfaceArea() {
             Thread.Sleep(1000); //mandatory sleeping time requirement
 
-            Face[] faces = new Face[] {
-                new Face(_vertices[0], _vertices[1], _vertices[2]), 
-                new Face(_vertices[0], _vertices[1], _vertices[3]), 
-                new Face(_vertices[0], _vertices[2], _vertices[3]), 
-                new Face(_vertices[1], _vertices[2], _vertices[3]) 
+            TriFace[] faces = new TriFace[] {
+                new TriFace(_vertices[0], _vertices[1], _vertices[2]), 
+                new TriFace(_vertices[0], _vertices[1], _vertices[3]), 
+                new TriFace(_vertices[0], _vertices[2], _vertices[3]), 
+                new TriFace(_vertices[1], _vertices[2], _vertices[3]) 
             };
 
-            float totalSurface = faces.Aggregate(0, (float total, Face next) => total + next.Surface);
+            float totalSurface = faces.Aggregate(0, (float total, TriFace next) => total + next.Surface);
             return totalSurface;
         }
 
@@ -51,6 +51,7 @@ namespace GeometryLibrary
         // Methods non-inheritated
         public Position[] OrganisePoints(Position[] arrayToOrganize) {
             Position[] btmFace = returnBtmFace(arrayToOrganize);
+
             Position topPoint = arrayToOrganize[1];
             for (int i = 0; i < arrayToOrganize.Length; i++) {
                 if (arrayToOrganize[i] != btmFace[0] &&
@@ -61,23 +62,23 @@ namespace GeometryLibrary
             }
 
             Position origin = new Position(0f, 0f, 0f);
-            Position closestVertexBtmFace = returnClosestVertex(btmFace, origin);
+            Position farthestVertexBtmFace = returnFarthestVertex(btmFace, origin);
 
             float xMax = minMaxCoord(btmFace, 'x')[1];
             float yMax = minMaxCoord(arrayToOrganize, 'y')[1];
             float zMax = minMaxCoord(arrayToOrganize, 'z')[1];
 
-            Position point2btm = returnClosestVertex(btmFace, new Position(xMax, (closestVertexBtmFace.y + yMax)/2, (closestVertexBtmFace.z)/2));
-            Position point3btm = point2btm;
+            Position point2btm = returnFarthestVertex(btmFace, farthestVertexBtmFace);
+            Position point3btm = new Position(float.MaxValue, float.MaxValue, float.MaxValue);
 
             for (int i = 0; i < btmFace.Length; i++) {
-                if (btmFace[i] != closestVertexBtmFace &&
+                if (btmFace[i] != farthestVertexBtmFace &&
                     btmFace[i] != point2btm) {
                         point3btm = btmFace[i];
                     }
             }
             Position[] organizedArr = new Position[] {
-                closestVertexBtmFace,
+                farthestVertexBtmFace,
                 point2btm,
                 point3btm,
                 topPoint
@@ -86,18 +87,18 @@ namespace GeometryLibrary
             return organizedArr;
         }
 
-        public Position returnClosestVertex(Position[] arr, Position origin) {
-            Position closestVertex = arr[0];
-            float minDistance = cartesianDistance(arr[0], origin);
+        public Position returnFarthestVertex(Position[] arr, Position origin) {
+            Position farthestVertex = arr[0];
+            float maxDistance = 0;
 
             for (int i = 0; i < arr.Length; i++) {
                 float distance = cartesianDistance(arr[i], origin);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestVertex = arr[i];
+                if (distance > maxDistance) {
+                    maxDistance = distance;
+                    farthestVertex = arr[i];
                 }
             }
-            return closestVertex;
+            return farthestVertex;
         }
 
         public float cartesianDistance(Position point, Position origin) {
@@ -113,12 +114,12 @@ namespace GeometryLibrary
             switch (coord) {
                 case 'y':
                     for (int i = 0; i < arr.Length; i++) {
-                        coordArray[i] = arr[i].x;
+                        coordArray[i] = arr[i].y;
                     }
                         break;
                 case 'z':
                     for (int i = 0; i < arr.Length; i++) {
-                        coordArray[i] = arr[i].x;
+                        coordArray[i] = arr[i].z;
                     }
                     break;
                 default:
@@ -154,15 +155,20 @@ namespace GeometryLibrary
         }
 
         public void IterativeIncrementation(Position[] destArr, Position[] srcArr, uint index) {
-            if (index == destArr.Length) {return;}
+            if (index == destArr.Length) {return;} // if index reach destArr.Length then return
             // look for the minimun
             float minY = minMaxCoord(srcArr, 'y')[0];
+
             // find the first point with minY and add it to destArr
-            Position chosenPoint = new Position(float.MinValue, float.MinValue, float.MinValue);
+            Position chosenPoint = new Position(float.MaxValue, float.MaxValue, float.MaxValue);
             for (int i = 0; i < srcArr.Length; i++) {
-                if (srcArr[i].y <= minY && (chosenPoint == new Position(float.MinValue, float.MinValue, float.MinValue) || srcArr[i].y < chosenPoint.y)) {
-                    chosenPoint = srcArr[i];
-                }
+                Position tempPos = srcArr[i];
+                //if (tempPos.x < 0) {
+                    if (tempPos.y == minY && (chosenPoint == new Position(float.MaxValue, float.MaxValue, float.MaxValue) || tempPos.y < chosenPoint.y)) {
+                        chosenPoint = tempPos;
+                    }
+                //}
+
             }
             destArr[index] = chosenPoint;
             // create a new array without the chosen point
