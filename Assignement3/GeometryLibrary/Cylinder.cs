@@ -19,8 +19,9 @@ namespace GeometryLibrary
        }
         // Methods
             // Surface area
-        sealed public override void SurfaceArea() {
+        sealed public override float SurfaceArea() {
             Thread.Sleep(1000); //mandatory sleeping time requirement
+            return 0;
         }
             // Volume
         sealed public override float Volume() {

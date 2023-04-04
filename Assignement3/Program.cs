@@ -29,7 +29,8 @@ public class Program
         Position[] btmFace = tetra.returnBtmFace(tetra.Vertices);
         tetra.Vertices = tetra.OrganisePoints(tetra.Vertices);
         Position tetraCentroid = tetra.Centroid();
-        System.Console.WriteLine($"x: {tetraCentroid.x}, y: {tetraCentroid.y}, z: {tetraCentroid.z}");
+        float tetraSurface = tetra.SurfaceArea();
+        System.Console.WriteLine(tetraSurface);
   
     }
 

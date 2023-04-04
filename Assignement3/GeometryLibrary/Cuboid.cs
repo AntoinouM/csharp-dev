@@ -23,8 +23,9 @@ namespace GeometryLibrary
 
         // Methods
             // Surface Area
-        sealed public override void SurfaceArea() {
+        sealed public override float SurfaceArea() {
             Thread.Sleep(1000); //mandatory sleeping time requirement
+            return 0;
         }
             // Centroid
         sealed public override Position Centroid() {

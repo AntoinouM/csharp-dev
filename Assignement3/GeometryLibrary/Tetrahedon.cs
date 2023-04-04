@@ -18,9 +18,19 @@ namespace GeometryLibrary
        public Tetrahedon() : base(4) {
             
        }
-        
-        sealed public override void SurfaceArea() {
+
+        sealed public override float SurfaceArea() {
             Thread.Sleep(1000); //mandatory sleeping time requirement
+
+            Face[] faces = new Face[] {
+                new Face(_vertices[0], _vertices[1], _vertices[2]), 
+                new Face(_vertices[0], _vertices[1], _vertices[3]), 
+                new Face(_vertices[0], _vertices[2], _vertices[3]), 
+                new Face(_vertices[1], _vertices[2], _vertices[3]) 
+            };
+
+            float totalSurface = faces.Aggregate(0, (float total, Face next) => total + next.Surface);
+            return totalSurface;
         }
 
         sealed public override Position Centroid()
@@ -38,7 +48,6 @@ namespace GeometryLibrary
 
             return Centroid;
         }
-
         // Methods non-inheritated
         public Position[] OrganisePoints(Position[] arrayToOrganize) {
             Position[] btmFace = returnBtmFace(arrayToOrganize);

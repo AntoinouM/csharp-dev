@@ -3,6 +3,68 @@ using System.Collections;
 
 namespace GeometryLibrary
 {
+    public struct Face {
+        private Position[] _vertices;
+        private Edge[] _edges;
+        private float _semiPerim;
+        private float _surface;
+        public Face(Position vertex1, Position vertex2, Position vertex3) {
+
+            this._vertices = new Position[] {
+                vertex1,
+                vertex2,
+                vertex3
+            };
+            this._edges = new Edge[_vertices.Length];
+            for (int i = 0; i < _vertices.Length; i++) {
+              int j = i + 1;
+              j = j >= _vertices.Length ? 0 : i + 1;
+              _edges[i] = new Edge(_vertices[i], _vertices[j]);
+            }
+
+            this._semiPerim = (_edges[0].Length + _edges[1].Length + _edges[2].Length) / 2;
+
+            this._surface = MathF.Sqrt(
+                    _semiPerim *
+                    (_semiPerim - _edges[0].Length) *
+                    (_semiPerim - _edges[1].Length) *
+                    (_semiPerim - _edges[2].Length)
+            );
+        }
+        public Position[] Vertices {
+            get {return _vertices;}
+            set {_vertices = value;}
+        }
+        public Edge[] Edges {
+            get {return _edges;}
+            set {_edges = value;}
+        }
+
+        public float Surface {
+            get {return _surface;}
+        }
+
+    }
+    public struct Edge {
+        private Position _vertex1;
+        private Position _vertex2;
+        private float _length;
+
+        public Edge(Position vertex1, Position vertex2) {
+            this._vertex1 = vertex1;
+            this._vertex2 = vertex2;
+            this._length = MathF.Sqrt(
+                MathF.Pow(vertex2.x - vertex1.x, 2) +
+                MathF.Pow(vertex2.y - vertex1.y, 2) +
+                MathF.Pow(vertex2.z - vertex1.z, 2)
+            );
+        }
+        public float Length {
+            get {return _length;}
+        }
+
+
+    }
     public struct Position {
         private float _x;
         private float _y;
@@ -118,7 +180,7 @@ namespace GeometryLibrary
             return new Position();
         }
         //SurfaceArea
-        public abstract void SurfaceArea();
+        public abstract float SurfaceArea();
         //Volume
         public virtual float Volume() {
             return 0;
