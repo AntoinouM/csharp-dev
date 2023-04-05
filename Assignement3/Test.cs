@@ -25,23 +25,20 @@ public class QuadriFace {
 }
 
  public class Test {
-    public Tetrahedon<Assignement3.Program.TetrahedonProperty> AddTetrahedon(float offset) {
-        Position point1 = new Position(0f + offset, 1f + offset, 0f + offset);
-        Position point2 = new Position(0.707f + offset, 0f + offset, 0f + offset);
-        Position point3 = new Position(-1.708f + offset, 0f + offset, 0f + offset);
-        Position point4 = new Position(0f + offset, 0f + offset, 1f + offset);
 
-        Tetrahedon<Assignement3.Program.TetrahedonProperty> tetra = new Tetrahedon<Assignement3.Program.TetrahedonProperty>();
-        tetra.AddVertex(point1);
-        tetra.AddVertex(point2);
-        tetra.AddVertex(point3);
-        tetra.AddVertex(point4);
-
+    public Tetrahedon<Assignement3.Program.TetrahedonProperty> AddTetrahedron() {
+        Tetrahedon<Assignement3.Program.TetrahedonProperty> tetra = new Tetrahedon<Assignement3.Program.TetrahedonProperty>(
+        new Position(0f, 1f, 0f),
+        new Position(0.707f, 0f, 0f),
+        new Position(-1.708f, 0f, 0f),
+        new Position(0f, 0f, 1f)
+        );
         return tetra;
     }
 
-    public Cuboid<Assignement3.Program.CuboidProperty> AddCuboid(float offset) {
-        Position[] pointArray = new Position[] {
+    public Cuboid<Assignement3.Program.CuboidProperty> AddCuboid() {
+       
+        Cuboid<Assignement3.Program.CuboidProperty> cubo = new Cuboid<Assignement3.Program.CuboidProperty>(
             new Position(-0.68192f , -1f, -1f), 
             new Position(0.68192f , -1f, -1f), 
             new Position(1f, 1f, -1f), 
@@ -50,21 +47,18 @@ public class QuadriFace {
             new Position(1.6131f, -1.6131f, 1f),
             new Position(0.59856f, 1.6131f, 1f),
             new Position(-0.59856f, 1.6131f, 1f)
-            };
-        Cuboid<Assignement3.Program.CuboidProperty> cubo = new Cuboid<Assignement3.Program.CuboidProperty>();
-        for (int i = 0; i < pointArray.Length; i++) {
-            cubo.Vertices[i] = pointArray[i];
-        }
+            );
         return cubo;   
     }
 
-    public Cylinder<Assignement3.Program.CylinderProperty> AddCylinder(float offset) {
-        Position point1 = new Position(1f + offset, 0f + offset, 1f + offset);
-        Position point2 = new Position(1f + offset, 2f + offset, 1f + offset);
+    public Cylinder<Assignement3.Program.CylinderProperty> AddCylinder(float radius) {
+        Position point1 = new Position(1f, 0f, 1f);
+        Position point2 = new Position(1f, 2f, 1f);
 
         Cylinder<Assignement3.Program.CylinderProperty> cylo = new Cylinder<Assignement3.Program.CylinderProperty>();
         cylo.AddVertex(point1);
         cylo.AddVertex(point2);
+        cylo.Property.Radius = radius;
 
         return cylo;
     }

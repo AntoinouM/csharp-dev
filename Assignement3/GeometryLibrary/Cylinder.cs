@@ -11,7 +11,8 @@ namespace GeometryLibrary
 
         private TCylinder _property = new TCylinder();
 
-        public Cylinder() : base(2) {}
+        public Cylinder() : base(2) {
+        }
 
        public TCylinder Property {
             get {return _property;}
