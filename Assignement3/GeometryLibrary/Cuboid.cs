@@ -38,6 +38,8 @@ namespace GeometryLibrary
             frontFace = new Position[] { p1, p4, p8, p5};
             backFace = new Position[] { p1, p4, p8, p5};
 
+            _vertices = new Position[] { p1, p2, p3, p4, p5, p6, p7, p8 };
+
             // setting up some trigo faces for easier calculations
             _triFaces = new TriFace[] {
                 // 2 triangles btm face
@@ -87,8 +89,36 @@ namespace GeometryLibrary
 
            // Volume
         sealed public override float Volume() {
-            base.Volume();
-            return base.Volume();
+            Position centroid = base.Centroid(_vertices);
+            // I have 12 triangular face -- in a _triFaces array
+            // I want to create 12 tetrahedrons -- a tetrahedron is an array of 4 vertices
+            // Create an array to hold my tetrahedrons:
+            Position[][] tetraArr = new Position[_triFaces.Length][];
+
+            // Increment if with the 4 points (all point to the centroid)
+            for (int i = 0; i < tetraArr.Length; i++) {
+               tetraArr[i] = extractAndConcatenate(_triFaces[i], centroid);
+            }
+            // create an array that hold the volume of all tetra
+            // formula : https://keisan.casio.com/exec/system/1223609147 create in SShape in case to use in another class
+            float[] volTetraArr = new float[tetraArr.Length];
+            for (int i = 0; i < volTetraArr.Length; i++) {
+               volTetraArr[i] = VolumeTetrahedron(tetraArr[i]);
+            }
+            
+            // sum all element of volume array
+            float volume = volTetraArr.Aggregate(0, (float total, float next) => total + next);
+
+            Position[] extractAndConcatenate(TriFace tf, Position p) {
+                Position[] tempArr = new Position[tf.Vertices.Count() + 1];
+                for (int i = 0; i < tf.Vertices.Count(); i++) {
+                    tempArr[i] = tf.Vertices[i];
+                }
+                tempArr[tempArr.Length - 1] = p;
+                return tempArr;
+            }
+
+            return volume;
         }
 
         // Methods non-inheritated
