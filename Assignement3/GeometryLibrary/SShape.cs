@@ -141,38 +141,7 @@ namespace GeometryLibrary
             set {_vertices = value;}
         }
 
-        // methods
-        public void AddVertex(Position vertex) {
-            for (int i = 0; i < _vertices.Length; i++) {
-                if (!_vertices[i].Declared) {
-                    _vertices[i] = vertex;
-                    return;
-                }
-            }
-        }
-        public void RemoveVertex(Position vertex) {
-            Position temp = new Position(float.MinValue, float.MinValue, float.MinValue);
-            temp.Declared = false;
-            for (int i = 0; i < _vertices.Length; i++) {
-                if (_vertices[i] == vertex) {
-                        _vertices[i] = temp;
-                        break;
-                } else {
-                    Console.WriteLine($"The vertex (x: {vertex.x}, y: {vertex.y}, z: {vertex.z}) was not found in the shape.");
-                }
-            }
-        }
-
-        public bool HasVertex(Position vertex) {
-            for (int i = 0; i < _vertices.Length; i++) {
-                if ( (_vertices[i].x == vertex.x) &&
-                     (_vertices[i].y == vertex.y) &&
-                     (_vertices[i].z == vertex.z) ) {
-                        return true;
-                    } 
-            }
-            return false;
-        }
+        /* ======= METHOD =======*/
         //GetCentroid
         public virtual Position Centroid(Position[] arr)
         {
