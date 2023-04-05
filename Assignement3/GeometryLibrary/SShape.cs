@@ -222,17 +222,15 @@ namespace GeometryLibrary
             }
             SShape other = (SShape)obj;
 
-            if (Vertices.Length != other.Vertices.Length) {
+           if (Vertices.Length != other.Vertices.Length) {
                 return false;
             }
-
             for (int i = 0; i < Vertices.Length; i++ ) {
-                for (int j = 0; j < other._vertices.Length; j++) {
-                    if (Vertices[i] != other.Vertices[j]) {
-                        return false;
-                    }
+                if (other.Vertices.Contains(Vertices[i]) == false) {
+                    return false;
                 }
-            }          
+            }
+            
             return true;
         }
 

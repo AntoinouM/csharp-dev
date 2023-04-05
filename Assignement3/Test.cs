@@ -62,6 +62,3 @@ public class QuadriFace {
         return cylo;
     }
 }
-
-// TO OVERIDE == for the shapes, just check if all the vertices are matching the other one
-// array.Contains(xx)
