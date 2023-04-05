@@ -39,27 +39,26 @@ public class QuadriFace {
     public Cuboid<Assignement3.Program.CuboidProperty> AddCuboid() {
        
         Cuboid<Assignement3.Program.CuboidProperty> cubo = new Cuboid<Assignement3.Program.CuboidProperty>(
-            new Position(-0.68192f , -1f, -1f), 
-            new Position(0.68192f , -1f, -1f), 
-            new Position(1f, 1f, -1f), 
-            new Position(-1f, 1f, -1f), 
-            new Position(-1.6131f, -1.6131f, 1f), 
-            new Position(1.6131f, -1.6131f, 1f),
-            new Position(0.59856f, 1.6131f, 1f),
-            new Position(-0.59856f, 1.6131f, 1f)
+            new Position(-0.34329f,-0.870595f,0.866248f),
+            new Position(1.46298f,-0.870595f,0.866248f),
+            new Position(1.01123f,0.858149f,-0.030544f),
+            new Position(-0.795039f,0.858149f,-0.030544f),
+            new Position(-1.24306f,-0.870595f,-0.919927f),
+            new Position(0.563215f,-0.870595f,-0.919927f),
+            new Position(0.563215f,0.858149f,-0.919927f),
+            new Position(-1.24306f,0.858149f,-0.919927f)
             );
         return cubo;   
     }
 
-    public Cylinder<Assignement3.Program.CylinderProperty> AddCylinder(float radius) {
-        Position point1 = new Position(1f, 0f, 1f);
-        Position point2 = new Position(1f, 2f, 1f);
+    public Cylinder<Assignement3.Program.CylinderProperty> AddCylinder() {
 
-        Cylinder<Assignement3.Program.CylinderProperty> cylo = new Cylinder<Assignement3.Program.CylinderProperty>();
-        cylo.AddVertex(point1);
-        cylo.AddVertex(point2);
-        cylo.Property.Radius = radius;
-
+        Cylinder<Assignement3.Program.CylinderProperty> cylo = new Cylinder<Assignement3.Program.CylinderProperty>(
+            new Position(1f, 0f, 1f),
+            new Position(1f, 2f, 1f),
+            2f
+        );
+        
         return cylo;
     }
 }

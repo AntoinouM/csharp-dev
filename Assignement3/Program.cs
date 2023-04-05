@@ -19,11 +19,13 @@ public class Program
     static void Main(string[] args)
     {
         Test test = new Test();
-        Cylinder<CylinderProperty> cylo = test.AddCylinder(3f);
+        Cylinder<CylinderProperty> cylo = test.AddCylinder();
         Cuboid<CuboidProperty> cubo = test.AddCuboid();
         Tetrahedon<TetrahedonProperty> tetra = test.AddTetrahedron();
 
-
+        System.Console.WriteLine(
+            $"btm area: {cylo.BottomArea()} \nheight: {cylo.Height} \nTotal Surface: {cylo.SurfaceArea()} \nVolume: {cylo.Volume()}"
+        );
 
     }
 

@@ -21,8 +21,9 @@ namespace GeometryLibrary
                 new TriFace(p1, p2, p3), 
                 new TriFace(p1, p2, p4), 
                 new TriFace(p1, p3, p4), 
-                new TriFace(p2, p3, p4) 
+                new TriFace(p2, p3, p4)            
             };
+            _vertices = new Position[] { p1, p2, p3, p4 };
        }
 
         sealed public override float SurfaceArea() {

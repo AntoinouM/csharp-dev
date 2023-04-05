@@ -21,7 +21,7 @@ namespace GeometryLibrary
               j = j >= _vertices.Length ? 0 : i + 1;
               _edges[i] = new Edge(_vertices[i], _vertices[j]);
             }
-
+            // Heron's formula
             this._semiPerim = (_edges[0].Length + _edges[1].Length + _edges[2].Length) / 2;
 
             this._surface = MathF.Sqrt(
@@ -174,25 +174,30 @@ namespace GeometryLibrary
             return false;
         }
         //GetCentroid
-        public virtual Position Centroid()
+        public virtual Position Centroid(Position[] arr)
         {
 
-            float xSum = _vertices.Aggregate(0, (float total, Position next) => total + next.x);
-            float ySum = _vertices.Aggregate(0, (float total, Position next) => total + next.y);
-            float zSum = _vertices.Aggregate(0, (float total, Position next) => total + next.z);
+            float xSum = arr.Aggregate(0, (float total, Position next) => total + next.x);
+            float ySum = arr.Aggregate(0, (float total, Position next) => total + next.y);
+            float zSum = arr.Aggregate(0, (float total, Position next) => total + next.z);
 
             Position Centroid = new Position(
-                xSum / _vertices.Length,
-                ySum / _vertices.Length,
-                zSum / _vertices.Length
+                xSum / arr.Length,
+                ySum / arr.Length,
+                zSum / arr.Length
             );
-
             return Centroid;
         }
         //SurfaceArea
         public abstract float SurfaceArea();
         //Volume
-        public virtual float VolumeTetrahedron(Position v1, Position v2, Position v3, Position v4) {
+        public virtual float VolumeTetrahedron(Position[] pointArr) {
+            Position v1 = pointArr[0];
+            Position v2 = pointArr[1];
+            Position v3 = pointArr[2];
+            Position v4 = pointArr[3];
+            
+            // formula : https://keisan.casio.com/exec/system/1223609147
             float volume = (v4.x - v1.x) * ((v2.y - v1.y) * (v3.z - v1.z) - (v2.z - v1.z) * (v3.y - v1.y)) +
                     (v4.y - v1.y) * ((v2.z - v1.z) * (v3.x - v1.x) - (v2.x - v1.x) * (v3.z - v1.z)) +
                     (v4.z - v1.z) * ((v2.x - v1.x) * (v3.y - v1.y) - (v2.y - v1.y) * (v3.x - v1.x));

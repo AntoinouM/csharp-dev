@@ -31,12 +31,12 @@ namespace GeometryLibrary
         private TriFace[] _triFaces = new TriFace[12];
 
         public Cuboid(Position p1, Position p2, Position p3, Position p4, Position p5, Position p6, Position p7, Position p8) : base(8) {
-            btmFace = new Position[] { p1, p2, p3, p4};
-            topFace = new Position[] { p5, p6, p7, p8};
-            rightFace = new Position[] { p2, p3, p7, p6};
-            leftFace = new Position[] { p1, p4, p8, p5};
-            frontFace = new Position[] { p1, p4, p8, p5};
-            backFace = new Position[] { p1, p4, p8, p5};
+            _btmFace = new Position[] { p1, p2, p3, p4};
+            _topFace = new Position[] { p5, p6, p7, p8};
+            _rightFace = new Position[] { p2, p3, p7, p6};
+            _leftFace = new Position[] { p1, p4, p8, p5};
+            _frontFace = new Position[] { p1, p4, p8, p5};
+            _backFace = new Position[] { p1, p4, p8, p5};
 
             _vertices = new Position[] { p1, p2, p3, p4, p5, p6, p7, p8 };
 
@@ -71,12 +71,12 @@ namespace GeometryLibrary
             set {_property = value;}
        }
 
-        public Position[] btmFace {get;}
-        public Position[] topFace {get;}
-        public Position[] rightFace {get;}
-        public Position[] leftFace {get;}
-        public Position[] frontFace {get;}
-        public Position[] backFace {get;}
+        public Position[] btmFace {get {return _btmFace;}}
+        public Position[] topFace {get {return _topFace;}}
+        public Position[] rightFace {get {return _rightFace;}}
+        public Position[] leftFace {get {return _leftFace;}}
+        public Position[] frontFace {get {return _frontFace;}}
+        public Position[] backFace {get {return _backFace;}}
 
 
         // Methods
