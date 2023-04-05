@@ -193,6 +193,61 @@ namespace GeometryLibrary
             float squaredDist = Pow2(p2.x - p1.x) + Pow2(p2.y - p1.y) + Pow2(p2.z - p1.z);
             return MathF.Sqrt(squaredDist);
         }
+
+        /* ====== OPERATOR OVERRIDING ====== */
+        public static bool operator ==(SShape a, SShape b)
+        {
+            if (a.Vertices.Length != b.Vertices.Length) {
+                return false;
+            }
+            for (int i = 0; i < a.Vertices.Length; i++ ) {
+                if (b.Vertices.Contains(a.Vertices[i]) == false) {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        public static bool operator !=(SShape a, SShape b)
+        {
+            return !(a == b);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is SShape))
+            {
+                return false;
+            }
+            SShape other = (SShape)obj;
+
+            if (Vertices.Length != other.Vertices.Length) {
+                return false;
+            }
+
+            for (int i = 0; i < Vertices.Length; i++ ) {
+                for (int j = 0; j < other._vertices.Length; j++) {
+                    if (Vertices[i] != other.Vertices[j]) {
+                        return false;
+                    }
+                }
+            }          
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+                foreach (var vertex in Vertices)
+                {
+                    hash = hash * 23 + vertex.GetHashCode();
+                }
+                return hash;
+            }
+        }
         // Finaliser
         ~SShape() {}
 

@@ -122,6 +122,5 @@ namespace GeometryLibrary
         }
 
         // Methods non-inheritated
-
     }
 }
