@@ -174,8 +174,20 @@ namespace GeometryLibrary
             return false;
         }
         //GetCentroid
-        public virtual Position Centroid() {
-            return new Position();
+        public virtual Position Centroid()
+        {
+
+            float xSum = _vertices.Aggregate(0, (float total, Position next) => total + next.x);
+            float ySum = _vertices.Aggregate(0, (float total, Position next) => total + next.y);
+            float zSum = _vertices.Aggregate(0, (float total, Position next) => total + next.z);
+
+            Position Centroid = new Position(
+                xSum / _vertices.Length,
+                ySum / _vertices.Length,
+                zSum / _vertices.Length
+            );
+
+            return Centroid;
         }
         //SurfaceArea
         public abstract float SurfaceArea();
@@ -199,6 +211,14 @@ namespace GeometryLibrary
             System.Console.WriteLine($"x: {pos.x}, y: {pos.y}, z: {pos.z}");                     
         }
 
+        public static float Pow2(float num) {
+            return MathF.Pow(num, 2);
+        }
+        public static float euclidDist (Position p1, Position p2) {
+            //d = Sqr( (x2 - x1)pow2 + (y2 - y1)pow2 + (z2 - z1)pow2)
+            float squaredDist = Pow2(p2.x - p1.x) + Pow2(p2.y - p1.y) + Pow2(p2.z - p1.z);
+            return MathF.Sqrt(squaredDist);
+        }
         // Finaliser
         ~SShape() {}
 

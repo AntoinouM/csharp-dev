@@ -4,6 +4,18 @@ using GeometryLibrary;
 
 
 namespace Assignement3;
+
+/* All input should be in the order convention:
+        8 _________________________ 7
+         /|                       /| 
+        /_|______________________/ | 
+      5 | |                    6|  | 
+        | |_____________________|__| 3
+        | /4                    | /  
+        |/______________________|/
+        1                       2
+*/
+
 public class Program
 {
     public class CylinderProperty : BasicCylinderProperties {
@@ -27,26 +39,8 @@ public class Program
             face.p1, face.p2, face.p3, face.p4
         };
         SShape.WritePositionToConsole(faceVertices);
+        System.Console.WriteLine();
 
-
-        // for (int i = 0; i < tetra.Vertices.Length; i++) {
-        //     System.Console.WriteLine($"Point {i}:       x: {tetra.Vertices[i].x}, y: {tetra.Vertices[i].y}, z: {tetra.Vertices[i].z}");
-        // }
-        // Position tetraCentroid1 = tetra.Centroid();
-        // float tetraSurface1 = tetra.SurfaceArea();
-        // System.Console.WriteLine(tetraSurface1);
-        // System.Console.WriteLine($"{tetraCentroid1.x}, {tetraCentroid1.y}, {tetraCentroid1.z}");
-  
-        // System.Console.WriteLine();
-        // tetra.Vertices = tetra.OrganisePoints(tetra.Vertices);
-        // for (int i = 0; i < tetra.Vertices.Length; i++) {
-        //     System.Console.WriteLine($"Point {i}:       x: {tetra.Vertices[i].x}, y: {tetra.Vertices[i].y}, z: {tetra.Vertices[i].z}");
-        // }
-        // Position tetraCentroid = tetra.Centroid();
-        // float tetraSurface = tetra.SurfaceArea();
-        // System.Console.WriteLine(tetraSurface);
-        // System.Console.WriteLine($"{tetraCentroid.x}, {tetraCentroid.y}, {tetraCentroid.z}");
-  
     }
 
 }

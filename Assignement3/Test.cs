@@ -42,14 +42,14 @@ public class QuadriFace {
 
     public Cuboid<Assignement3.Program.CuboidProperty> AddCuboid(float offset) {
         Position[] pointArray = new Position[] {
-            new Position(1f + offset, 1f + offset, 1f + offset), 
-            new Position(1f + offset, 4f + offset, 1f + offset), 
-            new Position(4f + offset, 4f + offset, 1f + offset), 
-            new Position(4f + offset, 1f + offset, 1f + offset), 
-            new Position(1f + offset, 1f + offset, 4f + offset), 
-            new Position(1f + offset, 4f + offset, 4f + offset), 
-            new Position(4f + offset, 4f + offset, 4f + offset), 
-            new Position(4f + offset, 1f + offset, 4f + offset)
+            new Position(-0.68192f , -1f, -1f), 
+            new Position(0.68192f , -1f, -1f), 
+            new Position(1f, 1f, -1f), 
+            new Position(-1f, 1f, -1f), 
+            new Position(-1.6131f, -1.6131f, 1f), 
+            new Position(1.6131f, -1.6131f, 1f),
+            new Position(0.59856f, 1.6131f, 1f),
+            new Position(-0.59856f, 1.6131f, 1f)
             };
         Cuboid<Assignement3.Program.CuboidProperty> cubo = new Cuboid<Assignement3.Program.CuboidProperty>();
         for (int i = 0; i < pointArray.Length; i++) {
