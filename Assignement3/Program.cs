@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using GeometryLibrary;
 
 
@@ -7,6 +9,7 @@ namespace Assignement3;
 
 public class Program
 {
+    private static object priorityTaskToken = new object();
     public class CylinderProperty : BasicCylinderProperties {
                
     }
@@ -24,53 +27,64 @@ public class Program
         Tetrahedon<TetrahedonProperty>[] tetraArr = test.AddTetrahedron(5);
 
         if (args.Length == 0) {
-            iterativeMethod(cyloArr, cuboArr, tetraArr);
+            Stopwatch timer = Stopwatch.StartNew();
+            GetCuboSurface(cuboArr);
+            GetCyloSurface(cyloArr);
+            GetTetraSurface(tetraArr);
+            timer.Stop();
+            System.Console.WriteLine();
+            System.Console.WriteLine($"{timer.ElapsedMilliseconds:#,##0}ms elapsed");
         } else {
             if (args[0] == "-thread") {
-            threadMethod(cyloArr, cuboArr, tetraArr);
+            Stopwatch timer = Stopwatch.StartNew();
+            Task tetraSurfaceT = Task.Run(() =>
+            {
+                GetTetraSurface(tetraArr);
+            });
+            tetraSurfaceT.Wait();
+
+            Task cuboSurfaceT = Task.Run(() =>
+            {
+                GetCuboSurface(cuboArr);
+            });
+
+            Task cyloSurfaceT = Task.Run(() =>
+            {
+                GetCyloSurface(cyloArr);
+            });
+            if (cyloSurfaceT.IsCompleted && cuboSurfaceT.IsCompleted && tetraSurfaceT.IsCompleted) {
+            timer.Stop();
+            System.Console.WriteLine();
+            System.Console.WriteLine($"{timer.ElapsedMilliseconds:#,##0}ms elapsed");
+            }
+
+
             } else {
-                iterativeMethod(cyloArr, cuboArr, tetraArr);
+            Stopwatch timer = Stopwatch.StartNew();
+            GetCuboSurface(cuboArr);
+            GetCyloSurface(cyloArr);
+            GetTetraSurface(tetraArr);
+            timer.Stop();
+            System.Console.WriteLine();
+            System.Console.WriteLine($"{timer.ElapsedMilliseconds:#,##0}ms elapsed");
             }
         }
-        // System.Console.WriteLine(
-        //     $"btm area: {cylo.BottomArea()} \nheight: {cylo.Height} \nTotal Surface: {cylo.SurfaceArea()} \nVolume: {cylo.Volume()}"
-        // );
+        Console.ReadKey();
     }
 
-    public static void iterativeMethod(Cylinder<CylinderProperty>[] cyloArr, Cuboid<CuboidProperty>[] cuboArr, Tetrahedon<TetrahedonProperty>[] tetraArr) {
-        Stopwatch timer = Stopwatch.StartNew();
-
-        // Generate a shape array
-        SShape[] shapeArr = new SShape[cyloArr.Length + cuboArr.Length + tetraArr.Length];
-        cyloArr.CopyTo(shapeArr, 0);
-        cuboArr.CopyTo(shapeArr, cyloArr.Length);
-        tetraArr.CopyTo(shapeArr, (cuboArr.Length) + (tetraArr.Length));
-
-        for (int i = 0; i < shapeArr.Length; i++) {
-            if (shapeArr[i] is Cylinder<CylinderProperty>) {
-                System.Console.WriteLine($"Cylinder {i+1} surface: {MathF.Round(shapeArr[i].SurfaceArea(), 3)} cm²");
-            } else if (shapeArr[i] is Cuboid<CuboidProperty>) {
-
-                System.Console.WriteLine($"Cuboid {(i-5)+1} surface: {MathF.Round(shapeArr[i].SurfaceArea(), 3)} cm²");
-            } else {
-                System.Console.WriteLine($"Tetrahedron {(i-10)+1} surface: {MathF.Round(shapeArr[i].SurfaceArea(), 3)} cm²");
-            }
+    public static void GetTetraSurface(Tetrahedon<TetrahedonProperty>[] tetraArr) {
+        for (int i = 0; i < tetraArr.Length; i++) {
+            System.Console.WriteLine($"Tetrahedron {i + 1} surface: {MathF.Round(tetraArr[i].SurfaceArea(), 3)} cm²");
         }
-
-
-
-        timer.Stop();
-        System.Console.WriteLine($"{timer.ElapsedMilliseconds:#,##0}ms elapsed");
     }
-
-    public static void threadMethod(Cylinder<CylinderProperty>[] cyloArr , Cuboid<CuboidProperty>[] cuboArr,Tetrahedon<TetrahedonProperty>[] tetraArr) {
-        Stopwatch timer = Stopwatch.StartNew();
-
-
-
-
-
-        timer.Stop();
-        System.Console.WriteLine($"{timer.ElapsedMilliseconds:#,##0}ms elapsed");
+    public static void GetCuboSurface(Cuboid<CuboidProperty>[] cuboArr) {
+        for (int i = 0; i < cuboArr.Length; i++) {
+            System.Console.WriteLine($"Cuboid {i + 1} surface: {MathF.Round(cuboArr[i].SurfaceArea(), 3)} cm²");
+        }
+    }
+    public static void GetCyloSurface(Cylinder<CylinderProperty>[] cyloArr) {
+        for (int i = 0; i < cyloArr.Length; i++) {
+            System.Console.WriteLine($"Cylinder {i + 1} surface: {MathF.Round(cyloArr[i].SurfaceArea(), 3)} cm²");
+        }
     }
 }
