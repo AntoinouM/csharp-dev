@@ -122,7 +122,14 @@ public class QuadriFace {
             new Position(-1.0545f, -1.3668f, 0.87238f)
         );
         Cuboid<Assignement3.Program.CuboidProperty> cubo5 = new Cuboid<Assignement3.Program.CuboidProperty>(
-
+            new Position(0.73636f, -1.0803f, -0.73636f),
+            new Position(0.487f, 1f, -0.96127f),
+            new Position(-0.487f, 1f, -0.96127f),
+            new Position(-0.73636f, -1.0803f, -0.73636f),
+            new Position(0.98365f, -1.3668f, 0.87238f),
+            new Position(0.81829f, 1.6093f, 2.1458f),
+            new Position(-0.81829f, 1.6093f, 2.1458f),
+            new Position(-0.72266f, -1.3668f, 0.87238f)
         );
 
         Cuboid<Assignement3.Program.CuboidProperty>[] tempArr = new Cuboid<Assignement3.Program.CuboidProperty>[] {
@@ -137,14 +144,49 @@ public class QuadriFace {
         return cuboArr;   
     }
 
-    public Cylinder<Assignement3.Program.CylinderProperty> AddCylinder() {
+    public Cylinder<Assignement3.Program.CylinderProperty>[] AddCylinder(uint num) {
 
-        Cylinder<Assignement3.Program.CylinderProperty> cylo = new Cylinder<Assignement3.Program.CylinderProperty>(
+        Cylinder<Assignement3.Program.CylinderProperty>[] cyloArr = new Cylinder<Assignement3.Program.CylinderProperty>[num];
+
+        Cylinder<Assignement3.Program.CylinderProperty> cylo1 = new Cylinder<Assignement3.Program.CylinderProperty>(
             new Position(1f, 0f, 1f),
             new Position(1f, 2f, 1f),
             2f
         );
+
+        Cylinder<Assignement3.Program.CylinderProperty> cylo2 = new Cylinder<Assignement3.Program.CylinderProperty>(
+            new Position(1f, 0f, 1f),
+            new Position(1f, 2f, 1f),
+            5f
+        );
+
+        Cylinder<Assignement3.Program.CylinderProperty> cylo3 = new Cylinder<Assignement3.Program.CylinderProperty>(
+            new Position(1f, -1f, 1f),
+            new Position(1f, 4f, 1f),
+            2.56f
+        );
+
+        Cylinder<Assignement3.Program.CylinderProperty> cylo4 = new Cylinder<Assignement3.Program.CylinderProperty>(
+            new Position(-1f, 0f, 1f),
+            new Position(1f, 4.3f, 1f),
+            2f
+        );
+
+        Cylinder<Assignement3.Program.CylinderProperty> cylo5 = new Cylinder<Assignement3.Program.CylinderProperty>(
+            new Position(1f, 0f, 1f),
+            new Position(1f, 6f, 1f),
+            1f
+        );
+
+        Cylinder<Assignement3.Program.CylinderProperty>[] tempArr = new Cylinder<Assignement3.Program.CylinderProperty>[] {
+            cylo1, cylo2, cylo3, cylo4, cylo5
+        };
+
+        for (int i = 0; i < num; i++) {
+            if (i > 5) {break;}
+            cyloArr[i] = tempArr[i];
+        }
         
-        return cylo;
+        return cyloArr;
     }
 }
