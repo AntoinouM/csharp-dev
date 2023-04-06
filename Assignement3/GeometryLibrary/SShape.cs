@@ -130,7 +130,6 @@ namespace GeometryLibrary
         // Field
         protected Position[] _vertices;
 
-
         // Constructor
         protected SShape(uint nVertices) {
             _vertices = new Position[nVertices];
