@@ -1,0 +1,12 @@
+@startuml
+!include ./Test.puml
+!include ./Program.puml
+!include ./GeometryLibrary/SShape.puml
+!include ./GeometryLibrary/Cylinder.puml
+!include ./GeometryLibrary/Tetrahedon.puml
+!include ./GeometryLibrary/Cuboid.puml
+!include ./obj/Debug/net6.0/Assignement3.GlobalUsings.g.puml
+!include ./GeometryLibrary/obj/Debug/net6.0/GeometryLibrary.AssemblyInfo.puml
+!include ./GeometryLibrary/obj/Debug/net6.0/GeometryLibrary.GlobalUsings.g.puml
+!include ./GeometryLibrary/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.puml
+@enduml

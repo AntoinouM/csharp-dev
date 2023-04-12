@@ -1,0 +1,30 @@
+@startuml
+class TriFace <<struct>> {
+    + TriFace(vertex1:Position, vertex2:Position, vertex3:Position)
+    + Surface : float <<get>>
+}
+class Edge <<struct>> {
+    + Edge(vertex1:Position, vertex2:Position)
+    + Length : float <<get>>
+}
+class Position <<struct>> {
+    + Position(xPos:float, yPos:float, zPos:float)
+    + x : float <<get>> <<set>>
+    + y : float <<get>> <<set>>
+    + z : float <<get>> <<set>>
+    + <<override>> Equals(obj:object?) : bool
+    + <<override>> GetHashCode() : int
+}
+abstract class SShape {
+    + <<virtual>> Centroid(arr:Position[]) : Position
+    + {abstract} SurfaceArea() : float
+    + <<virtual>> VolumeTetrahedron(pointArr:Position[]) : float
+    + <<virtual>> Volume() : float
+    + {static} WritePositionToConsole(arr:Position[]) : void
+    + {static} WritePositionToConsole(pos:Position) : void
+    + {static} Pow2(num:float) : float
+    + {static} euclidDist(p1:Position, p2:Position) : float
+    + <<override>> Equals(obj:object?) : bool
+    + <<override>> GetHashCode() : int
+}
+@enduml

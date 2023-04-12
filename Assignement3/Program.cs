@@ -21,22 +21,19 @@ public class Program
     }
     static void Main(string[] args)
     {
+        Stopwatch timer = Stopwatch.StartNew();
         Test test = new Test();
         Cylinder<CylinderProperty>[] cyloArr = test.AddCylinder(5);
         Cuboid<CuboidProperty>[] cuboArr = test.AddCuboid(5);
         Tetrahedon<TetrahedonProperty>[] tetraArr = test.AddTetrahedron(5);
 
         if (args.Length == 0) {
-            Stopwatch timer = Stopwatch.StartNew();
+
             GetCuboSurface(cuboArr);
             GetCyloSurface(cyloArr);
             GetTetraSurface(tetraArr);
-            timer.Stop();
-            System.Console.WriteLine();
-            System.Console.WriteLine($"{timer.ElapsedMilliseconds:#,##0}ms elapsed");
         } else {
             if (args[0] == "-thread") {
-            Stopwatch timer = Stopwatch.StartNew();
             Task tetraSurfaceT = Task.Run(() =>
             {
                 GetTetraSurface(tetraArr);
@@ -53,14 +50,9 @@ public class Program
                 GetCyloSurface(cyloArr);
             });
             if (cyloSurfaceT.IsCompleted && cuboSurfaceT.IsCompleted && tetraSurfaceT.IsCompleted) {
-            timer.Stop();
-            System.Console.WriteLine();
-            System.Console.WriteLine($"{timer.ElapsedMilliseconds:#,##0}ms elapsed");
             }
 
-
             } else {
-            Stopwatch timer = Stopwatch.StartNew();
             GetCuboSurface(cuboArr);
             GetCyloSurface(cyloArr);
             GetTetraSurface(tetraArr);
@@ -69,7 +61,11 @@ public class Program
             System.Console.WriteLine($"{timer.ElapsedMilliseconds:#,##0}ms elapsed");
             }
         }
+        timer.Stop();
+        System.Console.WriteLine();
+        System.Console.WriteLine($"{timer.ElapsedMilliseconds:#,##0}ms elapsed");
         Console.ReadKey();
+
     }
 
     public static void GetTetraSurface(Tetrahedon<TetrahedonProperty>[] tetraArr) {

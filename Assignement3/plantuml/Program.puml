@@ -1,0 +1,19 @@
+@startuml
+class Program {
+    + {static} GetTetraSurface(tetraArr:Tetrahedon<TetrahedonProperty>[]) : void
+    + {static} GetCuboSurface(cuboArr:Cuboid<CuboidProperty>[]) : void
+    + {static} GetCyloSurface(cyloArr:Cylinder<CylinderProperty>[]) : void
+}
+class CylinderProperty {
+}
+class CuboidProperty {
+}
+class TetrahedonProperty {
+}
+Program +-- CylinderProperty
+BasicCylinderProperties <|-- CylinderProperty
+Program +-- CuboidProperty
+BasicCuboidProperty <|-- CuboidProperty
+Program +-- TetrahedonProperty
+BasicTetrahedonProperty <|-- TetrahedonProperty
+@enduml

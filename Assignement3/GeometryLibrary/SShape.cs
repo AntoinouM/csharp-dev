@@ -69,13 +69,11 @@ namespace GeometryLibrary
         private float _x;
         private float _y;
         private float _z;
-        private bool _declared = false;
 
         public Position(float xPos, float yPos, float zPos) {
             this._x = xPos;
             this._y = yPos;
             this._z = zPos;
-            this._declared = true;
         }
 
         public float x {
@@ -89,10 +87,6 @@ namespace GeometryLibrary
         public float z {
             get {return _z;}
             set {_z = value;}
-        }
-        public bool Declared {
-            get {return _declared;}
-            set {_declared = value;}
         }
         public static bool operator ==(Position a, Position b)
         {

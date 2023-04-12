@@ -1,0 +1,11 @@
+@startuml
+abstract class BasicCuboidProperty {
+}
+class "Cuboid`1"<TCuboid> {
+    + Cuboid(p1:Position, p2:Position, p3:Position, p4:Position, p5:Position, p6:Position, p7:Position, p8:Position)
+    + Propriety : TCuboid <<get>> <<set>>
+    <<sealed>> + <<override>> SurfaceArea() : float
+    <<sealed>> + <<override>> Volume() : float
+}
+SShape <|-- "Cuboid`1"
+@enduml
