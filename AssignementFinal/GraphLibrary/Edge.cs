@@ -3,9 +3,9 @@ namespace GraphLibrary;
 public abstract class BasicEdgeProperty 
 {
     // Fields
-    public uint Id;
-    public uint SourceId;
-    public uint TargetId;
+    public int Id;
+    public int SourceId;
+    public int TargetId;
     public int Weight;
 }
 
@@ -15,7 +15,7 @@ public class Edge<T> where T: BasicEdgeProperty, new()
     private T _property;
 
     // Constructors
-    public Edge(uint id, uint source, uint target, int weight) 
+    public Edge(int id, int source, int target, int weight) 
     {
         _property = new T();
         _property.Id = id;

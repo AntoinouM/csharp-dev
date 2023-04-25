@@ -3,7 +3,7 @@
 public abstract class BasicVertexProperty
 {
     // Fields
-    public uint Id;
+    public int Id;
     public string Name = "Unknown Name";
 }
 
@@ -13,7 +13,7 @@ public class Vertex<T> where T: BasicVertexProperty, new() // this is a constrai
     private T _property;
 
     // Constructor
-    public Vertex( uint id, string name)
+    public Vertex( int id, string name)
     {
         _property = new T();
         _property.Id = id;

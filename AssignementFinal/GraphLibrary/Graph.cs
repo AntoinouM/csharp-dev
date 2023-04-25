@@ -2,11 +2,20 @@ using System.Collections.Generic;
 
 namespace GraphLibrary;
 
-
 public class Graph <TVertex, TEdges> 
 where TVertex: BasicVertexProperty, new()
 where TEdges: BasicEdgeProperty, new()
 {
+    struct helperType<T> where T : IComparable {
+        public Vertex<TVertex> vertexValue;
+        public T value;
+
+        public helperType(Vertex<TVertex> vertex, T givenValue) {
+            vertexValue = vertex;
+            value = givenValue;
+        }
+
+    }
     // Fields
     // The vertex/edge lists in the graph
     private LinkedList<Vertex<TVertex>> _vertices;
@@ -15,8 +24,8 @@ where TEdges: BasicEdgeProperty, new()
     //private Dictionary<int, Vertex<T1>> _vertices; // better access methods, just bind an ID to a vertex! better?
 
     // The number of vertices and edges
-    private uint _nVertices;
-    private uint _nEdges;
+    private int _nVertices;
+    private int _nEdges;
 
     // Constructors
     public Graph() 
@@ -30,7 +39,7 @@ where TEdges: BasicEdgeProperty, new()
 
     // Methods
         // Vertex
-        public uint AddVertex(string name) {
+        public int AddVertex(string name) {
             if (HasVertex(name) != null) {
                 return 0;
             }
@@ -51,7 +60,7 @@ where TEdges: BasicEdgeProperty, new()
         }
 
         // Function overload same one with different parameter
-        public Vertex<TVertex>? HasVertex(uint id) {
+        public Vertex<TVertex>? HasVertex(int id) {
             for (int i = 0; i < _vertices.Count; i++) {
                 if (_vertices.ElementAt(i).Property.Id == id) {
                     return _vertices.ElementAt(i);
@@ -85,7 +94,7 @@ where TEdges: BasicEdgeProperty, new()
         }
 
         // Edge
-        public void AddEdge(uint sourceId, uint targetId, int weight) {
+        public void AddEdge(int sourceId, int targetId, int weight) {
             Edge<TEdges>? e = HasEdge(sourceId, targetId);
 
             if (e == null) {
@@ -103,7 +112,7 @@ where TEdges: BasicEdgeProperty, new()
             }
         }
 
-        public Edge<TEdges>? HasEdge(uint sourceId, uint targetId) {
+        public Edge<TEdges>? HasEdge(int sourceId, int targetId) {
 
             for (int i = 0; i < _edges.Count; i++) {
                 if ( (_edges.ElementAt(i).Property.SourceId == sourceId) && (_edges.ElementAt(i).Property.TargetId == targetId)) {
@@ -113,7 +122,7 @@ where TEdges: BasicEdgeProperty, new()
             return null;
         }
 
-        public void RemoveEdge(uint sourceId, uint targetId) {
+        public void RemoveEdge(int sourceId, int targetId) {
             Edge<TEdges>? e = HasEdge(sourceId, targetId);
 
             if (e != null) {
@@ -140,6 +149,139 @@ where TEdges: BasicEdgeProperty, new()
             System.Console.WriteLine($"E({_edges.ElementAt(i).Property.Id}) = V{_edges.ElementAt(i).Property.SourceId}) -- V({_edges.ElementAt(i).Property.TargetId})");
         }
     }
+
+  
+public List<Vertex<TVertex>>? Dijkstra(string startName, string endName) {
+    // Find the starting vertex
+    Vertex<TVertex>? startVertex = HasVertex(startName);
+    if (startVertex == null) {
+        Console.WriteLine("Starting vertex not found.");
+        return null;
+    }
+
+    // Find the ending vertex
+    Vertex<TVertex>? endVertex = HasVertex(endName);
+    if (endVertex == null) {
+        Console.WriteLine("Ending vertex not found.");
+        return null;
+    }
+
+    // create and initialize a boolena array 
+    helperType<bool>[] boolArr = new helperType<bool>[_nVertices];
+    for (int i = 0; i < _nVertices; i++) {
+        boolArr[i] = new helperType<bool>(_vertices.ElementAt(i), false);
+    }
+
+    // create and initialize a dtstance array
+    helperType<int>[] distArr = new helperType<int>[_nVertices];
+    for (int i = 0; i < _nVertices; i++) {
+        distArr[i] = new helperType<int>(_vertices.ElementAt(i), int.MaxValue);
+    }
+    
+    // we want to return a list of vertex that represent the shortest path fron start to end
+    List<Vertex<TVertex>> shortestPath = new List<Vertex<TVertex>>();
+    
+    // set the distance of startVertex to itself to 0
+    ChangeArray<int>(distArr, startVertex, 0);
+
+    for (int count = 0; count < _nVertices - 1; count++) {
+        Vertex<TVertex> vertexWithMinimumDistance = returnVertexWithMinDistance(boolArr, distArr);
+        helperType<int>? verMinDistHT = returnedHelperType<int>(distArr, vertexWithMinimumDistance)!;
+
+        ChangeArray<bool>(boolArr, vertexWithMinimumDistance, true);
+
+
+        for (int vertexCount = 0; vertexCount < _nVertices; vertexCount++) {
+            Vertex<TVertex> currentVertex =  _vertices.ElementAt(vertexCount);
+            Edge<TEdges>? currentEdge = returnEdge(vertexWithMinimumDistance, currentVertex)!;
+            helperType<bool>? tempBool = returnedHelperType<bool>(boolArr,currentVertex)!.Value;
+            helperType<int>? tempInt = returnedHelperType<int>(distArr, currentVertex)!.Value;
+
+            if (!tempBool.Value.value &&
+                currentEdge != null &&
+                verMinDistHT.Value.value != int.MaxValue &&
+                verMinDistHT.Value.value + currentEdge.Property.Weight < tempInt.Value.value
+                ) {
+                    ChangeArray<int>(distArr, currentVertex, (verMinDistHT.Value.value + currentEdge.Property.Weight));
+            }
+        }     
+    }
+    printSolution(distArr);
+    
+    /*=====================*/
+    /*** HELPER FUNCTION ***/
+    /*=====================*/
+
+
+    Vertex<TVertex> returnVertexWithMinDistance(helperType<bool>[] boolArr, helperType<int>[] distarr) {
+        int min = int.MaxValue;
+        Vertex<TVertex> vertexWithMinDistance = new Vertex<TVertex>(-1, "");
+
+        for (int i = 0; i < _nVertices; i++) {
+            helperType<bool>? tempBool = returnedHelperType<bool>(boolArr, _vertices.ElementAt(i))!;
+            helperType<int>? tempInt= returnedHelperType<int>(distArr, _vertices.ElementAt(i))!;
+
+            
+            if (tempBool.Value.value == false && tempInt.Value.value <= min) {
+                min = tempInt.Value.value;
+                vertexWithMinDistance = tempInt.Value.vertexValue;
+            }
+        }
+
+        return vertexWithMinDistance;
+    }
+
+    Edge<TEdges>? returnEdge(Vertex<TVertex> v1, Vertex<TVertex> v2) {
+
+        if (HasEdge(v1.Property.Id, v2.Property.Id) != null) {
+            return HasEdge(v1.Property.Id, v2.Property.Id);
+        } else if (HasEdge(v2.Property.Id, v1.Property.Id) != null) {
+            return HasEdge(v2.Property.Id, v1.Property.Id);
+        }
+        return null;
+    }
+    
+    void PrintList<T>(List<T> list) {
+        for (int i = 0; i < list.Count; i++) {
+            System.Console.WriteLine($"{i}:  {list.ElementAt(i)}");
+        }
+    }
+
+    void PrintArr<T>(helperType<T>[] arr) where T : IComparable {
+        for (int i = 0; i < arr.Length; i++) {
+            Console.WriteLine($"{i}: Vertex:{arr[i].vertexValue.Property.Name}, Value:{arr[i].value}");
+        }
+    }
+
+    void ChangeArray<T>(helperType<T>[] arr, Vertex<TVertex> vertex, T value) where T : IComparable {
+        for (int i = 0; i < arr.Length; i++) {
+            if (arr[i].vertexValue == vertex) {
+                arr[i].value = value;
+            }
+        }
+    }
+
+    helperType<T>? returnedHelperType<T>(helperType<T>[] arr, Vertex<TVertex> vertex) where T: IComparable {
+        
+        for (int i = 0; i < arr.Length; i++) {
+            if (arr[i].vertexValue == vertex) {
+                return arr[i];
+            }
+        }
+        return null;
+    }
+
+    void printSolution(helperType<int>[] distArr)
+    {
+        Console.Write("Vertex \t\t Distance "
+                      + "from Source\n");
+        for (int i = 0; i < distArr.Length; i++)
+            Console.Write(distArr[i].vertexValue.Property.Name + " \t\t " + distArr[i].value + "\n");
+    }
+    
+    return shortestPath;
+}
+
 
     // Finaliser
     ~Graph() {}
