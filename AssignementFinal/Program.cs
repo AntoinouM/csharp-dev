@@ -1,5 +1,11 @@
 ﻿using System;
 using GraphLibrary;
+using System.Globalization;
+using System.IO;
+using static System.Console;
+using static System.IO.Directory;
+using static System.IO.Path;
+using static System.Environment;
 
 namespace SocialNet;
 class Program
@@ -15,17 +21,7 @@ class Program
     {
 
         Graph<VertexProperty, EdgeProperty>  graph = new Graph<VertexProperty, EdgeProperty>  ();
-        /*
-            { 0, 4, 0, 0, 0, 0, 0, 8, 0 },
-            { 4, 0, 8, 0, 0, 0, 0, 11, 0 },
-            { 0, 8, 0, 7, 0, 4, 0, 0, 2 },
-            { 0, 0, 7, 0, 9, 14, 0, 0, 0 },
-            { 0, 0, 0, 9, 0, 10, 0, 0, 0 },
-            { 0, 0, 4, 14, 10, 0, 2, 0, 0 },
-            { 0, 0, 0, 0, 0, 2, 0, 1, 6 },
-            { 8, 11, 0, 0, 0, 0, 1, 0, 7 },
-            { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
-        */
+
         int v0 = graph.AddVertex("0");
         int v1 = graph.AddVertex("1");
         int v2 = graph.AddVertex("2");
@@ -35,8 +31,6 @@ class Program
         int v6 = graph.AddVertex("6");
         int v7 = graph.AddVertex("7");
         int v8 = graph.AddVertex("8");
-
-
         graph.AddEdge(v0,v1, 4);
         graph.AddEdge(v0,v7, 8);
         graph.AddEdge(v1,v2, 8);
@@ -52,7 +46,25 @@ class Program
         graph.AddEdge(v6,v8, 6);
         graph.AddEdge(v7,v8, 7);
 
-        graph.Dijkstra("0", "7");
+        //graph.Dijkstra("0", "3");
+
+        // creating files path
+        string inputPath = Combine(CurrentDirectory, "input.txt");
+        string outputPath = Combine(CurrentDirectory, "output.txt");
+
+        // check if files exists
+        if (!File.Exists(outputPath)) {
+            File.Delete(outputPath);
+        }
+
+        if (!File.Exists(inputPath)) {
+            Console.WriteLine("\nPlease create a text file: input:txt");
+            return;
+        }
+
+
+
+        // execute each line
 
     }
 }

@@ -151,19 +151,19 @@ where TEdges: BasicEdgeProperty, new()
     }
 
   
-public List<Vertex<TVertex>>? Dijkstra(string startName, string endName) {
+public void Dijkstra(string startName, string endName) {
     // Find the starting vertex
     Vertex<TVertex>? startVertex = HasVertex(startName);
     if (startVertex == null) {
         Console.WriteLine("Starting vertex not found.");
-        return null;
+        return;
     }
 
     // Find the ending vertex
     Vertex<TVertex>? endVertex = HasVertex(endName);
     if (endVertex == null) {
         Console.WriteLine("Ending vertex not found.");
-        return null;
+        return;
     }
 
     // create and initialize a boolena array 
@@ -178,17 +178,31 @@ public List<Vertex<TVertex>>? Dijkstra(string startName, string endName) {
         distArr[i] = new helperType<int>(_vertices.ElementAt(i), int.MaxValue);
     }
     
-    // we want to return a list of vertex that represent the shortest path fron start to end
-    List<Vertex<TVertex>> shortestPath = new List<Vertex<TVertex>>();
-    
     // set the distance of startVertex to itself to 0
     ChangeArray<int>(distArr, startVertex, 0);
+
+    // Create a Parent array of Vertices that store an ID
+    helperType<int>[] parrentArr = new helperType<int>[_nVertices];
+    for (int i = 0; i < _nVertices; i++) {
+        parrentArr[i] = new helperType<int>(_vertices.ElementAt(i), -1); // all ID are instanciate to -1
+    }
 
     for (int count = 0; count < _nVertices - 1; count++) {
         Vertex<TVertex> vertexWithMinimumDistance = returnVertexWithMinDistance(boolArr, distArr);
         helperType<int>? verMinDistHT = returnedHelperType<int>(distArr, vertexWithMinimumDistance)!;
 
         ChangeArray<bool>(boolArr, vertexWithMinimumDistance, true);
+        if (returnedHelperType<bool>(boolArr, endVertex)!.Value.value) {
+            // write headers
+            Console.Write("Vertex \t\t Distance from Source \t\t Path\n");
+
+            // write selected path and distance
+            Console.Write(startVertex.Property.Name + " -> " + endVertex.Property.Name + " \t\t " + returnedHelperType<int>(distArr, endVertex)!.Value.value  + "\t\t\t\t" + startVertex.Property.Name + " ");
+
+            // write path
+            printPath(parrentArr, endVertex);
+            return;
+        }
 
 
         for (int vertexCount = 0; vertexCount < _nVertices; vertexCount++) {
@@ -202,11 +216,13 @@ public List<Vertex<TVertex>>? Dijkstra(string startName, string endName) {
                 verMinDistHT.Value.value != int.MaxValue &&
                 verMinDistHT.Value.value + currentEdge.Property.Weight < tempInt.Value.value
                 ) {
+                    ChangeArray<int>(parrentArr, currentVertex, vertexWithMinimumDistance.Property.Id);
                     ChangeArray<int>(distArr, currentVertex, (verMinDistHT.Value.value + currentEdge.Property.Weight));
             }
         }     
     }
-    printSolution(distArr);
+    printSolution(distArr, parrentArr, startVertex);
+
     
     /*=====================*/
     /*** HELPER FUNCTION ***/
@@ -241,18 +257,6 @@ public List<Vertex<TVertex>>? Dijkstra(string startName, string endName) {
         return null;
     }
     
-    void PrintList<T>(List<T> list) {
-        for (int i = 0; i < list.Count; i++) {
-            System.Console.WriteLine($"{i}:  {list.ElementAt(i)}");
-        }
-    }
-
-    void PrintArr<T>(helperType<T>[] arr) where T : IComparable {
-        for (int i = 0; i < arr.Length; i++) {
-            Console.WriteLine($"{i}: Vertex:{arr[i].vertexValue.Property.Name}, Value:{arr[i].value}");
-        }
-    }
-
     void ChangeArray<T>(helperType<T>[] arr, Vertex<TVertex> vertex, T value) where T : IComparable {
         for (int i = 0; i < arr.Length; i++) {
             if (arr[i].vertexValue == vertex) {
@@ -271,15 +275,25 @@ public List<Vertex<TVertex>>? Dijkstra(string startName, string endName) {
         return null;
     }
 
-    void printSolution(helperType<int>[] distArr)
+    void printSolution(helperType<int>[] distArr, helperType<int>[] parentArr, Vertex<TVertex> startVertex)
     {
-        Console.Write("Vertex \t\t Distance "
-                      + "from Source\n");
-        for (int i = 0; i < distArr.Length; i++)
-            Console.Write(distArr[i].vertexValue.Property.Name + " \t\t " + distArr[i].value + "\n");
+        Console.Write("Vertex \t\t Distance from Source \t\t Path\n");
+        for (int i = 0; i < distArr.Length; i++) {
+            if (distArr[i].vertexValue.Property.Id != startVertex.Property.Id) {
+                Console.Write("\n" + startVertex.Property.Name + " -> " + distArr[i].vertexValue.Property.Name + " \t\t " + distArr[i].value  + "\t\t\t\t" + startVertex.Property.Name + " ");
+                printPath(parentArr, distArr[i].vertexValue);
+            }
+        }
     }
-    
-    return shortestPath;
+
+    void printPath(helperType<int>[] parentArr, Vertex<TVertex> currentVertex) {
+        helperType<int>? currentHT = returnedHelperType<int>(parrentArr, currentVertex)!;
+        if (currentHT.Value.value == -1) { // if comes back to startVertex, return
+            return;
+        }
+        printPath(parrentArr, HasVertex(currentHT.Value.value)!);
+        Console.Write(currentVertex.Property.Name + " ");
+    }
 }
 
 
