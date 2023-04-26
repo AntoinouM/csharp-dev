@@ -206,7 +206,7 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
 
         for (int vertexCount = 0; vertexCount < _nVertices; vertexCount++) {
             Vertex<TVertex> currentVertex =  _vertices.ElementAt(vertexCount);
-            Edge<TEdges>? currentEdge = returnEdge(vertexWithMinimumDistance, currentVertex)!;
+            Edge<TEdges>? currentEdge = returnEdge(vertexWithMinimumDistance, currentVertex);
             bool tempBool = boolDic[currentVertex];
             int tempDistance = distDic[currentVertex];
 
