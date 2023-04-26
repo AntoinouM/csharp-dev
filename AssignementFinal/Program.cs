@@ -86,10 +86,17 @@ class Program
         // create a text file and return a writer helper
         StreamWriter output = File.CreateText(outputPath);
         
-        output.WriteLine($"{dijkstraDictionary["source"]} --> {dijkstraDictionary["target"]}"); // text is a helper writer that helps generating/managing text file
-        output.WriteLine($"Minimum distance: {dijkstraDictionary["dist"]}");
-        output.WriteLine($"Path: {dijkstraDictionary["source"]}{dijkstraDictionary["path"]}");
-
+        if (target.Length != 0) { 
+            output.WriteLine($"{dijkstraDictionary["source"]} --> {dijkstraDictionary["target"]}"); // text is a helper writer that helps generating/managing text file
+            output.WriteLine($"Minimum distance: {dijkstraDictionary["dist"]}");
+            output.WriteLine($"Path: {dijkstraDictionary["source"]}{dijkstraDictionary["path"]}");
+        } else {
+            output.WriteLine("No destination specified");
+            output.Write("Vertex \t\t Distance from Source \t\t Path");
+            for (int i = 1; i < dijkstraDictionary.Count; i++) {
+                output.Write(dijkstraDictionary.ElementAt(i).Value);
+            }
+        }
         output.Close(); // release the ressources
 
         Console.WriteLine();

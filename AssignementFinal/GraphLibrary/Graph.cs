@@ -143,8 +143,10 @@ where TEdges: BasicEdgeProperty, new()
 
   
 public Dictionary<string, string>? Dijkstra(string startName, string endName) {
+
     Dictionary<string, string> DijkstraDic = new Dictionary<string, string>();
     string pathStr = "";
+
     // Find the starting vertex
     Vertex<TVertex>? startVertex = HasVertex(startName);
     if (startVertex == null) {
@@ -156,10 +158,12 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
     Vertex<TVertex>? endVertex = HasVertex(endName);
     if (endVertex == null) {
         Console.WriteLine("Ending vertex not found.");
-        return null;
     }
     DijkstraDic.Add("source", startVertex.Property.Name);
-    DijkstraDic.Add("target", endVertex.Property.Name);
+
+    if (endVertex != null) {
+        DijkstraDic.Add("target", endVertex.Property.Name);
+    }
 
     // create dictionary to store Vertex-bool
     Dictionary<Vertex<TVertex>, bool> boolDic = new Dictionary<Vertex<TVertex>, bool>();
@@ -188,15 +192,17 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
 
         boolDic[vertexWithMinimumDistance] = true;
 
-        if (boolDic[endVertex]) {
-            // add distance
-            DijkstraDic.Add("dist", distDic[endVertex].ToString());
-            
-            // add path
-            printPath(parentDic, endVertex);
-            return DijkstraDic;
-        }
+        if (endVertex != null) {
+            if (boolDic[endVertex]) {
+                // add distance
+                DijkstraDic.Add("dist", distDic[endVertex].ToString());
 
+                // add path
+                printPath(parentDic, endVertex);
+                DijkstraDic.Add("path", pathStr);
+                return DijkstraDic;
+            }
+        }
 
         for (int vertexCount = 0; vertexCount < _nVertices; vertexCount++) {
             Vertex<TVertex> currentVertex =  _vertices.ElementAt(vertexCount);
@@ -214,7 +220,7 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
             }
         }     
     }
-    //printSolution(distDic, parentDic, startVertex);
+    printSolution(distDic, parentDic, startVertex);
 
     
     /*=====================*/
@@ -248,18 +254,18 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
         return null;
     }
 
-    // void printSolution( Dictionary<Vertex<TVertex>, int> distDic, 
-    //                     Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic, 
-    //                     Vertex<TVertex> startVertex)
-    // {
-    //     Console.Write("Vertex \t\t Distance from Source \t\t Path\n");
-    //     for (int i = 0; i < distDic.Count; i++) {
-    //         if (distDic.ElementAt(i).Key.Property.Id != startVertex.Property.Id) {
-    //             Console.Write("\n" + startVertex.Property.Name + " -> " + distDic.ElementAt(i).Key.Property.Name + " \t\t " + distDic.ElementAt(i).Value  + "\t\t\t" + startVertex.Property.Name + " ");
-    //             printPath(parentDic, distDic.ElementAt(i).Key);
-    //         }
-    //     }
-    // }
+    void printSolution( Dictionary<Vertex<TVertex>, int> distDic, 
+                        Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic, 
+                        Vertex<TVertex> startVertex)
+    {
+        for (int i = 0; i < distDic.Count; i++) {
+            if (distDic.ElementAt(i).Key.Property.Id != startVertex.Property.Id) {
+                pathStr = "";
+                printPath(parentDic, distDic.ElementAt(i).Key);
+                DijkstraDic[$"line{i+1}"] = ("\n" + startVertex.Property.Name + " -> " + distDic.ElementAt(i).Key.Property.Name + " \t\t " + distDic.ElementAt(i).Value  + "\t\t\t " + startVertex.Property.Name) + pathStr;
+            }
+        }
+    }
 
     void printPath(Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic , Vertex<TVertex>? currentVertex) {
         Vertex<TVertex>? currentParent = parentDic[currentVertex!];
@@ -268,7 +274,6 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
         }
         printPath(parentDic, currentParent!);
         pathStr += $"-{currentVertex!.Property.Name}";
-        DijkstraDic["path"] = pathStr;
     }
 
     return DijkstraDic;
