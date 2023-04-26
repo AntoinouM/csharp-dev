@@ -7,16 +7,6 @@ public class Graph <TVertex, TEdges>
 where TVertex: BasicVertexProperty, new()
 where TEdges: BasicEdgeProperty, new()
 {
-    struct helperType<T> where T : IComparable {
-        public Vertex<TVertex> vertexValue;
-        public T value;
-
-        public helperType(Vertex<TVertex> vertex, T givenValue) {
-            vertexValue = vertex;
-            value = givenValue;
-        }
-
-    }
     // Fields
     // The vertex/edge lists in the graph
     private LinkedList<Vertex<TVertex>> _vertices;
@@ -152,8 +142,9 @@ where TEdges: BasicEdgeProperty, new()
     }
 
   
-public string[]? Dijkstra(string startName, string endName) {
-    string[] displayedText = new string[3];
+public Dictionary<string, string>? Dijkstra(string startName, string endName) {
+    Dictionary<string, string> DijkstraDic = new Dictionary<string, string>();
+    string pathStr = "";
     // Find the starting vertex
     Vertex<TVertex>? startVertex = HasVertex(startName);
     if (startVertex == null) {
@@ -167,6 +158,8 @@ public string[]? Dijkstra(string startName, string endName) {
         Console.WriteLine("Ending vertex not found.");
         return null;
     }
+    DijkstraDic.Add("source", startVertex.Property.Name);
+    DijkstraDic.Add("target", endVertex.Property.Name);
 
     // create dictionary to store Vertex-bool
     Dictionary<Vertex<TVertex>, bool> boolDic = new Dictionary<Vertex<TVertex>, bool>();
@@ -194,17 +187,14 @@ public string[]? Dijkstra(string startName, string endName) {
         int minDistance = distDic[vertexWithMinimumDistance];
 
         boolDic[vertexWithMinimumDistance] = true;
-        if (boolDic[endVertex]) {
-            // write headers
-            displayedText[0] = "Vertex \t\t Distance from Source \t\t Path\n";
 
-            // write selected path and distance
-            displayedText[1] = $"{startVertex.Property.Name} -> {endVertex.Property.Name} \t\t {distDic[endVertex]} \t\t\t {startVertex.Property.Name}";
-            // write path
+        if (boolDic[endVertex]) {
+            // add distance
+            DijkstraDic.Add("dist", distDic[endVertex].ToString());
+            
+            // add path
             printPath(parentDic, endVertex);
-            Console.Write(displayedText[0]);
-            Console.WriteLine(displayedText[1]);
-            return displayedText;
+            return DijkstraDic;
         }
 
 
@@ -230,7 +220,6 @@ public string[]? Dijkstra(string startName, string endName) {
     /*=====================*/
     /*** HELPER FUNCTION ***/
     /*=====================*/
-
 
     Vertex<TVertex>? returnVertexWithMinDistance(Dictionary<Vertex<TVertex>, bool> boolDic, Dictionary<Vertex<TVertex>, int> distDic) {
         
@@ -278,10 +267,11 @@ public string[]? Dijkstra(string startName, string endName) {
             return;
         }
         printPath(parentDic, currentParent!);
-        displayedText[1] += $"-{currentVertex!.Property.Name}";
+        pathStr += $"-{currentVertex!.Property.Name}";
+        DijkstraDic["path"] = pathStr;
     }
 
-    return displayedText;
+    return DijkstraDic;
 }
 
     // Finaliser

@@ -1,2 +1,3 @@
-Vertex 		 Distance from Source 		 Path
-v0 -> v5 		 11 			 v0-v7-v6-v5
+v0 --> v5
+Minimum distance: 11
+Path: v0-v7-v6-v5

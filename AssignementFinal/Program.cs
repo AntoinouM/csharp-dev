@@ -22,7 +22,7 @@ class Program
     static void Main(string[] args)
     {
 
-        Graph<VertexProperty, EdgeProperty>  graph = new Graph<VertexProperty, EdgeProperty>  ();
+        Graph<VertexProperty, EdgeProperty>  graph = new Graph<VertexProperty, EdgeProperty>();
 
         // variables
         string source = "";
@@ -80,17 +80,21 @@ class Program
             }
         }
 
-        string[]? displayText = graph.Dijkstra(source, target)!;
+        Dictionary<string, string>? dijkstraDictionary = graph.Dijkstra(source, target)!;
+
         // create output
         // create a text file and return a writer helper
         StreamWriter output = File.CreateText(outputPath);
-        foreach(string item in displayText) {
-            output.Write(item); // text is a helper writer that helps generating/managing text file
-        }
+        
+        output.WriteLine($"{dijkstraDictionary["source"]} --> {dijkstraDictionary["target"]}"); // text is a helper writer that helps generating/managing text file
+        output.WriteLine($"Minimum distance: {dijkstraDictionary["dist"]}");
+        output.WriteLine($"Path: {dijkstraDictionary["source"]}{dijkstraDictionary["path"]}");
+
         output.Close(); // release the ressources
 
+        Console.WriteLine();
+        Console.WriteLine(File.ReadAllText(outputPath));
         Console.WriteLine("Result saved into output.txt");
-
     }
 
 
