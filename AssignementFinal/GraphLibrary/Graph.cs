@@ -151,19 +151,20 @@ where TEdges: BasicEdgeProperty, new()
     }
 
   
-public void Dijkstra(string startName, string endName) {
+public string[]? Dijkstra(string startName, string endName) {
+    string[] displayedText = new string[3];
     // Find the starting vertex
     Vertex<TVertex>? startVertex = HasVertex(startName);
     if (startVertex == null) {
         Console.WriteLine("Starting vertex not found.");
-        return;
+        return null;
     }
 
     // Find the ending vertex
     Vertex<TVertex>? endVertex = HasVertex(endName);
     if (endVertex == null) {
         Console.WriteLine("Ending vertex not found.");
-        return;
+        return null;
     }
 
     // create and initialize a boolena array 
@@ -194,14 +195,15 @@ public void Dijkstra(string startName, string endName) {
         ChangeArray<bool>(boolArr, vertexWithMinimumDistance, true);
         if (returnedHelperType<bool>(boolArr, endVertex)!.Value.value) {
             // write headers
-            Console.Write("Vertex \t\t Distance from Source \t\t Path\n");
+            //Console.Write("Vertex \t\t Distance from Source \t\t Path\n");
+            displayedText[0] = "Vertex \t\t Distance from Source \t\t Path\n";
 
             // write selected path and distance
-            Console.Write(startVertex.Property.Name + " -> " + endVertex.Property.Name + " \t\t " + returnedHelperType<int>(distArr, endVertex)!.Value.value  + "\t\t\t\t" + startVertex.Property.Name + " ");
-
+            //Console.Write(startVertex.Property.Name + " -> " + endVertex.Property.Name + " \t\t " + returnedHelperType<int>(distArr, endVertex)!.Value.value  + "\t\t\t\t" + startVertex.Property.Name + " ");
+            displayedText[1] = $"{startVertex.Property.Name} -> {endVertex.Property.Name} \t\t {returnedHelperType<int>(distArr, endVertex)!.Value.value} \t\t\t\t {startVertex.Property.Name}";
             // write path
             printPath(parrentArr, endVertex);
-            return;
+            return displayedText;
         }
 
 
@@ -280,7 +282,7 @@ public void Dijkstra(string startName, string endName) {
         Console.Write("Vertex \t\t Distance from Source \t\t Path\n");
         for (int i = 0; i < distArr.Length; i++) {
             if (distArr[i].vertexValue.Property.Id != startVertex.Property.Id) {
-                Console.Write("\n" + startVertex.Property.Name + " -> " + distArr[i].vertexValue.Property.Name + " \t\t " + distArr[i].value  + "\t\t\t\t" + startVertex.Property.Name + " ");
+                Console.Write("\n" + startVertex.Property.Name + " -> " + distArr[i].vertexValue.Property.Name + " \t\t " + distArr[i].value  + "\t\t\t" + startVertex.Property.Name + " ");
                 printPath(parentArr, distArr[i].vertexValue);
             }
         }
@@ -292,8 +294,11 @@ public void Dijkstra(string startName, string endName) {
             return;
         }
         printPath(parrentArr, HasVertex(currentHT.Value.value)!);
-        Console.Write(currentVertex.Property.Name + " ");
+        displayedText[1] += $" {currentVertex.Property.Name}";
     }
+
+    
+    return displayedText;
 }
 
 

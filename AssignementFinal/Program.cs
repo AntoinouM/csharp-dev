@@ -1,7 +1,9 @@
 ﻿using System;
 using GraphLibrary;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using static System.Console;
 using static System.IO.Directory;
 using static System.IO.Path;
@@ -22,38 +24,17 @@ class Program
 
         Graph<VertexProperty, EdgeProperty>  graph = new Graph<VertexProperty, EdgeProperty>  ();
 
-        int v0 = graph.AddVertex("0");
-        int v1 = graph.AddVertex("1");
-        int v2 = graph.AddVertex("2");
-        int v3 = graph.AddVertex("3");
-        int v4 = graph.AddVertex("4");
-        int v5 = graph.AddVertex("5");
-        int v6 = graph.AddVertex("6");
-        int v7 = graph.AddVertex("7");
-        int v8 = graph.AddVertex("8");
-        graph.AddEdge(v0,v1, 4);
-        graph.AddEdge(v0,v7, 8);
-        graph.AddEdge(v1,v2, 8);
-        graph.AddEdge(v1,v7, 11);
-        graph.AddEdge(v2,v3, 7);
-        graph.AddEdge(v2,v5, 4);
-        graph.AddEdge(v2,v8, 2);
-        graph.AddEdge(v3,v4, 9);
-        graph.AddEdge(v3,v5, 14);
-        graph.AddEdge(v4,v5, 10);
-        graph.AddEdge(v5,v6, 2);
-        graph.AddEdge(v6,v7, 1);
-        graph.AddEdge(v6,v8, 6);
-        graph.AddEdge(v7,v8, 7);
-
-        //graph.Dijkstra("0", "3");
+        // variables
+        string source = "";
+        string target = "";
+        LinkedList<string> verticesName = new LinkedList<string>();
 
         // creating files path
         string inputPath = Combine(CurrentDirectory, "input.txt");
         string outputPath = Combine(CurrentDirectory, "output.txt");
 
         // check if files exists
-        if (!File.Exists(outputPath)) {
+        if (File.Exists(outputPath)) {
             File.Delete(outputPath);
         }
 
@@ -62,9 +43,55 @@ class Program
             return;
         }
 
+        // generate vertices
+        string[] linesForVName = File.ReadAllLines(inputPath);
+        foreach (string line in linesForVName) {
+            string[] argsForNames = line.Split(',');
+            foreach (string name in argsForNames) {
+                name.Trim();
+                if (!name.All(char.IsDigit) && !line.Contains("source") && !line.Contains("target")) {
+                    if (!verticesName.Contains(name)) {
+                        verticesName.AddLast(name);
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < verticesName.Count; i++) {
+            graph.AddVertex(verticesName.ElementAt(i));
+        }
 
+        // read text file
+        string[] linesFromInput = File.ReadAllLines(inputPath);
+        foreach (string line in linesFromInput) {
+            if (!line.Contains("source") && !line.Contains("target") && line.Length != 0) {
+                //Console.WriteLine(line);
+                string[] parameters = line.Split(',');
+                if (parameters.Length == 3) {
+                     graph.AddEdge(graph.HasVertex(parameters[0].Trim())!.Property.Id, graph.HasVertex(parameters[1].Trim())!.Property.Id, int.Parse(parameters[2]));
+                }
+            }
+            else if (line.Contains("source")) {
+                string[] parametersSrc = line.Split(':');
+                source = parametersSrc[parametersSrc.Length-1].Trim();
+            }
+            else if (line.Contains("target")) {
+                string[] parametersTrg = line.Split(':');
+                target = parametersTrg[parametersTrg.Length-1].Trim();
+            }
+        }
 
-        // execute each line
+        string[]? displayText = graph.Dijkstra(source, target)!;
+        // create output
+        // create a text file and return a writer helper
+        StreamWriter output = File.CreateText(outputPath);
+        foreach(string item in displayText) {
+            output.Write(item); // text is a helper writer that helps generating/managing text file
+        }
+        output.Close(); // release the ressources
+
+        Console.WriteLine(File.ReadAllText(outputPath));
 
     }
+
+
 }
