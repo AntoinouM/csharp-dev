@@ -49,7 +49,7 @@ class Program
             string[] argsForNames = line.Split(',');
             foreach (string name in argsForNames) {
                 name.Trim();
-                if (!name.All(char.IsDigit) && !line.Contains("source") && !line.Contains("target")) {
+                if (!name.All(char.IsDigit) && !line.Contains("from") && !line.Contains("to")) {
                     if (!verticesName.Contains(name)) {
                         verticesName.AddLast(name);
                     }
@@ -63,18 +63,18 @@ class Program
         // read text file
         string[] linesFromInput = File.ReadAllLines(inputPath);
         foreach (string line in linesFromInput) {
-            if (!line.Contains("source") && !line.Contains("target") && line.Length != 0) {
+            if (!line.Contains("from") && !line.Contains("to") && line.Length != 0) {
                 //Console.WriteLine(line);
                 string[] parameters = line.Split(',');
                 if (parameters.Length == 3) {
                      graph.AddEdge(graph.HasVertex(parameters[0].Trim())!.Property.Id, graph.HasVertex(parameters[1].Trim())!.Property.Id, int.Parse(parameters[2]));
                 }
             }
-            else if (line.Contains("source")) {
+            else if (line.Contains("from")) {
                 string[] parametersSrc = line.Split(':');
                 source = parametersSrc[parametersSrc.Length-1].Trim();
             }
-            else if (line.Contains("target")) {
+            else if (line.Contains("to")) {
                 string[] parametersTrg = line.Split(':');
                 target = parametersTrg[parametersTrg.Length-1].Trim();
             }
@@ -89,7 +89,7 @@ class Program
         }
         output.Close(); // release the ressources
 
-        Console.WriteLine(File.ReadAllText(outputPath));
+        Console.WriteLine("Result saved into output.txt");
 
     }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 
 namespace GraphLibrary;
 
@@ -167,42 +168,42 @@ public string[]? Dijkstra(string startName, string endName) {
         return null;
     }
 
-    // create and initialize a boolena array 
-    helperType<bool>[] boolArr = new helperType<bool>[_nVertices];
+    // create dictionary to store Vertex-bool
+    Dictionary<Vertex<TVertex>, bool> boolDic = new Dictionary<Vertex<TVertex>, bool>();
     for (int i = 0; i < _nVertices; i++) {
-        boolArr[i] = new helperType<bool>(_vertices.ElementAt(i), false);
+        boolDic.Add(_vertices.ElementAt(i), false);
     }
-
-    // create and initialize a dtstance array
-    helperType<int>[] distArr = new helperType<int>[_nVertices];
+    
+    // create dictionary to store Vertex-int (dist)
+    Dictionary<Vertex<TVertex>, int> distDic = new Dictionary<Vertex<TVertex>, int>();
     for (int i = 0; i < _nVertices; i++) {
-        distArr[i] = new helperType<int>(_vertices.ElementAt(i), int.MaxValue);
+        distDic.Add(_vertices.ElementAt(i), int.MaxValue);
     }
     
     // set the distance of startVertex to itself to 0
-    ChangeArray<int>(distArr, startVertex, 0);
-
+    distDic[startVertex] = 0;
+ 
     // Create a Parent array of Vertices that store an ID
-    helperType<int>[] parrentArr = new helperType<int>[_nVertices];
+    Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic = new Dictionary<Vertex<TVertex>, Vertex<TVertex>?>();
     for (int i = 0; i < _nVertices; i++) {
-        parrentArr[i] = new helperType<int>(_vertices.ElementAt(i), -1); // all ID are instanciate to -1
+        parentDic.Add(_vertices.ElementAt(i), null);
     }
 
     for (int count = 0; count < _nVertices - 1; count++) {
-        Vertex<TVertex> vertexWithMinimumDistance = returnVertexWithMinDistance(boolArr, distArr);
-        helperType<int>? verMinDistHT = returnedHelperType<int>(distArr, vertexWithMinimumDistance)!;
+        Vertex<TVertex> vertexWithMinimumDistance = returnVertexWithMinDistance(boolDic, distDic)!;
+        int minDistance = distDic[vertexWithMinimumDistance];
 
-        ChangeArray<bool>(boolArr, vertexWithMinimumDistance, true);
-        if (returnedHelperType<bool>(boolArr, endVertex)!.Value.value) {
+        boolDic[vertexWithMinimumDistance] = true;
+        if (boolDic[endVertex]) {
             // write headers
-            //Console.Write("Vertex \t\t Distance from Source \t\t Path\n");
             displayedText[0] = "Vertex \t\t Distance from Source \t\t Path\n";
 
             // write selected path and distance
-            //Console.Write(startVertex.Property.Name + " -> " + endVertex.Property.Name + " \t\t " + returnedHelperType<int>(distArr, endVertex)!.Value.value  + "\t\t\t\t" + startVertex.Property.Name + " ");
-            displayedText[1] = $"{startVertex.Property.Name} -> {endVertex.Property.Name} \t\t {returnedHelperType<int>(distArr, endVertex)!.Value.value} \t\t\t\t {startVertex.Property.Name}";
+            displayedText[1] = $"{startVertex.Property.Name} -> {endVertex.Property.Name} \t\t {distDic[endVertex]} \t\t\t {startVertex.Property.Name}";
             // write path
-            printPath(parrentArr, endVertex);
+            printPath(parentDic, endVertex);
+            Console.Write(displayedText[0]);
+            Console.WriteLine(displayedText[1]);
             return displayedText;
         }
 
@@ -210,20 +211,20 @@ public string[]? Dijkstra(string startName, string endName) {
         for (int vertexCount = 0; vertexCount < _nVertices; vertexCount++) {
             Vertex<TVertex> currentVertex =  _vertices.ElementAt(vertexCount);
             Edge<TEdges>? currentEdge = returnEdge(vertexWithMinimumDistance, currentVertex)!;
-            helperType<bool>? tempBool = returnedHelperType<bool>(boolArr,currentVertex)!.Value;
-            helperType<int>? tempInt = returnedHelperType<int>(distArr, currentVertex)!.Value;
+            bool tempBool = boolDic[currentVertex];
+            int tempDistance = distDic[currentVertex];
 
-            if (!tempBool.Value.value &&
+            if (!tempBool &&
                 currentEdge != null &&
-                verMinDistHT.Value.value != int.MaxValue &&
-                verMinDistHT.Value.value + currentEdge.Property.Weight < tempInt.Value.value
+                minDistance != int.MaxValue &&
+                minDistance + currentEdge.Property.Weight < tempDistance
                 ) {
-                    ChangeArray<int>(parrentArr, currentVertex, vertexWithMinimumDistance.Property.Id);
-                    ChangeArray<int>(distArr, currentVertex, (verMinDistHT.Value.value + currentEdge.Property.Weight));
+                    parentDic[currentVertex] = vertexWithMinimumDistance;
+                    distDic[currentVertex] = minDistance + currentEdge.Property.Weight;
             }
         }     
     }
-    printSolution(distArr, parrentArr, startVertex);
+    //printSolution(distDic, parentDic, startVertex);
 
     
     /*=====================*/
@@ -231,21 +232,20 @@ public string[]? Dijkstra(string startName, string endName) {
     /*=====================*/
 
 
-    Vertex<TVertex> returnVertexWithMinDistance(helperType<bool>[] boolArr, helperType<int>[] distarr) {
+    Vertex<TVertex>? returnVertexWithMinDistance(Dictionary<Vertex<TVertex>, bool> boolDic, Dictionary<Vertex<TVertex>, int> distDic) {
+        
         int min = int.MaxValue;
-        Vertex<TVertex> vertexWithMinDistance = new Vertex<TVertex>(-1, "");
+        Vertex<TVertex>? vertexWithMinDistance = null;
 
         for (int i = 0; i < _nVertices; i++) {
-            helperType<bool>? tempBool = returnedHelperType<bool>(boolArr, _vertices.ElementAt(i))!;
-            helperType<int>? tempInt= returnedHelperType<int>(distArr, _vertices.ElementAt(i))!;
-
+            bool tempBoolean = boolDic[_vertices.ElementAt(i)];
+            int tempDist = distDic[_vertices.ElementAt(i)];
             
-            if (tempBool.Value.value == false && tempInt.Value.value <= min) {
-                min = tempInt.Value.value;
-                vertexWithMinDistance = tempInt.Value.vertexValue;
+            if (tempBoolean == false && tempDist <= min) {
+                min = tempDist;
+                vertexWithMinDistance = _vertices.ElementAt(i);
             }
         }
-
         return vertexWithMinDistance;
     }
 
@@ -258,49 +258,31 @@ public string[]? Dijkstra(string startName, string endName) {
         }
         return null;
     }
-    
-    void ChangeArray<T>(helperType<T>[] arr, Vertex<TVertex> vertex, T value) where T : IComparable {
-        for (int i = 0; i < arr.Length; i++) {
-            if (arr[i].vertexValue == vertex) {
-                arr[i].value = value;
-            }
-        }
-    }
 
-    helperType<T>? returnedHelperType<T>(helperType<T>[] arr, Vertex<TVertex> vertex) where T: IComparable {
-        
-        for (int i = 0; i < arr.Length; i++) {
-            if (arr[i].vertexValue == vertex) {
-                return arr[i];
-            }
-        }
-        return null;
-    }
+    // void printSolution( Dictionary<Vertex<TVertex>, int> distDic, 
+    //                     Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic, 
+    //                     Vertex<TVertex> startVertex)
+    // {
+    //     Console.Write("Vertex \t\t Distance from Source \t\t Path\n");
+    //     for (int i = 0; i < distDic.Count; i++) {
+    //         if (distDic.ElementAt(i).Key.Property.Id != startVertex.Property.Id) {
+    //             Console.Write("\n" + startVertex.Property.Name + " -> " + distDic.ElementAt(i).Key.Property.Name + " \t\t " + distDic.ElementAt(i).Value  + "\t\t\t" + startVertex.Property.Name + " ");
+    //             printPath(parentDic, distDic.ElementAt(i).Key);
+    //         }
+    //     }
+    // }
 
-    void printSolution(helperType<int>[] distArr, helperType<int>[] parentArr, Vertex<TVertex> startVertex)
-    {
-        Console.Write("Vertex \t\t Distance from Source \t\t Path\n");
-        for (int i = 0; i < distArr.Length; i++) {
-            if (distArr[i].vertexValue.Property.Id != startVertex.Property.Id) {
-                Console.Write("\n" + startVertex.Property.Name + " -> " + distArr[i].vertexValue.Property.Name + " \t\t " + distArr[i].value  + "\t\t\t" + startVertex.Property.Name + " ");
-                printPath(parentArr, distArr[i].vertexValue);
-            }
-        }
-    }
-
-    void printPath(helperType<int>[] parentArr, Vertex<TVertex> currentVertex) {
-        helperType<int>? currentHT = returnedHelperType<int>(parrentArr, currentVertex)!;
-        if (currentHT.Value.value == -1) { // if comes back to startVertex, return
+    void printPath(Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic , Vertex<TVertex>? currentVertex) {
+        Vertex<TVertex>? currentParent = parentDic[currentVertex!];
+        if (currentParent == null) { // if comes back to startVertex, return
             return;
         }
-        printPath(parrentArr, HasVertex(currentHT.Value.value)!);
-        displayedText[1] += $" {currentVertex.Property.Name}";
+        printPath(parentDic, currentParent!);
+        displayedText[1] += $"-{currentVertex!.Property.Name}";
     }
 
-    
     return displayedText;
 }
-
 
     // Finaliser
     ~Graph() {}

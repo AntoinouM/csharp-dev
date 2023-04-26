@@ -13,5 +13,5 @@ v6,v7,1
 v6,v8,6
 v7,v8,7
 
-source: v0
-target: v3
+from: v0
+to: v5
