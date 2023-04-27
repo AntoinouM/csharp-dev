@@ -85,7 +85,7 @@ where TEdges: BasicEdgeProperty, new()
         }
 
         // Edge
-        public void AddEdge(int sourceId, int targetId, int weight) {
+        public void AddEdge(int sourceId, int targetId, uint weight) {
             Edge<TEdges>? e = HasEdge(sourceId, targetId);
 
             if (e == null) {
@@ -172,7 +172,7 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
     }
     
     // create dictionary to store Vertex-int (dist)
-    Dictionary<Vertex<TVertex>, int> distDic = new Dictionary<Vertex<TVertex>, int>();
+    Dictionary<Vertex<TVertex>, uint> distDic = new Dictionary<Vertex<TVertex>, uint>();
     for (int i = 0; i < _nVertices; i++) {
         distDic.Add(_vertices.ElementAt(i), int.MaxValue);
     }
@@ -186,13 +186,14 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
         parentDic.Add(_vertices.ElementAt(i), null);
     }
 
-    for (int count = 0; count < _nVertices - 1; count++) {
+    for (int count = 0; count < _nVertices; count++) {
         Vertex<TVertex> vertexWithMinimumDistance = returnVertexWithMinDistance(boolDic, distDic)!;
-        int minDistance = distDic[vertexWithMinimumDistance];
+        uint minDistance = distDic[vertexWithMinimumDistance];
 
         boolDic[vertexWithMinimumDistance] = true;
 
         if (endVertex != null) {
+            System.Console.WriteLine(boolDic[endVertex]);
             if (boolDic[endVertex]) {
                 // add distance
                 DijkstraDic.Add("dist", distDic[endVertex].ToString());
@@ -208,7 +209,7 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
             Vertex<TVertex> currentVertex =  _vertices.ElementAt(vertexCount);
             Edge<TEdges>? currentEdge = returnEdge(vertexWithMinimumDistance, currentVertex);
             bool tempBool = boolDic[currentVertex];
-            int tempDistance = distDic[currentVertex];
+            uint tempDistance = distDic[currentVertex];
 
             if (!tempBool &&
                 currentEdge != null &&
@@ -227,14 +228,14 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
     /*** HELPER FUNCTION ***/
     /*=====================*/
 
-    Vertex<TVertex>? returnVertexWithMinDistance(Dictionary<Vertex<TVertex>, bool> boolDic, Dictionary<Vertex<TVertex>, int> distDic) {
+    Vertex<TVertex>? returnVertexWithMinDistance(Dictionary<Vertex<TVertex>, bool> boolDic, Dictionary<Vertex<TVertex>, uint> distDic) {
         
-        int min = int.MaxValue;
+        uint min = int.MaxValue;
         Vertex<TVertex>? vertexWithMinDistance = null;
 
         for (int i = 0; i < _nVertices; i++) {
             bool tempBoolean = boolDic[_vertices.ElementAt(i)];
-            int tempDist = distDic[_vertices.ElementAt(i)];
+            uint tempDist = distDic[_vertices.ElementAt(i)];
             
             if (tempBoolean == false && tempDist <= min) {
                 min = tempDist;
@@ -254,7 +255,7 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
         return null;
     }
 
-    void printSolution( Dictionary<Vertex<TVertex>, int> distDic, 
+    void printSolution( Dictionary<Vertex<TVertex>, uint> distDic, 
                         Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic, 
                         Vertex<TVertex> startVertex)
     {

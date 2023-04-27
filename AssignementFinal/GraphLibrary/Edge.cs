@@ -6,7 +6,7 @@ public abstract class BasicEdgeProperty
     public int Id;
     public int SourceId;
     public int TargetId;
-    public int Weight;
+    public uint Weight;
 }
 
 public class Edge<T> where T: BasicEdgeProperty, new() 
@@ -15,7 +15,7 @@ public class Edge<T> where T: BasicEdgeProperty, new()
     private T _property;
 
     // Constructors
-    public Edge(int id, int source, int target, int weight) 
+    public Edge(int id, int source, int target, uint weight) 
     {
         _property = new T();
         _property.Id = id;

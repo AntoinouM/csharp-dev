@@ -67,7 +67,7 @@ class Program
                 //Console.WriteLine(line);
                 string[] parameters = line.Split(',');
                 if (parameters.Length == 3) {
-                     graph.AddEdge(graph.HasVertex(parameters[0].Trim())!.Property.Id, graph.HasVertex(parameters[1].Trim())!.Property.Id, int.Parse(parameters[2]));
+                     graph.AddEdge(graph.HasVertex(parameters[0].Trim())!.Property.Id, graph.HasVertex(parameters[1].Trim())!.Property.Id, uint.Parse(parameters[2]));
                 }
             }
             else if (line.Contains("from")) {
