@@ -17,7 +17,136 @@ The motivation behind the algorithm is to find the most efficient route between 
 Dijkstra's algorithm is widely used in network routing protocols, transportation planning, and many other applications that involve finding the shortest path in a graph.
 
 ### Implementation Detail
-I used the graph library we created during class, has the edge
+I used the graph library we created during class, as the edge are weighted positiviely I added **uint weight** to the proprieties.
+```csharp
+    public uint Weight;
+```
+
+Concerning my implementation of Dirjkstra, I chose to create a method (non-static) that must be called on an instance of graph and that return a Dictionary<TKey, TValue> to have for each graph a 'dist', 'path', 'source' and 'target' -if provided-.
+
+```csharp
+public Dictionary<string, string>? Dijkstra(string startName, string endName) {
+
+    Dictionary<string, string> DijkstraDic = new Dictionary<string, string>();
+    string pathStr = "";
+
+    // Find the starting vertex
+    Vertex<TVertex>? startVertex = HasVertex(startName);
+    if (startVertex == null) {
+        Console.WriteLine("Starting vertex not found.");
+        return null;
+    }
+
+    // Find the ending vertex
+    Vertex<TVertex>? endVertex = HasVertex(endName);
+    if (endVertex == null) {
+        Console.WriteLine("Ending vertex not found.");
+    }
+    DijkstraDic.Add("source", startVertex.Property.Name); //create an entry source in the dictionary to be returned
+
+    if (endVertex != null) {
+        DijkstraDic.Add("target", endVertex.Property.Name); // create a target entry if target declared
+    }
+
+    // create dictionary to store Vertex-bool
+    Dictionary<Vertex<TVertex>, bool> boolDic = new Dictionary<Vertex<TVertex>, bool>();
+    for (int i = 0; i < _nVertices; i++) {
+        boolDic.Add(_vertices.ElementAt(i), false);
+    }
+    
+    // create dictionary to store Vertex-int (dist)
+    Dictionary<Vertex<TVertex>, uint> distDic = new Dictionary<Vertex<TVertex>, uint>();
+    for (int i = 0; i < _nVertices; i++) {
+        distDic.Add(_vertices.ElementAt(i), int.MaxValue);
+    }
+    
+    // set the distance of startVertex to itself to 0
+    distDic[startVertex] = 0;
+ 
+    // Create a Parent array of Vertices that store an ID
+    Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic = new Dictionary<Vertex<TVertex>, Vertex<TVertex>?>();
+    for (int i = 0; i < _nVertices; i++) {
+        parentDic.Add(_vertices.ElementAt(i), null);
+    }
+```
+The method return a Dictionary. This is a personal choice that I made in order to facilitate the generation of an output.txt.
+
+At first I decided to create my own struct to generate an array of it to store my visitedList and my distanceList. But after trying and researching I decided to use dictionary, to improve performances.
+
+There are 3 Dictionary entries:
+```csharp
+Dictionary<Vertex<TVertex>, bool> boolDic
+Dictionary<Vertex<TVertex>, uint> distDic
+Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic
+```
+These allow me to store and update values for my vertices.
+
+The important part of the code is the following:
+```csharp
+    // Iterate through all the vertices in the graph
+    for (int count = 0; count < _nVertices; count++) {
+        Vertex<TVertex> vertexWithMinimumDistance = returnVertexWithMinDistance(boolDic, distDic)!;
+        uint minDistance = distDic[vertexWithMinimumDistance];
+
+        boolDic[vertexWithMinimumDistance] = true;
+
+        if (endVertex != null) {
+            System.Console.WriteLine(boolDic[endVertex]);
+            if (boolDic[endVertex]) {
+                // add distance
+                DijkstraDic.Add("dist", distDic[endVertex].ToString());
+
+                // add path
+                printPath(parentDic, endVertex);
+                DijkstraDic.Add("path", pathStr);
+                return DijkstraDic;
+            }
+        }
+
+    // loop for all vertices that are neighbors
+        for (int vertexCount = 0; vertexCount < _nVertices; vertexCount++) {
+            Vertex<TVertex> currentVertex =  _vertices.ElementAt(vertexCount);
+            Edge<TEdges>? currentEdge = returnEdge(vertexWithMinimumDistance, currentVertex);
+            bool tempBool = boolDic[currentVertex];
+            uint tempDistance = distDic[currentVertex];
+
+            if (!tempBool && // if vertices has not been 'approved' before
+                currentEdge != null && // if nodes are connected
+                minDistance != int.MaxValue && // if the distance has already been updated
+                minDistance + currentEdge.Property.Weight < tempDistance // if distance from previous + edge < distance marked for current
+                ) { // update
+                    parentDic[currentVertex] = vertexWithMinimumDistance;
+                    distDic[currentVertex] = minDistance + currentEdge.Property.Weight;
+            }
+        }     
+    }
+    printSolution(distDic, parentDic, startVertex);
+```
+
+In this bloc of code, I Iterate through all my vertices, each time, I returned the vertex with the minimum distance from my source that has not been 'approved' yet, using the helper function returnVertexWithMinDistance. This function will be detailed later.
+I then 'aprove' that vertex in order to not return it at the next iteration.
+
+I then have a conditional statement, that return a different result if a target vertex has been provided and found. This allow me to only print the path and distance between the source Vertex and Target Vertex.
+
+I then iterate through all the neigbor vertices (that share an edge) and update their distance regarding the value of it and the 'approve' status.
+
+When all the vertices has been 'approved', all the distances has been updated to the minimum possible to reach that target.
+
+I then call some helper functions to print/generate my result:
+```csharp
+    void printSolution( Dictionary<Vertex<TVertex>, uint> distDic, 
+                        Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic, 
+                        Vertex<TVertex> startVertex)
+                        {...}
+
+    void printPath(Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic , 
+                Vertex<TVertex>? currentVertex) 
+                {... }
+```
+These two helpers methods just update my Dictionary dijsktra that is return by the method. They are not rocket science but they work well, and there is a nice use of recursive for the printPath.
+
+
+
 
 #### Implementation Logic Explanation:
 Dijkstra pseudo code:

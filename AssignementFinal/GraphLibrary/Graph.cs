@@ -159,10 +159,10 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
     if (endVertex == null) {
         Console.WriteLine("Ending vertex not found.");
     }
-    DijkstraDic.Add("source", startVertex.Property.Name);
+    DijkstraDic.Add("source", startVertex.Property.Name); //create an entry source in the dictionary to be returned
 
     if (endVertex != null) {
-        DijkstraDic.Add("target", endVertex.Property.Name);
+        DijkstraDic.Add("target", endVertex.Property.Name); // create a target entry if target declared
     }
 
     // create dictionary to store Vertex-bool
@@ -186,6 +186,7 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
         parentDic.Add(_vertices.ElementAt(i), null);
     }
 
+    // Iterate through all the vertices in the graph
     for (int count = 0; count < _nVertices; count++) {
         Vertex<TVertex> vertexWithMinimumDistance = returnVertexWithMinDistance(boolDic, distDic)!;
         uint minDistance = distDic[vertexWithMinimumDistance];
@@ -205,17 +206,18 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
             }
         }
 
+    // loop for all vertices that are neighbors
         for (int vertexCount = 0; vertexCount < _nVertices; vertexCount++) {
             Vertex<TVertex> currentVertex =  _vertices.ElementAt(vertexCount);
             Edge<TEdges>? currentEdge = returnEdge(vertexWithMinimumDistance, currentVertex);
             bool tempBool = boolDic[currentVertex];
             uint tempDistance = distDic[currentVertex];
 
-            if (!tempBool &&
-                currentEdge != null &&
-                minDistance != int.MaxValue &&
-                minDistance + currentEdge.Property.Weight < tempDistance
-                ) {
+            if (!tempBool && // if vertices has not been 'approved' before
+                currentEdge != null && // if nodes are connected
+                minDistance != int.MaxValue && // if the distance has already been updated
+                minDistance + currentEdge.Property.Weight < tempDistance // if distance from previous + edge < distance marked for current
+                ) { // update
                     parentDic[currentVertex] = vertexWithMinimumDistance;
                     distDic[currentVertex] = minDistance + currentEdge.Property.Weight;
             }
@@ -228,18 +230,20 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
     /*** HELPER FUNCTION ***/
     /*=====================*/
 
+    // This helper function is used to find the vertex with the minimum distance from the start vertex that has not been marked as visited
     Vertex<TVertex>? returnVertexWithMinDistance(Dictionary<Vertex<TVertex>, bool> boolDic, Dictionary<Vertex<TVertex>, uint> distDic) {
         
-        uint min = int.MaxValue;
-        Vertex<TVertex>? vertexWithMinDistance = null;
+        uint min = uint.MaxValue; // initialize to max value
+        Vertex<TVertex>? vertexWithMinDistance = null; // initialize as null
 
+        // Loop through all vertices
         for (int i = 0; i < _nVertices; i++) {
             bool tempBoolean = boolDic[_vertices.ElementAt(i)];
             uint tempDist = distDic[_vertices.ElementAt(i)];
             
-            if (tempBoolean == false && tempDist <= min) {
-                min = tempDist;
-                vertexWithMinDistance = _vertices.ElementAt(i);
+            if (tempBoolean == false && tempDist <= min) { //if vertex has not been 'approved' and distance inferior than min dist
+                min = tempDist; // update min dist
+                vertexWithMinDistance = _vertices.ElementAt(i); // update vertex
             }
         }
         return vertexWithMinDistance;
