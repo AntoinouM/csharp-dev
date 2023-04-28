@@ -221,3 +221,8 @@ I deepthen my knowledge in data structure (MinHeap), Generic collection (Diction
 (List down and explain what you have learned from your colleague’s codes and what you should pay attention to when writing codes next time.)
 1. Adjency list is a better approach that adjency matrix in term of results
 2. Data structure such as queue are more useful than I thought. I did discover a use case for this and it change my approach of my own code.
+
+
+We discussed in class that having an infinity edge could create an infinity loop.
+I do believe that in my implementation that would not happen has each vertex is visited/approved in each iteration (first for loop). So in my code it would only return the wrong path.
+In any case you can not provide a negative value for a Weight as it require a uint type.
