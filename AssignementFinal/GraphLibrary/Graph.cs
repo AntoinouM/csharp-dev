@@ -181,7 +181,8 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
     distDic[startVertex] = 0;
  
     // Create a Parent array of Vertices that store an ID
-    Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic = new Dictionary<Vertex<TVertex>, Vertex<TVertex>?>();
+    Dictionary<Vertex<TVertex>, Vertex<TVertex>?> parentDic = 
+    new Dictionary<Vertex<TVertex>, Vertex<TVertex>?>();
     for (int i = 0; i < _nVertices; i++) {
         parentDic.Add(_vertices.ElementAt(i), null);
     }

@@ -130,6 +130,29 @@ I then have a conditional statement, that return a different result if a target 
 
 I then iterate through all the neigbor vertices (that share an edge) and update their distance regarding the value of it and the 'approve' status.
 
+```csharp
+    // This helper function is used to find the vertex with the minimum distance from the start vertex that has not been marked as visited
+    Vertex<TVertex>? returnVertexWithMinDistance(Dictionary<Vertex<TVertex>, bool> boolDic, Dictionary<Vertex<TVertex>, uint> distDic) {
+        
+        uint min = uint.MaxValue; // initialize to max value
+        Vertex<TVertex>? vertexWithMinDistance = null; // initialize as null
+
+        // Loop through all vertices
+        for (int i = 0; i < _nVertices; i++) {
+            bool tempBoolean = boolDic[_vertices.ElementAt(i)];
+            uint tempDist = distDic[_vertices.ElementAt(i)];
+            
+            if (tempBoolean == false && tempDist <= min) { //if vertex has not been 'approved' and distance inferior than min dist
+                min = tempDist; // update min dist
+                vertexWithMinDistance = _vertices.ElementAt(i); // update vertex
+            }
+        }
+        return vertexWithMinDistance;
+    }
+```
+
+This function has the only aim to return a Vertex that has not been approved yet with the shortest distance in the set.
+
 When all the vertices has been 'approved', all the distances has been updated to the minimum possible to reach that target.
 
 I then call some helper functions to print/generate my result:
@@ -196,5 +219,5 @@ I deepthen my knowledge in data structure (MinHeap), Generic collection (Diction
 
 ### Reflections on the Projects learned during the Presentation:
 (List down and explain what you have learned from your colleague’s codes and what you should pay attention to when writing codes next time.)
-1. Item
-2. Item, and so forth
+1. Adjency list is a better approach that adjency matrix in term of results
+2. Data structure such as queue are more useful than I thought. I did discover a use case for this and it change my approach of my own code.
