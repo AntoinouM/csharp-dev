@@ -194,7 +194,6 @@ public Dictionary<string, string>? Dijkstra(string startName, string endName) {
         boolDic[vertexWithMinimumDistance] = true;
 
         if (endVertex != null) {
-            System.Console.WriteLine(boolDic[endVertex]);
             if (boolDic[endVertex]) {
                 // add distance
                 DijkstraDic.Add("dist", distDic[endVertex].ToString());
