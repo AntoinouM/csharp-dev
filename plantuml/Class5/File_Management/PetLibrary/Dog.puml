@@ -1,6 +1,0 @@
-@startuml
-class Dog {
-    + Name : string
-    + Dog()
-}
-@enduml
