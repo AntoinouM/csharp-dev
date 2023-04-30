@@ -1,0 +1,3 @@
+v7 --> v4
+Minimum distance: 13
+Path: v7-v6-v5-v4
