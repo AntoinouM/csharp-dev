@@ -1,9 +1,0 @@
-@startuml
-class Program {
-}
-class Cat {
-    + getName() : string
-    + Age : int <<get>> <<set>>
-}
-Cat --> "DateOfBirth" DateTime
-@enduml
